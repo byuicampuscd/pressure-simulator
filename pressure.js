@@ -26,8 +26,7 @@ handle.mousedown(function(e) {
 })
 draw.mousemove(function(e) {
     if (handleHeld) {
-        var distance = draw.point(e.movementX, e.movementY);
-        alert(draw.point(e.movementX, e.movementY).y);
+        var distance = e.movementY;
         var handlePosition = handle.transform('y');
         if ((distance < 0 && handlePosition > 0) || (distance > 0 && handlePosition < boundary.bottom - 25)) {
             handle.transform({ y: distance, relative: true});
