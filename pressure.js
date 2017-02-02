@@ -1,42 +1,57 @@
-/* Image links and Sizes */
+/* Desired Sizes */
 
-var ballImage = "ball.svg";
 var ballImageSize = 5;
-var ballContainerImage = "ball_container.svg";
-var ballContainerRimImage = "images/outertube.png";
-var ballContainerImageWidth = 379.2;
-var ballContainerImageHeight = 648.7;
-var lidImage = "images/disc.png";
-var lidImageWidth = 453;
-var lidImageHeight = 123;
+var ballContainerImageWidth = 200; // The ratio is maintained below
 
-/* End of Image links and Sizes */
+/* End of Desired Sizes */
+
+var ballContainerImageRatio = 648.7/379.2; // Height/Width
 
 // Container element for the svg tag
 var drawingElement = document.getElementById('pressureDrawing');
 drawingElement.style.width = ballContainerImageWidth + "px";
-drawingElement.style.height = ballContainerImageHeight + "px";
-
+drawingElement.style.height = (ballContainerImageWidth * ballContainerImageRatio) + "px";
 
 var areaWidth = drawingElement.style.width.slice(0, -2);
 var areaHeight = drawingElement.style.height.slice(0, -2);
 
+
 var draw = SVG('pressureDrawing').svg(document.getElementById("svg_ball_container").outerHTML); //size(areaWidth, areaHeight);
+
+// Handling of handle movements using SVG.js
+var handle = draw.select('#handle').first();
+var handleHeld = false;
+handle.mousedown(function(e) {
+    handleHeld = true;
+})
+draw.mousemove(function(e) {
+    if (handleHeld) {
+        var distance = draw.point(e.movementX, e.movementY);
+        alert(draw.point(e.movementX, e.movementY).y);
+        var handlePosition = handle.transform('y');
+        if ((distance < 0 && handlePosition > 0) || (distance > 0 && handlePosition < boundary.bottom - 25)) {
+            handle.transform({ y: distance, relative: true});
+            boundary.top += distance;
+        }
+    }
+})
+draw.mouseup(function(e) {
+    handleHeld = false;
+})
+
+
 
 // Boundary limitations of the balls, relative to the container element
 var boundary = {
-    left: draw.select('g#back path').first().x(),
-    top: 100,
-    right: Number(drawingElement.style.width.slice(0, -2)) - 27,
-    bottom: Number(drawingElement.style.height.slice(0, -2)) - 75
+    top: 0
 }
-/*var boundary = {
-    left: Number(drawingElement.style.left.slice(0, -2)),
-    top: Number(drawingElement.style.top.slice(0, -2)),
-    right: Number(drawingElement.style.left.slice(0, -2)) + Number(drawingElement.style.width.slice(0, -2)),
-    bottom: Number(drawingElement.style.top.slice(0, -2)) + Number(drawingElement.style.height.slice(0, -2))
-}*/
-
+function updateBoundary() {
+    var testboundary = document.getElementById('ballBoundary');
+    var handledisc = document.getElementById('handle');//.getElementsByTagName('ellipse').item(0);
+    boundary.left = 0;
+    boundary.right = Number(testboundary.getAttribute('width'));
+    boundary.bottom = Number(testboundary.getAttribute('height'));
+}
 
 
 function Ball(startingLocation, speed, direction) {
@@ -49,9 +64,7 @@ function Ball(startingLocation, speed, direction) {
         y: speed * Math.sin(direction)
     }
     
-    this.circle = draw.nested().svg(document.getElementById("svg_ball").outerHTML).size(ballImageSize, ballImageSize);
-    //this.circle = draw.image(ballImage, ballImageSize, ballImageSize).cx(startingLocation.x).cy(startingLocation.y);
-    //this.circle = draw.circle(10).cx(startingLocation.x).cy(startingLocation.y).attr({fill: 'black'});
+    this.circle = draw.select('#svg_ball_boundary').first().nested().svg(document.getElementById("svg_ball").outerHTML).size(ballImageSize, ballImageSize);
 }
 Ball.prototype.updateLocation = function() {
     this.location.x += this.velocity.x;
@@ -63,28 +76,22 @@ Ball.prototype.updateLocation = function() {
 }
 Ball.prototype.handleCollisions = function() {
     
-    var testboundary = document.getElementById('ballBoundary')
-    var boundaryLeft = testboundary.getAttribute('x');
-    var boundaryTop = testboundary.getAttribute('y');
-    var boundaryRight = boundaryLeft + testboundary.getAttribute('width');
-    var boundaryBottom = boundaryTop + testboundary.getAttribute('height');
-    
     // If the ball has crossed a boundary, reflect it back over the boundary, and change its direction
-    if (this.location.x < boundaryLeft) {
+    if (this.location.x < boundary.left) {
         this.velocity.x = -this.velocity.x;
-        this.location.x += 2 * (boundaryLeft - this.location.x);
+        this.location.x += 2 * (boundary.left - this.location.x);
     }
-    if (this.location.y < boundaryTop) {
+    if (this.location.y < boundary.top) {
         this.velocity.y = -this.velocity.y;
-        this.location.y += 2 * (boundaryTop - this.location.y);
+        this.location.y += 2 * (boundary.top - this.location.y);
     }
-    if (this.location.x > boundaryRight) {
+    if (this.location.x > boundary.right) {
         this.velocity.x = -this.velocity.x;
-        this.location.x += 2 * (boundaryRight - this.location.x);
+        this.location.x += 2 * (boundary.right - this.location.x);
     }
-    if (this.location.y > boundaryBottom) {
+    if (this.location.y > boundary.bottom) {
         this.velocity.y = -this.velocity.y;
-        this.location.y += 2 * (boundaryBottom - this.location.y);
+        this.location.y += 2 * (boundary.bottom - this.location.y);
     }
 }
 function generateBalls(n) {
@@ -112,17 +119,14 @@ function generateBalls(n) {
     return ballArray;
 }
 
-//draw.image(ballContainerImage, ballContainerImageWidth, ballContainerImageHeight);
-//alert(document.getElementById("back"));
-//var containerBack = draw.nested().svg(document.getElementById("back").outerHTML);
+
 var balls = generateBalls(50);
 function moveBalls() {
+    console.log(document.getElementById('handle').getElementsByTagName('ellipse').item(0).getAttribute('cy'));
+    updateBoundary();
     balls.forEach(function(ball) {
         ball.updateLocation();
     });
 }
-//draw.image(lidImage, lidImageWidth, lidImageHeight).x(boundary.left - 2).y(boundary.top - (lidImageHeight/2));
-//var containerHandle = draw.nested().svg(document.getElementById("handle").outerHTML);
-//draw.image(ballContainerRimImage, ballContainerImageWidth, ballContainerImageHeight);
-//var containerFront = draw.nested().svg(document.getElementById("front").outerHTML);
+
 var pressureTimer = setInterval(moveBalls, 1000/30);
