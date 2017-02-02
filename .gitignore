@@ -1,6 +1,3 @@
 # Add-in Folders
 node_modules/
 svgjs/
-
-# Temporary to catch up proper versions
-*.js
