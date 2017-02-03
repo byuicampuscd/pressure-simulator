@@ -1,42 +1,46 @@
 /* Desired Sizes */
 
 var ballImageSize = 5;
-var ballContainerImageWidth = 200; // The ratio is maintained below
+var ballContainerImageWidth = 400; // The ratio is maintained below
 
 /* End of Desired Sizes */
 
-var ballContainerImageRatio = 648.7/379.2; // Height/Width
+var ballContainerImageRatio = 648.7/379.2; // Viewbox Height/Width
+var ballContainerImageHeight = ballContainerImageWidth * ballContainerImageRatio;
 
 // Container element for the svg tag
 var drawingElement = document.getElementById('pressureDrawing');
 drawingElement.style.width = ballContainerImageWidth + "px";
-drawingElement.style.height = (ballContainerImageWidth * ballContainerImageRatio) + "px";
+drawingElement.style.height = ballContainerImageHeight + "px";
 
-var areaWidth = drawingElement.style.width.slice(0, -2);
-var areaHeight = drawingElement.style.height.slice(0, -2);
+var areaWidth = ballContainerImageWidth;
+var areaHeight = ballContainerImageHeight;
 
-
+// Store the outmost svg in SVG.js form
 var draw = SVG('pressureDrawing').svg(document.getElementById("svg_ball_container").outerHTML); //size(areaWidth, areaHeight);
 
 // Handling of handle movements using SVG.js
 var handle = draw.select('#handle').first();
+/*handle.draggable(function(x, y) {
+    return {y: y >= 0 && y < boundary.bottom - 20}
+});*/
 var handleHeld = false;
 handle.mousedown(function(e) {
     handleHeld = true;
 })
-draw.mousemove(function(e) {
+document.body.onmousemove = function(e) {
     if (handleHeld) {
-        var distance = e.movementY;
+        var distance = e.movementY * 648.7 / ballContainerImageHeight;
         var handlePosition = handle.transform('y');
         if ((distance < 0 && handlePosition > 0) || (distance > 0 && handlePosition < boundary.bottom - 25)) {
             handle.transform({ y: distance, relative: true});
             boundary.top += distance;
         }
     }
-})
-draw.mouseup(function(e) {
+}
+document.body.onmouseup = function(e) {
     handleHeld = false;
-})
+}
 
 
 
