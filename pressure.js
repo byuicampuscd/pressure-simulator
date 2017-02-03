@@ -177,9 +177,9 @@ function generateBalls(n) {
 }
 
 // Update the boundary and move the balls one frame
-function moveBalls(balls) {
+function moveBalls(ballArray) {
     updateBoundary();
-    balls.forEach(function(ball) {
+    ballArray.forEach(function(ball) {
         ball.updateLocation();
     });
 }
@@ -193,6 +193,6 @@ function moveBalls(balls) {
 var balls = generateBalls(numberOfBalls);
 
 // Start the animation
-var pressureTimer = setInterval(moveBalls(balls), 1000/30);
+var pressureTimer = setInterval(moveBalls.bind(null, balls), 1000/30);
 
 /* END Getting the simulation going */
