@@ -36,7 +36,7 @@ var handleHeld = false; // Flag for mouse events
 handle.mousedown(function(e) {
     handleHeld = true;
 })
-document.body.onmousemove = function(e) {
+document.getElementsByTagName('html').item(0).onmousemove = function(e) {
     
     // If the user is currently 'holding the handle'
     if (handleHeld) {
@@ -56,7 +56,7 @@ document.body.onmousemove = function(e) {
         }
     }
 }
-document.body.onmouseup = function(e) {
+document.getElementsByTagName('html').item(0).onmouseup = function(e) {
     handleHeld = false;
 }
 
