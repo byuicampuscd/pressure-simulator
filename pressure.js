@@ -20,13 +20,8 @@ drawingElement.style.width = ballContainerImageWidth + "px";
 drawingElement.style.height = ballContainerImageHeight + "px";
 
 
-// These seem to be redundant now, and should be changed
-var areaWidth = ballContainerImageWidth;
-var areaHeight = ballContainerImageHeight;
-
-
 // Store the outmost svg in SVG.js form
-var draw = SVG('pressureDrawing').svg(document.getElementById("svg_ball_container").outerHTML); //size(areaWidth, areaHeight);
+var draw = SVG('pressureDrawing').svg(document.getElementById("svg_ball_container").outerHTML);
 
 /* END Misc Setup */
 
@@ -164,8 +159,8 @@ function generateBalls(n) {
     var initialDirection;
     var i;
     for (i = 0; i < n; i++) {
-        initialLocation.x = areaWidth * Math.random();
-        initialLocation.y = areaHeight * Math.random();
+        initialLocation.x = ballContainerImageWidth * Math.random();
+        initialLocation.y = ballContainerImageHeight * Math.random();
         initialDirection = 2 * Math.PI * Math.random();
         
         newBall = new Ball(initialLocation, initialSpeed, initialDirection);
