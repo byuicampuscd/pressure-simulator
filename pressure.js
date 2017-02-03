@@ -67,16 +67,10 @@ document.body.onmouseup = function(e) {
 
 // Boundary limitations of the balls, relative to the container element
 var boundary = {
-    top: 0
-}
-
-// Updates the bounds
-function updateBoundary() {
-    var testboundary = document.getElementById('ballBoundary');
-    var handledisc = document.getElementById('handle');//.getElementsByTagName('ellipse').item(0);
-    boundary.left = 0;
-    boundary.right = Number(testboundary.getAttribute('width'));
-    boundary.bottom = Number(testboundary.getAttribute('height'));
+    top: 0, // This is the only one that changes, done in handle moving code
+    right: Number(document.getElementById('ballBoundary').getAttribute('width')),
+    bottom: Number(document.getElementById('ballBoundary').getAttribute('height')),
+    left: 0
 }
 
 /* END boundary object */
@@ -173,7 +167,6 @@ function generateBalls(n) {
 
 // Update the boundary and move the balls one frame
 function moveBalls(ballArray) {
-    updateBoundary();
     ballArray.forEach(function(ball) {
         ball.updateLocation();
     });
