@@ -5,10 +5,10 @@
 var air = (function () {
     /* START Desired Conditions - These can be modified */
 
-    var BALL_COUNT = 50;
-    var ballImageSize = 5;
-    var ballContainerImageWidth = 400; // The ratio is maintained below
-    var speedMultiplier = 5;
+    const BALL_COUNT = 50;
+    const BALL_IMAGE_SIZE = 5;
+    const BALL_CONTAINER_IMAGE_WIDTH = 400; // The ratio is maintained below
+    const SPEED_MULTIPLIER = 5;
 
     /* END of Desired Conditions */
 
@@ -16,13 +16,13 @@ var air = (function () {
     /* START Misc Setup */
 
     // Calculated sizes from the indicated width above
-    var ballContainerImageRatio = 648.7 / 379.2; // ViewBox Height/Width
-    var ballContainerImageHeight = ballContainerImageWidth * ballContainerImageRatio;
+    const BALL_CONTAINER_IMAGE_RATIO = 648.7 / 379.2; // ViewBox Height/Width
+    const BALL_CONTAINER_IMAGE_HEIGHT = BALL_CONTAINER_IMAGE_WIDTH * BALL_CONTAINER_IMAGE_RATIO;
 
     // Container element for the svg tag
     var drawingElement = document.getElementById('pressureDrawing');
-    drawingElement.style.width = ballContainerImageWidth + "px";
-    drawingElement.style.height = ballContainerImageHeight + "px";
+    drawingElement.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
+    drawingElement.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
 
 
     // Store the outmost svg in SVG.js form
@@ -47,7 +47,7 @@ var air = (function () {
         if (handleHeld) {
 
             // Calculate the movement within the viewBox
-            var distance = e.movementY * 648.7 / ballContainerImageHeight;
+            var distance = e.movementY * 648.7 / BALL_CONTAINER_IMAGE_HEIGHT;
 
             // If we're trynig to move the handle within the boundary
             var handlePosition = handle.transform('y');
@@ -102,7 +102,7 @@ var air = (function () {
         }
 
         // Create the ball copy in svg using SVG.js
-        this.circle = draw.select('#svg_ball_boundary').first().nested().svg(document.getElementById("svg_ball").outerHTML).size(ballImageSize, ballImageSize);
+        this.circle = draw.select('#svg_ball_boundary').first().nested().svg(document.getElementById("svg_ball").outerHTML).size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
 
     }
     /* Constructor Methods */
@@ -152,13 +152,13 @@ var air = (function () {
 
         var tempArray = new Array(n).fill(null),
             // Create a speed variable holding random speed
-            initialSpeed = Math.random() * speedMultiplier;
+            initialSpeed = Math.random() * SPEED_MULTIPLIER;
 
         // Use a loop to creae n Balls, with random location and direction, but same speed
         return tempArray.map(function (ele, i) {
             var initialLocation = {
-                    x: ballContainerImageWidth * Math.random(),
-                    y: ballContainerImageHeight * Math.random()
+                    x: BALL_CONTAINER_IMAGE_WIDTH * Math.random(),
+                    y: BALL_CONTAINER_IMAGE_HEIGHT * Math.random()
                 },
                 initialDirection = 2 * Math.PI * Math.random();
 
