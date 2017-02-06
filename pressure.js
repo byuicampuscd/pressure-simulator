@@ -175,31 +175,60 @@ var air = (function () {
         });
     }
 
+    // Change the speed of all the balls
+    function setBallSpeed(newSpeed) {
+
+        // Find the magnitude (speed) of the velocity vector from one ball
+        var oldSpeed = Math.sqrt(Math.pow(balls[0].velocity.x, 2) +
+            Math.pow(balls[0].velocity.y, 2))
+
+        // Modify the speed by multiplying the vector of all balls by the change ratio
+        balls.forEach(function (ball) {
+            ball.velocity.x *= newSpeed / oldSpeed;
+            ball.velocity.y *= newSpeed / oldSpeed;
+        });
+    }
+
     /* END Other ball code */
 
     var pressureTimer, balls;
 
+    // Store a generated set of Ball objects in balls
     function makeBalls() {
         balls = generateBalls(BALL_COUNT);
+    }
+
+    // Start the repeating interval to moveBalls every 30th of a second
+    function startAnimation() {
+        if (balls == undefined)
+            makeBalls();
         pressureTimer = setInterval(function () {
             moveBalls(balls);
         }, 1000 / 30);
     }
 
-    // Store a generated set of balls
-    /* START Getting the simulation going */
-    /* END Getting the simulation going */
-
+    // Stop the repeating interval so the balls stop moving
     function endAnimation() {
         clearInterval(pressureTimer);
     }
 
+    // Methods to access globally
     return {
         makeBalls: makeBalls,
+        setBallSpeed: setBallSpeed,
+        startAnimation: startAnimation,
         endAnimation: endAnimation
     }
 
 }());
 
 air.makeBalls();
+air.startAnimation();
 setTimeout(air.endAnimation, 3000);
+setTimeout(air.startAnimation, 4000);
+setTimeout(function () {
+    air.setBallSpeed(10)
+}, 6000);
+setTimeout(function () {
+    air.setBallSpeed(3)
+}, 8000);
