@@ -7,8 +7,7 @@
  *
  * Global methods available in air object:
  *
- * makeBalls() - Creates the balls representing the air, currently won't display yet until
- *              animation starts
+ * makeBalls() - Creates the balls representing the air
  * setBallSpeed(newSpeed) - Sets the balls' speed to newSpeed px/s (within svg viewBox)
  * startAnimation() - Makes the balls move
  * endAnimation() - Makes the balls stop
@@ -36,7 +35,6 @@ var air = (function () {
     drawingElement.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
     drawingElement.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
 
-
     // Store the outmost svg in SVG.js form
     var draw = SVG('pressureDrawing').svg(document.getElementById("svg_ball_container").outerHTML);
 
@@ -46,9 +44,6 @@ var air = (function () {
     /* START Handling of handle movements using SVG.js */
 
     var handle = draw.select('#handle').first();
-    /*handle.draggable(function(x, y) {
-        return {y: y >= 0 && y < boundary.bottom - 20}
-    });*/
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function () {
         handleHeld = true;
@@ -114,28 +109,36 @@ var air = (function () {
         }
 
         // Create the ball copy in svg using SVG.js
-        this.circle = draw.select('#svg_ball_boundary').first().nested().svg(document.getElementById("svg_ball").outerHTML).size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
+        this.circle = draw.select('#svg_ball_boundary').first()
+            .nested().svg(document.getElementById("svg_ball").outerHTML)
+            .size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
 
+        // Displays it
+        this.circle.cx(this.location.x).cy(this.location.y);
     }
+
     /* Constructor Methods */
+
     // Use the ball's velocity and collision handling to update its location
     Ball.prototype.updateLocation = function () {
 
-            // Update the ball's location info
-            this.location.x += this.velocity.x;
-            this.location.y += this.velocity.y;
+        // Update the ball's location info
+        this.location.x += this.velocity.x;
+        this.location.y += this.velocity.y;
 
-            // Check for and handle collisions
-            this.handleCollisions();
+        // Check for and handle collisions
+        this.handleCollisions();
 
-            // Move the ball to new location
-            this.circle.cx(this.location.x).cy(this.location.y);
+        // Move the ball to new location
+        this.circle.cx(this.location.x).cy(this.location.y);
 
-        }
-        // Check for collisions and modify location and velocity vector accordingly
+    }
+
+    // Check for collisions and modify location and velocity vector accordingly
     Ball.prototype.handleCollisions = function () {
 
-        // If the ball has crossed a boundary, reflect it back over the boundary, and change its direction
+        // If the ball has crossed a boundary, reflect it back over the boundary, 
+        // and change its direction
         if (this.location.x < boundary.left) {
             this.velocity.x = -this.velocity.x;
             this.location.x += 2 * (boundary.left - this.location.x);
