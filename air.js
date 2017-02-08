@@ -18,7 +18,7 @@ var air = (function () {
 
     const BALL_COUNT = 50;
     const BALL_IMAGE_SIZE = 5;
-    const BALL_CONTAINER_IMAGE_WIDTH = 400; // The ratio is maintained below
+    const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below
     const SPEED_MULTIPLIER = 5; // Initial ball speed random between 0 and SPEED_MULTIPLIER
 
     /* END of Desired Conditions */
