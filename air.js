@@ -31,12 +31,13 @@ var air = (function () {
     const BALL_CONTAINER_IMAGE_HEIGHT = BALL_CONTAINER_IMAGE_WIDTH * BALL_CONTAINER_IMAGE_RATIO;
 
     // Container element for the svg tag
-    var drawingElement = document.getElementById('pressureDrawing');
-    drawingElement.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
-    drawingElement.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
+    var drawingContainer = document.getElementById('svg-container-air');
+    drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
+    drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
 
     // Store the outmost svg in SVG.js form
-    var draw = SVG('pressureDrawing').svg(document.getElementById("svg_ball_container").outerHTML);
+    var draw = SVG('svg-container-air')
+        .svg(document.getElementById("svg_ball_container").outerHTML);
 
     /* END Misc Setup */
 

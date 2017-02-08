@@ -1,0 +1,16 @@
+/* Layout components */
+
+#svg-container-air {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    border: 3px solid black;
+}
+
+
+/* Svg styles - consider moving inside svg tag */
+
+#front {
+    /* Make the front parts of the ball container unclickable */
+    pointer-events: none;
+}
