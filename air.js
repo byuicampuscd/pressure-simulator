@@ -17,7 +17,7 @@ var air = (function () {
     /* START Desired Conditions - These can be modified */
 
     const BALL_COUNT = 50;
-    const BALL_IMAGE_SIZE = 5;
+    const BALL_IMAGE_SIZE = 7;
     const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below
     const SPEED_MULTIPLIER = 5; // Initial ball speed random between 0 and SPEED_MULTIPLIER
 
@@ -84,8 +84,8 @@ var air = (function () {
     // Boundary limitations of the balls, relative to the container element
     var boundary = {
         top: 0, // This is the only one that changes, done in handle moving code
-        right: Number(document.getElementById('ballBoundary').getAttribute('width')),
-        bottom: Number(document.getElementById('ballBoundary').getAttribute('height')),
+        right: Number(document.getElementById('svg_ball_boundary').getAttribute('width')),
+        bottom: Number(document.getElementById('svg_ball_boundary').getAttribute('height')),
         left: 0
     }
 
