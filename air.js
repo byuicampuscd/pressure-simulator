@@ -20,6 +20,7 @@ var air = (function () {
     const BALL_IMAGE_SIZE = 7;
     const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below
     const SPEED_MULTIPLIER = 5; // Initial ball speed random between 0 and SPEED_MULTIPLIER
+    const MAX_VOLUME = 100; // in mL
 
     /* END of Desired Conditions */
 
@@ -42,9 +43,11 @@ var air = (function () {
     /* END Misc Setup */
 
 
-    /* START Handling of handle movements using SVG.js */
+    /* START Handling of handle movements using SVG.js and volume control */
 
     var handle = draw.select('#handle').first();
+    var volumeOutput = document.getElementById("volume")
+        .getElementsByClassName("output-single").item(0);
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function () {
         handleHeld = true;
@@ -55,11 +58,12 @@ var air = (function () {
         if (handleHeld) {
 
             // Calculate the movement within the viewBox
-            var distance = e.movementY * 648.7 / BALL_CONTAINER_IMAGE_HEIGHT;
+            var distance = e.movementY * 648.7 / BALL_CONTAINER_IMAGE_HEIGHT,
+                volumeChange = -distance * MAX_VOLUME / HANDLE_BOTTOM;
 
             // If we're trynig to move the handle within the boundary
             var handlePosition = handle.transform('y');
-            if ((distance < 0 && handlePosition > 0) || (distance > 0 && handlePosition < boundary.bottom - 25)) {
+            if ((distance < 0 && handlePosition > 0) || (distance > 0 && handlePosition < HANDLE_BOTTOM)) {
 
                 // Move the handle
                 handle.transform({
@@ -68,7 +72,11 @@ var air = (function () {
                 });
 
                 // Align the top of the ball boundary
-                boundary.top += distance;
+                boundary.setTop(boundary.top + distance);
+
+                // Change the volume indicator
+                volumeOutput.textContent = round(Number(volumeOutput.textContent) + volumeChange,
+                    2);
             }
         }
     }
@@ -82,12 +90,25 @@ var air = (function () {
     /* START boundary object */
 
     // Boundary limitations of the balls, relative to the container element
-    var boundary = {
+    const boundary = {
         top: 0, // This is the only one that changes, done in handle moving code
         right: Number(document.getElementById('svg_ball_boundary').getAttribute('width')),
         bottom: Number(document.getElementById('svg_ball_boundary').getAttribute('height')),
-        left: 0
+        left: 0,
+
+        setTop: Object.freeze(function (newTop) {
+            this.top = newTop;
+        })
+    };
+
+    function getBoundary() {
+        return Object.freeze(boundary);
     }
+
+
+
+    // Also set the bottom boundary for the handle
+    const HANDLE_BOTTOM = boundary.bottom - 20;
 
     /* END boundary object */
 
@@ -233,7 +254,9 @@ var air = (function () {
         makeBalls: makeBalls,
         setBallSpeed: setBallSpeed,
         startAnimation: startAnimation,
-        endAnimation: endAnimation
+        endAnimation: endAnimation,
+
+        getBoundary: getBoundary
     }
 
 }());
