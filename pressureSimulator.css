@@ -1,9 +1,14 @@
 /* Layout components */
 
+.flex_row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .layout-section {
-    display: inline-block;
     background-color: whitesmoke;
     border: 2px outset;
+    flex: 1 1 auto;
 }
 
 .layout-section-header {
@@ -22,7 +27,8 @@
 }
 
 #svg-container-air {
-    padding: 15px
+    padding: 15px;
+    margin: auto;
 }
 
 

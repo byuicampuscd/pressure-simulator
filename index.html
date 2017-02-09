@@ -9,16 +9,29 @@
 
 <body>
 
-    <div class="layout-section" id="pressure">
-        <h2 class="layout-section-header">Pressure (torr)</h2>
-        <p class="output-single">35.93</p>
+    <div class="flex_row">
+        <div class="layout-section" id="pressure">
+            <h2 class="layout-section-header">Pressure (torr)</h2>
+            <p class="output-single">35.93</p>
+        </div>
+
+        <div class="layout-section" id="volume">
+            <h2 class="layout-section-header">Volume (mL)</h2>
+            <p class="output-single">100.00</p>
+            <!-- Container for SVG.js used in air.js to insert svg for air container, leave empty -->
+            <div id="svg-container-air"></div>
+        </div>
+
+        <div class="layout-section" id="pressure">
+            <h2 class="layout-section-header">Temperature (&deg;C)</h2>
+            <p class="output-single">160.00</p>
+        </div>
     </div>
 
-    <div class="layout-section" id="volume">
-        <h2 class="layout-section-header">Volume (mL)</h2>
-        <p class="output-single">100.00</p>
-        <!-- Container for SVG.js used in air.js to insert svg for air container, leave empty -->
-        <div id="svg-container-air"></div>
+    <div class="flex_row">
+        <div class="layout-section" id="displays">
+            <h2 class="layout-section-header">Displays</h2>
+        </div>
     </div>
 
     <!-- START svg tags -->
