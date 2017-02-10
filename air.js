@@ -101,11 +101,10 @@ var air = (function () {
         })
     };
 
+    // Still need to figure this part out (and why the balls don't quite start right)
     function getBoundary() {
         return Object.freeze(boundary);
     }
-
-
 
     // Also set the bottom boundary for the handle
     const HANDLE_BOTTOM = boundary.bottom - 20;
