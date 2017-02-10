@@ -72,7 +72,8 @@ var air = (function () {
                 });
 
                 // Align the top of the ball boundary
-                boundary.setTop(boundary.top + distance);
+                getBoundary().top += distance;
+                //boundary.setTop(boundary.top + distance);
 
                 // Change the volume indicator
                 volumeOutput.textContent = round(Number(volumeOutput.textContent) + volumeChange,
@@ -94,16 +95,37 @@ var air = (function () {
         top: 0, // This is the only one that changes, done in handle moving code
         right: Number(document.getElementById('svg_ball_boundary').getAttribute('width')),
         bottom: Number(document.getElementById('svg_ball_boundary').getAttribute('height')),
-        left: 0,
-
-        setTop: Object.freeze(function (newTop) {
-            this.top = newTop;
-        })
+        left: 0
     };
 
-    // Still need to figure this part out (and why the balls don't quite start right)
+    // Seemed to figure this part out (but the balls don't quite start right still)
     function getBoundary() {
-        return Object.freeze(boundary);
+
+        return Object.defineProperties({}, {
+            'top': {
+                get: function () {
+                    return boundary.top
+                },
+                set: function (newTop) {
+                    boundary.top = newTop
+                }
+            },
+            'right': {
+                get: function () {
+                    return boundary.right
+                }
+            },
+            'bottom': {
+                get: function () {
+                    return boundary.bottom
+                }
+            },
+            'left': {
+                get: function () {
+                    return boundary.left
+                }
+            }
+        });
     }
 
     // Also set the bottom boundary for the handle
