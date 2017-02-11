@@ -18,74 +18,19 @@ var air = (function () {
 
     const BALL_COUNT = 50;
     const BALL_IMAGE_SIZE = 7;
-    const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below
     const SPEED_MULTIPLIER = 5; // Initial ball speed random between 0 and SPEED_MULTIPLIER
-    const MAX_VOLUME = 100; // in mL
 
     /* END of Desired Conditions */
 
 
     /* START Misc Setup */
 
-    // Calculated sizes from the indicated width above
-    const BALL_CONTAINER_IMAGE_RATIO = 648.7 / 379.2; // ViewBox Height/Width
-    const BALL_CONTAINER_IMAGE_HEIGHT = BALL_CONTAINER_IMAGE_WIDTH * BALL_CONTAINER_IMAGE_RATIO;
-
     // Container element for the svg tag
     var drawingContainer = document.getElementById('svg-container-air');
     drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
     drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
 
-    // Store the outmost svg in SVG.js form
-    var draw = SVG('svg-container-air')
-        .svg(document.getElementById("svg_ball_container").outerHTML);
-
     /* END Misc Setup */
-
-
-    /* START Handling of handle movements using SVG.js and volume control */
-
-    var handle = draw.select('#handle').first();
-    var volumeOutput = document.getElementById("volume")
-        .getElementsByClassName("output-single").item(0);
-    var handleHeld = false; // Flag for mouse events
-    handle.mousedown(function () {
-        handleHeld = true;
-    })
-    document.getElementsByTagName('html').item(0).onmousemove = function (e) {
-
-        // If the user is currently 'holding the handle'
-        if (handleHeld) {
-
-            // Calculate the movement within the viewBox
-            var distance = e.movementY * 648.7 / BALL_CONTAINER_IMAGE_HEIGHT,
-                volumeChange = -distance * MAX_VOLUME / HANDLE_BOTTOM;
-
-            // If we're trynig to move the handle within the boundary
-            var handlePosition = handle.transform('y');
-            if ((distance < 0 && handlePosition > 0) || (distance > 0 && handlePosition < HANDLE_BOTTOM)) {
-
-                // Move the handle
-                handle.transform({
-                    y: distance,
-                    relative: true
-                });
-
-                // Align the top of the ball boundary
-                getBoundary().top += distance;
-                //boundary.setTop(boundary.top + distance);
-
-                // Change the volume indicator
-                volumeOutput.textContent = round(Number(volumeOutput.textContent) + volumeChange,
-                    2);
-            }
-        }
-    }
-    document.getElementsByTagName('html').item(0).onmouseup = function () {
-        handleHeld = false;
-    }
-
-    /* END Handling of handle movements using SVG.js */
 
 
     /* START boundary object */
@@ -127,9 +72,6 @@ var air = (function () {
             }
         });
     }
-
-    // Also set the bottom boundary for the handle
-    const HANDLE_BOTTOM = boundary.bottom - 20;
 
     /* END boundary object */
 
