@@ -43,7 +43,7 @@ var air = (function () {
         left: 0
     };
 
-    // Seemed to figure this part out (but the balls don't quite start right still)
+    // Seemed to figure this part out
     function getBoundary() {
 
         return Object.defineProperties({}, {
@@ -157,8 +157,8 @@ var air = (function () {
         // Use a loop to creae n Balls, with random location and direction, but same speed
         return tempArray.map(function (ele, i) {
             var initialLocation = {
-                    x: BALL_CONTAINER_IMAGE_WIDTH * Math.random(),
-                    y: BALL_CONTAINER_IMAGE_HEIGHT * Math.random()
+                    x: boundary.right * Math.random(),
+                    y: boundary.bottom * Math.random()
                 },
                 initialDirection = 2 * Math.PI * Math.random();
 
