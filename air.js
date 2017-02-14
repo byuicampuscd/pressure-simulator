@@ -21,7 +21,6 @@ var air = (function () {
     const BALL_COUNT_DEFAULT = 50;
     const BALL_SPEED_DEFAULT = 3;
     const BALL_IMAGE_SIZE = 7;
-    const SPEED_MULTIPLIER = 5; // Initial ball speed random between 0 and SPEED_MULTIPLIER
 
     /* END of Desired Conditions */
 
@@ -35,6 +34,8 @@ var air = (function () {
         }
         balls = generateBalls(ballCount, ballInitialSpeed);
     }
+
+    /* START boundary object */
 
     // Boundary limitations of the balls, relative to the container element
     const boundary = {
