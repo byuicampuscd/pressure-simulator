@@ -1,7 +1,15 @@
-var handleController = (function () {
+var controller = (function () {
+
+    /* START Initial setup */
+
+    air.setup(50, 3);
+    //air.generateBalls(50, 3);
+    air.startAnimation();
+
+    /* END Initial setup */
+
 
     /* START Handling of handle movements using SVG.js and volume control */
-    console.log("here");
 
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
@@ -50,4 +58,25 @@ var handleController = (function () {
     }
 
     /* END Handling of handle movements using SVG.js */
+
+    /* Demos */
+
+    var demo = {
+
+        // Air movement demo
+        air: function () {
+            setTimeout(air.endAnimation, 3000);
+            setTimeout(air.startAnimation, 4000);
+            setTimeout(function () {
+                air.setBallSpeed(10)
+            }, 6000);
+            setTimeout(function () {
+                air.setBallSpeed(3)
+            }, 8000);
+        }
+    }
+
+    // Run demos
+    demo.air();
+
 }());

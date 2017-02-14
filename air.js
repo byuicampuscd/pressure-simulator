@@ -7,39 +7,40 @@
  *
  * Global methods available in air object:
  *
- * makeBalls() - Creates the balls representing the air
+ * generateBalls(count, speed) - Creates the balls representing the air
  * setBallSpeed(newSpeed) - Sets the balls' speed to newSpeed px/s (within svg viewBox)
- * startAnimation() - Makes the balls move
+ * startAnimation() - Makes the balls move; if none exist, it creates 50 first
  * endAnimation() - Makes the balls stop
  */
 var air = (function () {
 
+    var pressureTimer, balls;
+
     /* START Desired Conditions - These can be modified */
 
-    const BALL_COUNT = 50;
+    const BALL_COUNT_DEFAULT = 50;
+    const BALL_SPEED_DEFAULT = 3;
     const BALL_IMAGE_SIZE = 7;
     const SPEED_MULTIPLIER = 5; // Initial ball speed random between 0 and SPEED_MULTIPLIER
 
     /* END of Desired Conditions */
 
+    function setup(ballCount, ballInitialSpeed) {
 
-    /* START Misc Setup */
-
-    // Container element for the svg tag
-    var drawingContainer = document.getElementById('svg-container-air');
-    drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
-    drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
-
-    /* END Misc Setup */
-
-
-    /* START boundary object */
+        if (ballCount == undefined) {
+            ballCount = BALL_COUNT_DEFAULT;
+        }
+        if (ballInitialSpeed == undefined) {
+            ballInitialSpeed = BALL_SPEED_DEFAULT;
+        }
+        balls = generateBalls(ballCount, ballInitialSpeed);
+    }
 
     // Boundary limitations of the balls, relative to the container element
     const boundary = {
         top: 0, // This is the only one that changes, done in handle moving code
-        right: Number(document.getElementById('svg_ball_boundary').getAttribute('width')),
-        bottom: Number(document.getElementById('svg_ball_boundary').getAttribute('height')),
+        right: Number(document.querySelector('#svg_ball_boundary').getAttribute('width')),
+        bottom: Number(document.querySelector('#svg_ball_boundary').getAttribute('height')),
         left: 0
     };
 
@@ -78,7 +79,7 @@ var air = (function () {
 
     /* START Ball Prototype */
 
-    /* Constructor Properties */
+    /* Constructor - Properties */
     function Ball(startingLocation, speed, direction) {
 
         // Holds the center coordinates
@@ -102,7 +103,7 @@ var air = (function () {
         this.circle.cx(this.location.x).cy(this.location.y);
     }
 
-    /* Constructor Methods */
+    /* Constructor - Methods */
 
     // Use the ball's velocity and collision handling to update its location
     Ball.prototype.updateLocation = function () {
@@ -147,12 +148,10 @@ var air = (function () {
 
     /* START Other ball code */
 
-    // Will generate n balls according to requirements
-    function generateBalls(n) {
+    // Will generate n balls with same initialSpeed according to requirements
+    function generateBalls(n, initialSpeed) {
 
-        var tempArray = new Array(n).fill(null),
-            // Create a speed variable holding random speed
-            initialSpeed = Math.random() * SPEED_MULTIPLIER;
+        var tempArray = new Array(n).fill(null);
 
         // Use a loop to creae n Balls, with random location and direction, but same speed
         return tempArray.map(function (ele, i) {
@@ -191,17 +190,10 @@ var air = (function () {
 
     /* END Other ball code */
 
-    var pressureTimer, balls;
-
-    // Store a generated set of Ball objects in balls
-    function makeBalls() {
-        balls = generateBalls(BALL_COUNT);
-    }
-
     // Start the repeating interval to moveBalls every 30th of a second
     function startAnimation() {
         if (balls == undefined)
-            makeBalls();
+            generateBalls(BALL_COUNT_DEFAULT, BALL_SPEED_DEFAULT);
         pressureTimer = setInterval(function () {
             moveBalls(balls);
         }, 1000 / 30);
@@ -214,7 +206,9 @@ var air = (function () {
 
     // Methods to access globally
     return {
-        makeBalls: makeBalls,
+        setup: setup,
+
+        //generateBalls: generateBalls,
         setBallSpeed: setBallSpeed,
         startAnimation: startAnimation,
         endAnimation: endAnimation,
@@ -223,14 +217,3 @@ var air = (function () {
     }
 
 }());
-
-air.makeBalls();
-air.startAnimation();
-setTimeout(air.endAnimation, 3000);
-setTimeout(air.startAnimation, 4000);
-setTimeout(function () {
-    air.setBallSpeed(10)
-}, 6000);
-setTimeout(function () {
-    air.setBallSpeed(3)
-}, 8000);
