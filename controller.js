@@ -38,7 +38,7 @@ var controller = (function () {
         volumeOutput.textContent = Math.round((100 - newValue / handleSlider.max * 100) *
             100) / 100;
     };
-    document.getElementsByTagName('html').item(0).onmousemove = function (e) {
+    document.querySelector('html').onmousemove = function (e) {
 
         // If the user is currently 'holding the handle'
         if (handleHeld) {
@@ -46,7 +46,7 @@ var controller = (function () {
             handleSlider.update();
         }
     }
-    document.getElementsByTagName('html').item(0).onmouseup = function () {
+    document.querySelector('html').onmouseup = function () {
         handleHeld = false;
     }
 
