@@ -9,6 +9,7 @@
     background-color: whitesmoke;
     border: 2px outset;
     flex: 1 1 auto;
+    position: relative;
 }
 
 .layout-section-header {
@@ -28,6 +29,17 @@
 
 #svg-container-air {
     margin: 15px auto;
+}
+
+
+/* Sliders */
+
+.slider-vertical {
+    transform: rotate(90deg);
+    transform-origin: left;
+    position: absolute;
+    left: 25px;
+    width: 150px;
 }
 
 
