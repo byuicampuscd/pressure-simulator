@@ -15,17 +15,34 @@ var controller = (function () {
     // Also set the bottom boundary for the handle
     const HANDLE_BOTTOM = ballBoundary.bottom - 20;
 
+    // Volume Output
     const MAX_VOLUME = 100; // in mL
-
-    var handle = draw.select('#handle').first();
-    var handleSlider = document.querySelector('#volume .slider-vertical');
-    handleSlider.setAttribute('max', HANDLE_BOTTOM);
-    handleSlider.style.width = HANDLE_BOTTOM / 648.7 * BALL_CONTAINER_IMAGE_HEIGHT + "px";
     var volumeOutput = document.querySelector('#volume .output-single');
+
+    // Handle
+    var handle = draw.select('#handle').first();
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function () {
         handleHeld = true;
     })
+    document.querySelector('html').onmousemove = function (e) {
+
+        // If the user is currently 'holding the handle'
+        if (handleHeld) {
+            handleSlider.stepUp(e.movementY / BALL_CONTAINER_IMAGE_HEIGHT *
+                BALL_CONTAINER_VIEWBOX_HEIGHT);
+            handleSlider.update();
+        }
+    }
+    document.querySelector('html').onmouseup = function () {
+        handleHeld = false;
+    }
+
+    // Handle Slider
+    var handleSlider = document.querySelector('#volume .slider-vertical');
+    handleSlider.setAttribute('max', HANDLE_BOTTOM);
+    handleSlider.style.width = HANDLE_BOTTOM / BALL_CONTAINER_VIEWBOX_HEIGHT *
+        BALL_CONTAINER_IMAGE_HEIGHT + "px";
     handleSlider.oninput = function () {
         this.update();
     }
@@ -35,20 +52,9 @@ var controller = (function () {
             y: newValue
         });
         ballBoundary.top = newValue;
-        volumeOutput.textContent = Math.round((100 - newValue / handleSlider.max * 100) *
+        volumeOutput.textContent = Math.round((1 - newValue / handleSlider.max) * MAX_VOLUME *
             100) / 100;
     };
-    document.querySelector('html').onmousemove = function (e) {
-
-        // If the user is currently 'holding the handle'
-        if (handleHeld) {
-            handleSlider.stepUp(e.movementY * 648.7 / BALL_CONTAINER_IMAGE_HEIGHT);
-            handleSlider.update();
-        }
-    }
-    document.querySelector('html').onmouseup = function () {
-        handleHeld = false;
-    }
 
     /* END Handling of handle movements using SVG.js */
 

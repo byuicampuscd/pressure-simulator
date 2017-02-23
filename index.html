@@ -188,6 +188,8 @@
 
         // Calculated sizes from the indicated width above
         var temp = svgBallContainer.getAttribute('viewBox').split(' ');
+        const BALL_CONTAINER_VIEWBOX_HEIGHT = temp[3];
+        const BALL_CONTAINER_VIEWBOX_WIDTH = temp[2];
         const BALL_CONTAINER_IMAGE_RATIO = temp[3] / temp[2]; // ViewBox Height/Width
         const BALL_CONTAINER_IMAGE_HEIGHT = BALL_CONTAINER_IMAGE_WIDTH *
             BALL_CONTAINER_IMAGE_RATIO;
