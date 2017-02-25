@@ -9,7 +9,7 @@ var controller = (function () {
     /* END Initial setup */
 
 
-    /* START Handling of handle movements using SVG.js and volume control */
+    /* START Handling of Volume section */
 
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
@@ -25,18 +25,6 @@ var controller = (function () {
     handle.mousedown(function () {
         handleHeld = true;
     })
-    document.querySelector('html').onmousemove = function (e) {
-
-        // If the user is currently 'holding the handle'
-        if (handleHeld) {
-            handleSlider.stepUp(e.movementY / BALL_CONTAINER_IMAGE_HEIGHT *
-                BALL_CONTAINER_VIEWBOX_HEIGHT);
-            handleSlider.update();
-        }
-    }
-    document.querySelector('html').onmouseup = function () {
-        handleHeld = false;
-    }
 
     // Handle Slider
     var handleSlider = document.querySelector('#volume .slider-vertical');
@@ -56,7 +44,60 @@ var controller = (function () {
             100) / 100;
     };
 
-    /* END Handling of handle movements using SVG.js */
+    /*
+    function SVGMovementSlider(root, max) {
+        var rootContainer, viewbox;
+        var slider = document.createElement('input').setAttribute('type', 'range');
+        if (root instanceof SVG.Doc) {
+            rootContainer = root.parent();
+            viewbox = rootContainer.querySelector('svg').getAttribute('viewBox').split(' ');
+        } else {
+            rootContainer = root;
+            viewbox = root.getAttribute('viewBox').split(' ');
+        }
+        slider.setAttribute('max', max);
+        slider.style.transform = "rotate(90deg)";
+        slider.style.transform - origin: "left";
+        slider.style.position: "absolute";
+        slider.style.left: "10px";
+        slider.style.width: max / viewbox[3] *
+            rootContainer.height + "px";
+        rootContainer.parentNode.insertBefore(slider, rootContainer);
+        slider.oninput = function () {
+            this.update();
+        }
+        slider.update = function () {
+            var newValue = slider.value;
+            handle.transform({
+                y: newValue
+            });
+            ballBoundary.top = newValue;
+            volumeOutput.textContent = Math.round((1 - newValue / handleSlider.max) * max *
+                100) / 100;
+        };
+    }
+    */
+
+    /* END Handling of Volume section */
+
+    /* START Handling of mouse movement and release */
+
+    // For when svg parts are being used
+    document.querySelector('html').onmousemove = function (e) {
+
+        // If the user is currently 'holding the handle'
+        if (handleHeld) {
+            handleSlider.stepUp(e.movementY / BALL_CONTAINER_IMAGE_HEIGHT *
+                BALL_CONTAINER_VIEWBOX_HEIGHT);
+            handleSlider.update();
+        }
+    }
+    document.querySelector('html').onmouseup = function () {
+        handleHeld = false;
+    }
+
+    /* END Handling of mouse movement and release */
+
 
     /* Demos */
 

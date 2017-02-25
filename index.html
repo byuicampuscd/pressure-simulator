@@ -183,6 +183,10 @@
     <script>
         var svgBallContainer = document.getElementById("svg_ball_container");
 
+        // Store the outmost svg in SVG.js form
+        var draw = SVG('svg-container-air')
+            .svg(svgBallContainer.outerHTML);
+
         // These should be better handled, but here to make initial MVC setup work
         const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below
 
@@ -198,10 +202,6 @@
         var drawingContainer = document.getElementById('svg-container-air');
         drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
         drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
-
-        // Store the outmost svg in SVG.js form
-        var draw = SVG('svg-container-air')
-            .svg(svgBallContainer.outerHTML);
 
 
         // Startup methods and updates should be added, view and controller properly set up
