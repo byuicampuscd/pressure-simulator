@@ -20,11 +20,12 @@
         .st18{opacity:.15;fill:url(#front_2_)}
         
         #needle{
-            transform-origin:center;transition:1s
+            transform-origin:center;
+            transition:1s;
         }
         
         svg:active #needle{
-            transform:rotate(135deg)!important
+            transform:rotate(135deg)!important;
         }
     </style>
     <script>
