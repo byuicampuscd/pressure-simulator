@@ -80,6 +80,14 @@ var controller = (function () {
 
     /* END Handling of Volume section */
 
+
+    /* START Handling of Temperature section */
+
+
+
+    /* END Handling of Temperature section */
+
+
     /* START Handling of mouse movement and release */
 
     // For when svg parts are being used

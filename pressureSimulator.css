@@ -46,6 +46,6 @@
 /* Svg styles - consider moving inside svg tag */
 
 #front {
-    /* Make the front parts of the ball container unclickable */
+    /* Make the front parts of the ball container (and other svgs) unclickable */
     pointer-events: none;
 }
