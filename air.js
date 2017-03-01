@@ -96,7 +96,7 @@ var air = (function () {
         }
 
         // Create the ball copy in svg using SVG.js
-        this.circle = draw.select('#svg_ball_boundary').first()
+        this.circle = ballContainerSVGjs.select('#svg_ball_boundary').first()
             .nested().svg(document.getElementById("svg_ball").outerHTML)
             .size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
 

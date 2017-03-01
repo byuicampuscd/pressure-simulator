@@ -13,12 +13,15 @@
         <div class="layout-section" id="pressure">
             <h2 class="layout-section-header">Pressure (torr)</h2>
             <p class="output-single">35.93</p>
+            <!-- Container for SVG.js to insert svg for pressure gauge, leave empty -->
+            <input class="slider-vertical" type="range" value="0" />
+            <div id="svg-container-gauge"></div>
         </div>
 
         <div class="layout-section" id="volume">
             <h2 class="layout-section-header">Volume (mL)</h2>
             <p class="output-single">100.00</p>
-            <!-- Container for SVG.js used in air.js to insert svg for air container, leave empty -->
+            <!-- Container for SVG.js to insert svg for air container, leave empty -->
             <input class="slider-vertical" type="range" value="0" />
             <div id="svg-container-air"></div>
         </div>
@@ -26,6 +29,9 @@
         <div class="layout-section" id="pressure">
             <h2 class="layout-section-header">Temperature (&deg;C)</h2>
             <p class="output-single">160.00</p>
+            <!-- Container for SVG.js to insert svg for air container, leave empty -->
+            <input class="slider-vertical" type="range" value="0" />
+            <div id="svg-container-thermometer"></div>
         </div>
     </div>
 
@@ -511,7 +517,7 @@
         var svgBallContainer = document.getElementById("svg_ball_container");
 
         // Store the outmost svg in SVG.js form
-        var draw = SVG('svg-container-air')
+        var ballContainerSVGjs = SVG('svg-container-air')
             .svg(svgBallContainer.outerHTML);
 
         // These should be better handled, but here to make initial MVC setup work
@@ -533,6 +539,7 @@
 
         // Startup methods and updates should be added, view and controller properly set up
     </script>
+    <script src="modelFactory.js"></script>
     <script src="air.js"></script>
     <script src="controller.js"></script>
 </body>

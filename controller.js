@@ -1,3 +1,7 @@
+/**
+ * Requires:
+ * - air.js - provides object called air, which provides functionality for the air balls in svg
+ */
 var controller = (function () {
 
     /* START Initial setup */
@@ -15,12 +19,8 @@ var controller = (function () {
     // Also set the bottom boundary for the handle
     const HANDLE_BOTTOM = ballBoundary.bottom - 20;
 
-    // Volume Output
-    const MAX_VOLUME = 100; // in mL
-    var volumeOutput = document.querySelector('#volume .output-single');
-
     // Handle
-    var handle = draw.select('#handle').first();
+    var handle = ballContainerSVGjs.select('#handle').first();
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function () {
         handleHeld = true;
@@ -29,6 +29,7 @@ var controller = (function () {
     // Handle Slider
     var handleSlider = document.querySelector('#volume .slider-vertical');
     handleSlider.setAttribute('max', HANDLE_BOTTOM);
+    handleSlider.setAttribute('min', 0);
     handleSlider.style.width = HANDLE_BOTTOM / BALL_CONTAINER_VIEWBOX_HEIGHT *
         BALL_CONTAINER_IMAGE_HEIGHT + "px";
     handleSlider.oninput = function () {
@@ -40,9 +41,17 @@ var controller = (function () {
             y: newValue
         });
         ballBoundary.top = newValue;
-        volumeOutput.textContent = Math.round((1 - newValue / handleSlider.max) * MAX_VOLUME *
-            100) / 100;
+        volumeModel.update();
     };
+
+    // Volume Output
+    const MAX_VOLUME = 100; // in mL
+    var volumeModel = modelFactory.makeMeasureModel(handleSlider, [0, MAX_VOLUME], true);
+    var volumeOutput = document.querySelector('#volume .output-single');
+    volumeOutput.update = function () {
+        this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
+    }
+    volumeModel.addObserver(volumeOutput);
 
     /*
     function SVGMovementSlider(root, max) {
