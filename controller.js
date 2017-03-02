@@ -51,6 +51,7 @@ var controller = (function () {
     volumeOutput.update = function () {
         this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
+
     volumeModel.addObserver(volumeOutput);
 
     /*

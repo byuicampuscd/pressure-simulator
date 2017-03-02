@@ -3,8 +3,7 @@ var modelFactory = (function () {
     // slider must have a min and max explicitly given
     function makeMeasureModel(slider, measureBound, invertConversion) {
 
-        var measurement, measureMin, measureMax,
-            observers = [];
+        var measurement, measureMin, measureMax;
 
         // Set up bounds
         if (Array.isArray(measureBound)) {
@@ -20,13 +19,6 @@ var modelFactory = (function () {
             invertConversion = 0;
         }
 
-        function updateObservers() {
-            // Update the observers
-            observers.forEach(function (observer) {
-                observer.update();
-            });
-        }
-
         /* START Methods to include in object returned */
         function update() {
 
@@ -34,23 +26,20 @@ var modelFactory = (function () {
             measurement = measureMin + Math.abs(invertConversion -
                     (slider.value - slider.min) / (slider.max - slider.min)) *
                 (measureMax - measureMin);
-
-            updateObservers();
-        }
-
-        function addObserver(observer) {
-            observers.push(observer);
         }
 
         function getMeasurement() {
             return measurement;
         }
 
-        return {
+        var objectToReturn = {
             update: update,
-            addObserver: addObserver,
             getMeasurement: getMeasurement
         }
+
+        interfaceApplier.makeObservable(objectToReturn, ["update"]);
+
+        return objectToReturn;
     }
 
     return {
