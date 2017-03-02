@@ -15,7 +15,7 @@
             <p class="output-single">35.93</p>
             <!-- Container for SVG.js to insert svg for pressure gauge, leave empty -->
             <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-gauge"></div>
+            <div id="svg-container-gauge" class="svg-container"></div>
         </div>
 
         <div class="layout-section" id="volume">
@@ -23,15 +23,15 @@
             <p class="output-single">100.00</p>
             <!-- Container for SVG.js to insert svg for air container, leave empty -->
             <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-air"></div>
+            <div id="svg-container-air" class="svg-container"></div>
         </div>
 
-        <div class="layout-section" id="pressure">
+        <div class="layout-section" id="temperature">
             <h2 class="layout-section-header">Temperature (&deg;C)</h2>
             <p class="output-single">160.00</p>
             <!-- Container for SVG.js to insert svg for air container, leave empty -->
             <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-thermometer"></div>
+            <div id="svg-container-thermometer" class="svg-container"></div>
         </div>
     </div>
 
@@ -46,7 +46,7 @@
     <!-- JavaScript will be used to manipulate and place them inside the layout created above -->
     <div style="display:none;">
         <!-- START pressure gauge svg -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380.4 560">
+        <svg id="svg_pressure_gauge" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380.4 560">
             <style>
                 .gauge0{fill:url(#XMLID_3_)}
                 .gauge1{fill:url(#XMLID_6_)}
@@ -384,7 +384,7 @@
 
 
         <!-- START thermometer svg -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194.8 648.7">
+        <svg id="svg_thermometer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194.8 648.7">
             <style>
                 .therm0{fill:#bdccd4}
                 .therm1{fill:url(#XMLID_8_)}
@@ -516,9 +516,13 @@
     <script>
         var svgBallContainer = document.getElementById("svg_ball_container");
 
-        // Store the outmost svg in SVG.js form
+        // Store the outmost svgs in SVG.js form
+        var pressureGaugeSVGjs = SVG('svg-container-gauge')
+            .svg(document.getElementById("svg_pressure_gauge").outerHTML);
         var ballContainerSVGjs = SVG('svg-container-air')
             .svg(svgBallContainer.outerHTML);
+        var thermometerSVGjs = SVG('svg-container-thermometer')
+            .svg(document.getElementById("svg_thermometer").outerHTML);
 
         // These should be better handled, but here to make initial MVC setup work
         const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below

@@ -49,7 +49,7 @@ var controller = (function () {
     // Volume Output
     const MAX_VOLUME = 100; // in mL
     var volumeModel = modelFactory.makeMeasureModel(handleSlider, [0, MAX_VOLUME], true);
-    var volumeOutput = document.querySelector('#volume .output-single');
+    var volumeOutput = document.querySelector('#volume p');
     volumeOutput.update = function () {
         this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
