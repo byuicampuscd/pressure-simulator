@@ -20,6 +20,13 @@ var modelFactory = (function () {
             invertConversion = 0;
         }
 
+        function updateObservers() {
+            // Update the observers
+            observers.forEach(function (observer) {
+                observer.update();
+            });
+        }
+
         /* START Methods to include in object returned */
         function update() {
 
@@ -28,10 +35,7 @@ var modelFactory = (function () {
                     (slider.value - slider.min) / (slider.max - slider.min)) *
                 (measureMax - measureMin);
 
-            // Update the observers
-            observers.forEach(function (observer) {
-                observer.update();
-            });
+            updateObservers();
         }
 
         function addObserver(observer) {
