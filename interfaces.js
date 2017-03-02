@@ -18,7 +18,6 @@ var interfaceApplier = (function () {
 
         valueChangers.forEach(function (methodName) {
             var oldMethod = object[methodName];
-            alert(Object.getOwnPropertyNames(object))
             object[methodName] = function () {
                 oldMethod(arguments);
 

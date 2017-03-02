@@ -36,13 +36,15 @@ var controller = (function () {
         this.update();
     }
     handleSlider.update = function () {
-        var newValue = handleSlider.value;
         handle.transform({
-            y: newValue
+            y: handleSlider.value
         });
-        ballBoundary.top = newValue;
-        volumeModel.update();
     };
+    interfaceApplier.makeObservable(handleSlider, ["update"]);
+
+    ballBoundary.update = function () {
+        ballBoundary.top = handleSlider.value;
+    }
 
     // Volume Output
     const MAX_VOLUME = 100; // in mL
@@ -52,6 +54,8 @@ var controller = (function () {
         this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
 
+    handleSlider.addObserver(ballBoundary);
+    handleSlider.addObserver(volumeModel);
     volumeModel.addObserver(volumeOutput);
 
     /*
