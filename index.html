@@ -11,33 +11,36 @@
 
     <div class="flex_row">
         <div class="layout-section" id="pressure">
-            <h2 class="layout-section-header">Pressure (torr)</h2>
-            <p class="output-single">35.93</p>
-            <!-- Container for SVG.js to insert svg for pressure gauge, leave empty -->
+            <h2>Pressure (torr)</h2>
+            <p>35.93</p>
             <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-gauge" class="svg-container"></div>
+            <div id="svg-container-gauge" class="svg-container">
+                <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
+            </div>
         </div>
 
         <div class="layout-section" id="volume">
-            <h2 class="layout-section-header">Volume (mL)</h2>
-            <p class="output-single">100.00</p>
-            <!-- Container for SVG.js to insert svg for air container, leave empty -->
+            <h2>Volume (mL)</h2>
+            <p>100.00</p>
             <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-air" class="svg-container"></div>
+            <div id="svg-container-air" class="svg-container">
+                <!-- Container for SVG.js to insert svg for the air container, leave empty -->
+            </div>
         </div>
 
         <div class="layout-section" id="temperature">
-            <h2 class="layout-section-header">Temperature (&deg;C)</h2>
-            <p class="output-single">160.00</p>
-            <!-- Container for SVG.js to insert svg for air container, leave empty -->
+            <h2>Temperature (&deg;C)</h2>
+            <p>160.00</p>
             <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-thermometer" class="svg-container"></div>
+            <div id="svg-container-thermometer" class="svg-container">
+                <!-- Container for SVG.js to insert svg for the thermometer, leave empty -->
+            </div>
         </div>
     </div>
 
     <div class="flex_row">
         <div class="layout-section" id="displays">
-            <h2 class="layout-section-header">Displays</h2>
+            <h2>Displays</h2>
         </div>
     </div>
 
@@ -77,7 +80,7 @@
                 }
             </style>
             <script>
-                window.onload = function() { document.querySelector("&apos;#needle&apos;").style = &quot;transform:rotate(-135deg)&quot;; }
+                window.onload = function() { document.querySelector("#needle").style = "transform:rotate(-135deg)"; }
             </script>
             <g id="back">
                 <linearGradient id="XMLID_3_" gradientUnits="userSpaceOnUse" x1="149.874" y1="434.344" x2="230.545" y2="434.344" gradientTransform="translate(0 65.305)">
@@ -514,7 +517,58 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.4.0/svg.js"></script>
     <script>
-        var svgBallContainer = document.getElementById("svg_ball_container");
+        var asdf;
+
+        var svgInfo = {
+            pressureGauge: {
+                svgID: "svg_pressure_gauge",
+                divID: "svg-container-gauge",
+                image: {
+                    width: 250
+                }
+            },
+            ballContainer: {
+                svgID: "svg_ball_container",
+                divID: "svg-container-air",
+                image: {
+                    width: 250
+                }
+            },
+            thermometer: {
+                svgID: "svg_thermometer",
+                divID: "svg-container-thermometer",
+                image: {
+                    width: 100
+                }
+            }
+        };
+
+
+        for (var item in svgInfo) {
+            svgInfo[item].element = document.getElementById(svgInfo[item].svgID);
+        }
+
+        var pressureGaugeSVGjs = SVG(svgInfo.pressureGauge.divID)
+            .svg(svgInfo.pressureGauge.element.outerHTML);
+        var ballContainerSVGjs = SVG(svgInfo.ballContainer.divID)
+            .svg(svgInfo.ballContainer.element.outerHTML);
+        var thermometerSVGjs = SVG(svgInfo.thermometer.divID)
+            .svg(svgInfo.thermometer.element.outerHTML);
+
+        for (var item in svgInfo) {
+            var dimensions = svgInfo[item].element.getAttribute('viewBox').split(' ');
+            svgInfo[item].viewbox = {};
+            svgInfo[item].viewbox.height = dimensions[3];
+            svgInfo[item].viewbox.width = dimensions[2];
+            svgInfo[item].viewbox.ratio = dimensions[3] / dimensions[2];
+            svgInfo[item].image.height = svgInfo[item].image.width * svgInfo[item].viewbox.ratio;
+
+            var container = document.getElementById(svgInfo[item].divID);
+            container.style.width = svgInfo[item].image.width + "px";
+            container.style.height = svgInfo[item].image.height + "px";
+        }
+
+        /*var svgBallContainer = document.getElementById("svg_ball_container");
 
         // Store the outmost svgs in SVG.js form
         var pressureGaugeSVGjs = SVG('svg-container-gauge')
@@ -540,6 +594,7 @@
         drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
         drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
 
+*/
 
         // Startup methods and updates should be added, view and controller properly set up
     </script>

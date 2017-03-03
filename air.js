@@ -26,10 +26,10 @@ var air = (function () {
 
     function setup(ballCount, ballInitialSpeed) {
 
-        if (ballCount == undefined) {
+        if (ballCount === undefined) {
             ballCount = BALL_COUNT_DEFAULT;
         }
-        if (ballInitialSpeed == undefined) {
+        if (ballInitialSpeed === undefined) {
             ballInitialSpeed = BALL_SPEED_DEFAULT;
         }
         balls = generateBalls(ballCount, ballInitialSpeed);
@@ -84,6 +84,7 @@ var air = (function () {
     function Ball(startingLocation, speed, direction) {
 
         // Holds the center coordinates
+        // No error check since the Ball constructor is contained in a closure
         this.location = {
             x: startingLocation.x,
             y: startingLocation.y
@@ -101,7 +102,7 @@ var air = (function () {
             .size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
 
         // Displays it
-        this.circle.cx(this.location.x).cy(this.location.y);
+        this.updateLocation();
     }
 
     /* Constructor - Methods */
@@ -179,8 +180,8 @@ var air = (function () {
     function setBallSpeed(newSpeed) {
 
         // Find the magnitude (speed) of the velocity vector from one ball
-        var oldSpeed = Math.sqrt(Math.pow(balls[0].velocity.x, 2) +
-            Math.pow(balls[0].velocity.y, 2))
+        var v = balls[0].velocity;
+        var oldSpeed = Math.sqrt(v.x * v.x + v.y * v.y);
 
         // Modify the speed by multiplying the vector of all balls by the change ratio
         balls.forEach(function (ball) {
@@ -193,8 +194,9 @@ var air = (function () {
 
     // Start the repeating interval to moveBalls every 30th of a second
     function startAnimation() {
-        if (balls == undefined)
+        if (balls === undefined) {
             generateBalls(BALL_COUNT_DEFAULT, BALL_SPEED_DEFAULT);
+        }
         pressureTimer = setInterval(function () {
             moveBalls(balls);
         }, 1000 / 30);

@@ -30,8 +30,8 @@ var controller = (function () {
     var handleSlider = document.querySelector('#volume .slider-vertical');
     handleSlider.setAttribute('max', HANDLE_BOTTOM);
     handleSlider.setAttribute('min', 0);
-    handleSlider.style.width = HANDLE_BOTTOM / BALL_CONTAINER_VIEWBOX_HEIGHT *
-        BALL_CONTAINER_IMAGE_HEIGHT + "px";
+    handleSlider.style.width = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
+        svgInfo.ballContainer.image.height + "px";
     handleSlider.oninput = function () {
         this.update();
     }
@@ -109,8 +109,8 @@ var controller = (function () {
 
         // If the user is currently 'holding the handle'
         if (handleHeld) {
-            handleSlider.stepUp(e.movementY / BALL_CONTAINER_IMAGE_HEIGHT *
-                BALL_CONTAINER_VIEWBOX_HEIGHT);
+            handleSlider.stepUp(e.movementY / svgInfo.ballContainer.image.height *
+                svgInfo.ballContainer.viewbox.height);
             handleSlider.update();
         }
     }
