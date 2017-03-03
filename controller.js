@@ -42,7 +42,7 @@ var controller = (function () {
     };
     interfaceApplier.makeObservable(handleSlider, ["update"]);
 
-    ballBoundary.update = function () {
+    ballBoundary.notify = function () {
         ballBoundary.top = handleSlider.value;
     }
 
@@ -50,12 +50,12 @@ var controller = (function () {
     const MAX_VOLUME = 100; // in mL
     var volumeModel = modelFactory.makeMeasureModel(handleSlider, [0, MAX_VOLUME], true);
     var volumeOutput = document.querySelector('#volume p');
-    volumeOutput.update = function () {
+    volumeOutput.notify = function () {
         this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
 
     handleSlider.addObserver(ballBoundary);
-    handleSlider.addObserver(volumeModel);
+    handleSlider.addObserver(volumeModel, "update");
     volumeModel.addObserver(volumeOutput);
 
     /*

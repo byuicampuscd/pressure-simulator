@@ -5,15 +5,21 @@ var interfaceApplier = (function () {
 
         var observers = [];
 
-        var updateObservers = function () {
-            // Update the observers
+        var notifyObservers = function () {
+            // Notify the observers
             observers.forEach(function (observer) {
-                observer.update();
+                observer.object[observer.methodToCall].apply(observer.object, observer.sender());
             });
         }
 
-        object.addObserver = function (observer) {
-            observers.push(observer);
+        object.addObserver = function (observer, methodToCall, sender) {
+            observers.push({
+                object: observer,
+                methodToCall: methodToCall || "notify",
+                sender: sender || function () {
+                    return undefined
+                }
+            });
         }
 
         valueChangers.forEach(function (methodName) {
@@ -21,7 +27,7 @@ var interfaceApplier = (function () {
             object[methodName] = function () {
                 oldMethod(arguments);
 
-                updateObservers();
+                notifyObservers();
             }
         });
 

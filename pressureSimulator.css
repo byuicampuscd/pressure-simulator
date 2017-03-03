@@ -42,6 +42,10 @@
     width: 150px;
 }
 
+#pressure input[type="range"] {
+    visibility: hidden;
+}
+
 
 /* Svg styles - consider moving inside svg tag */
 
