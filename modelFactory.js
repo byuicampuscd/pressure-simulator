@@ -1,9 +1,8 @@
 var modelFactory = (function () {
-
     // slider must have a min and max explicitly given
     function makeMeasureModel(slider, measureBound, invertConversion) {
 
-        var measurement, measureMin, measureMax;
+        var measurement, measureMin, measureMax, measureRange;
 
         // Set up bounds
         if (Array.isArray(measureBound)) {
@@ -13,6 +12,8 @@ var modelFactory = (function () {
             measureMin = 0;
             measureMax = measureBound;
         }
+
+        measureRange = (measureMax - measureMin);
 
         // Make sure invertConversion is a 0 or 1
         if (invertConversion === undefined) {
@@ -28,16 +29,37 @@ var modelFactory = (function () {
                 (measureMax - measureMin);
         }
 
+        function setMeasurementByPercentage(value) {
+
+            alert(value)
+                // If meant to be of the from 100% (or just 100), should come in as string, convert to decimal
+            if (typeof value === "string") {
+                value = value.trim();
+                if (value.charAt(value.length - 1) === "%") {
+                    value = value.substring(0, value.length - 1);
+                }
+                value = Number(value) / 100;
+            }
+            // If not number at this point, remove
+            if (typeof value !== "number") {
+                return;
+            }
+            if (0 <= value && value <= 1) {
+                measurement = measureMin + value * measureRange;
+            }
+        }
+
         function getMeasurement() {
             return measurement;
         }
 
         var objectToReturn = {
             update: update,
-            getMeasurement: getMeasurement
+            getMeasurement: getMeasurement,
+            setMeasurementByPercentage: setMeasurementByPercentage
         }
 
-        interfaceApplier.makeObservable(objectToReturn, ["update"]);
+        interfaceApplier.makeObservable(objectToReturn, ["update", "setMeasurementByPercentage"]);
 
         return objectToReturn;
     }

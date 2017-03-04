@@ -7,7 +7,9 @@ var interfaceApplier = (function () {
 
         var notifyObservers = function () {
             // Notify the observers
-            observers.forEach(function (observer) {
+            observers.forEach(function (observer, i) {
+                /*if (Array.isArray(observer.sender()))
+                    alert(typeof observer.sender()[0])*/
                 observer.object[observer.methodToCall].apply(observer.object, observer.sender());
             });
         }

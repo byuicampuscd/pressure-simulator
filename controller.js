@@ -28,23 +28,26 @@ var controller = (function () {
 
     // Handle Slider
     var handleSlider = document.querySelector('#volume .slider-vertical');
-    handleSlider.setAttribute('max', HANDLE_BOTTOM);
+    handleSlider.setAttribute('max', 1);
     handleSlider.setAttribute('min', 0);
     handleSlider.style.width = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
         svgInfo.ballContainer.image.height + "px";
+    handleSlider.setAttribute('step', 1 / Number(handleSlider.style.width.slice(0, -2)));
     handleSlider.oninput = function () {
         this.update();
     }
     handleSlider.update = function () {
         handle.transform({
-            y: handleSlider.value
+            y: HANDLE_BOTTOM * handleSlider.value
         });
     };
     interfaceApplier.makeObservable(handleSlider, ["update"]);
 
     ballBoundary.notify = function () {
-        ballBoundary.top = handleSlider.value;
+        ballBoundary.top = HANDLE_BOTTOM * handleSlider.value;
     }
+
+
 
     // Volume Output
     const MAX_VOLUME = 100; // in mL
@@ -55,7 +58,9 @@ var controller = (function () {
     }
 
     handleSlider.addObserver(ballBoundary);
-    handleSlider.addObserver(volumeModel, "update");
+    handleSlider.addObserver(volumeModel, "setMeasurementByPercentage", function () {
+        return [handleSlider.value];
+    });
     volumeModel.addObserver(volumeOutput);
 
     /*
@@ -109,8 +114,7 @@ var controller = (function () {
 
         // If the user is currently 'holding the handle'
         if (handleHeld) {
-            handleSlider.stepUp(e.movementY / svgInfo.ballContainer.image.height *
-                svgInfo.ballContainer.viewbox.height);
+            handleSlider.stepUp(e.movementY);
             handleSlider.update();
         }
     }
