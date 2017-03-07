@@ -8,8 +8,6 @@ var interfaceApplier = (function () {
         var notifyObservers = function () {
             // Notify the observers
             observers.forEach(function (observer, i) {
-                /*if (Array.isArray(observer.sender()))
-                    alert(typeof observer.sender()[0])*/
                 observer.object[observer.methodToCall].apply(observer.object, observer.sender());
             });
         }
@@ -27,7 +25,7 @@ var interfaceApplier = (function () {
         valueChangers.forEach(function (methodName) {
             var oldMethod = object[methodName];
             object[methodName] = function () {
-                oldMethod(arguments);
+                oldMethod.apply(object, arguments);
 
                 notifyObservers();
             }

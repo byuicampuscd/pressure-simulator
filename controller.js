@@ -59,7 +59,7 @@ var controller = (function () {
 
     handleSlider.addObserver(ballBoundary);
     handleSlider.addObserver(volumeModel, "setMeasurementByPercentage", function () {
-        return [handleSlider.value];
+        return [1 - handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);
 

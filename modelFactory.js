@@ -29,16 +29,18 @@ var modelFactory = (function () {
                 (measureMax - measureMin);
         }
 
+        // Must be a decimal percentage, or else contain a percent sign
         function setMeasurementByPercentage(value) {
 
-            alert(value)
-                // If meant to be of the from 100% (or just 100), should come in as string, convert to decimal
+            // If meant to be of the from 100%, should come in as string with the '%' char, convert to decimal
             if (typeof value === "string") {
                 value = value.trim();
                 if (value.charAt(value.length - 1) === "%") {
                     value = value.substring(0, value.length - 1);
+                    value = Number(value) / 100;
+                } else {
+                    value = Number(value);
                 }
-                value = Number(value) / 100;
             }
             // If not number at this point, remove
             if (typeof value !== "number") {
