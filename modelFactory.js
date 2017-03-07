@@ -1,6 +1,6 @@
 var modelFactory = (function () {
-    // slider must have a min and max explicitly given
-    function makeMeasureModel(slider, measureBound, invertConversion) {
+
+    function makeMeasureModel(measureBound) {
 
         var measurement, measureMin, measureMax, measureRange;
 
@@ -15,19 +15,7 @@ var modelFactory = (function () {
 
         measureRange = (measureMax - measureMin);
 
-        // Make sure invertConversion is a 0 or 1
-        if (invertConversion === undefined) {
-            invertConversion = 0;
-        }
-
         /* START Methods to include in object returned */
-        function update() {
-
-            // Convert slider's value to and update measurement value
-            measurement = measureMin + Math.abs(invertConversion -
-                    (slider.value - slider.min) / (slider.max - slider.min)) *
-                (measureMax - measureMin);
-        }
 
         // Must be a decimal percentage, or else contain a percent sign
         function setMeasurementByPercentage(value) {
@@ -56,12 +44,11 @@ var modelFactory = (function () {
         }
 
         var objectToReturn = {
-            update: update,
             getMeasurement: getMeasurement,
             setMeasurementByPercentage: setMeasurementByPercentage
         }
 
-        interfaceApplier.makeObservable(objectToReturn, ["update", "setMeasurementByPercentage"]);
+        interfaceApplier.makeObservable(objectToReturn, ["setMeasurementByPercentage"]);
 
         return objectToReturn;
     }

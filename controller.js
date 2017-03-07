@@ -52,7 +52,7 @@ var controller = (function () {
 
 
     // Volume Output
-    var volumeModel = modelFactory.makeMeasureModel(handleSlider, [0, MAX_VOLUME], true);
+    var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME]);
     var volumeOutput = document.querySelector('#volume p');
     volumeOutput.notify = function () {
         this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
@@ -132,7 +132,7 @@ var controller = (function () {
 
 
     // Temperature Output
-    var temperatureModel = modelFactory.makeMeasureModel(barSlider, TEMPERATURE_BOUNDS, true);
+    var temperatureModel = modelFactory.makeMeasureModel(TEMPERATURE_BOUNDS);
     var temperatureOutput = document.querySelector('#temperature p');
     temperatureOutput.notify = function () {
         this.textContent = Math.round(temperatureModel.getMeasurement() * 100) / 100;
