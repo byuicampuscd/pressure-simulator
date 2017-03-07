@@ -102,7 +102,47 @@ var controller = (function () {
 
     /* START Handling of Temperature section */
 
+    const TEMPERATURE_BOUNDS = [0, 600];
 
+    // Temperature bar
+    var bar = thermometerSVGjs.select('#bar').first();
+    var barHeld = false; // Flag for mouse events
+    bar.mousedown(function () {
+        barHeld = true;
+    })
+
+    // Bar Slider
+    var barSlider = document.querySelector('#temperature .slider-vertical');
+    barSlider.setAttribute('max', 1);
+    barSlider.setAttribute('min', 0);
+    barSlider.style.width = bar.height() / svgInfo.thermometer.viewbox.height *
+        svgInfo.thermometer.image.height + "px";
+    barSlider.setAttribute('step', 1 / Number(barSlider.style.width.slice(0, -2)));
+    barSlider.oninput = function () {
+        this.update();
+    }
+    barSlider.update = function () {
+        bar.transform({
+            scaleY: 1 - Number(barSlider.value),
+            cy: bar.y() + bar.height()
+        });
+    };
+    interfaceApplier.makeObservable(barSlider, ["update"]);
+
+
+    // Temperature Output
+    const MAX_TEMPERATURE = 600; // in degrees
+    var temperatureModel = modelFactory.makeMeasureModel(barSlider, [0, MAX_TEMPERATURE], true);
+    var temperatureOutput = document.querySelector('#temperature p');
+    temperatureOutput.notify = function () {
+        this.textContent = Math.round(temperatureModel.getMeasurement() * 100) / 100;
+    }
+
+    barSlider.addObserver(ballBoundary);
+    barSlider.addObserver(temperatureModel, "setMeasurementByPercentage", function () {
+        return [1 - barSlider.value];
+    });
+    temperatureModel.addObserver(temperatureOutput);
 
     /* END Handling of Temperature section */
 
@@ -117,9 +157,15 @@ var controller = (function () {
             handleSlider.stepUp(e.movementY);
             handleSlider.update();
         }
+        // If the user is currently 'holding the temperature bar'
+        if (barHeld) {
+            barSlider.stepUp(e.movementY);
+            barSlider.update();
+        }
     }
     document.querySelector('html').onmouseup = function () {
         handleHeld = false;
+        barHeld = false;
     }
 
     /* END Handling of mouse movement and release */
