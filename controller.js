@@ -15,6 +15,8 @@ var controller = (function () {
 
     /* START Handling of Volume section */
 
+    const MAX_VOLUME = 100; // in mL
+
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
     const HANDLE_BOTTOM = ballBoundary.bottom - 20;
@@ -32,7 +34,7 @@ var controller = (function () {
     handleSlider.setAttribute('min', 0);
     handleSlider.style.width = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
         svgInfo.ballContainer.image.height + "px";
-    handleSlider.setAttribute('step', 1 / Number(handleSlider.style.width.slice(0, -2)));
+    handleSlider.setAttribute('step', 1 / (MAX_VOLUME * 100));
     handleSlider.oninput = function () {
         this.update();
     }
@@ -50,7 +52,6 @@ var controller = (function () {
 
 
     // Volume Output
-    const MAX_VOLUME = 100; // in mL
     var volumeModel = modelFactory.makeMeasureModel(handleSlider, [0, MAX_VOLUME], true);
     var volumeOutput = document.querySelector('#volume p');
     volumeOutput.notify = function () {
@@ -102,7 +103,7 @@ var controller = (function () {
 
     /* START Handling of Temperature section */
 
-    const TEMPERATURE_BOUNDS = [0, 600];
+    const TEMPERATURE_BOUNDS = [0, 600]; // in degrees Celsius
 
     // Temperature bar
     var bar = thermometerSVGjs.select('#bar').first();
@@ -117,7 +118,7 @@ var controller = (function () {
     barSlider.setAttribute('min', 0);
     barSlider.style.width = bar.height() / svgInfo.thermometer.viewbox.height *
         svgInfo.thermometer.image.height + "px";
-    barSlider.setAttribute('step', 1 / Number(barSlider.style.width.slice(0, -2)));
+    barSlider.setAttribute('step', 1 / (TEMPERATURE_BOUNDS[1] * 100));
     barSlider.oninput = function () {
         this.update();
     }
@@ -131,14 +132,12 @@ var controller = (function () {
 
 
     // Temperature Output
-    const MAX_TEMPERATURE = 600; // in degrees
-    var temperatureModel = modelFactory.makeMeasureModel(barSlider, [0, MAX_TEMPERATURE], true);
+    var temperatureModel = modelFactory.makeMeasureModel(barSlider, TEMPERATURE_BOUNDS, true);
     var temperatureOutput = document.querySelector('#temperature p');
     temperatureOutput.notify = function () {
         this.textContent = Math.round(temperatureModel.getMeasurement() * 100) / 100;
     }
 
-    barSlider.addObserver(ballBoundary);
     barSlider.addObserver(temperatureModel, "setMeasurementByPercentage", function () {
         return [1 - barSlider.value];
     });
@@ -154,12 +153,13 @@ var controller = (function () {
 
         // If the user is currently 'holding the handle'
         if (handleHeld) {
-            handleSlider.stepUp(e.movementY);
+            handleSlider.stepUp(e.movementY / Number(handleSlider.style.width.slice(0, -2)) * MAX_VOLUME * 100);
             handleSlider.update();
         }
         // If the user is currently 'holding the temperature bar'
         if (barHeld) {
-            barSlider.stepUp(e.movementY);
+            barSlider.stepUp(e.movementY / Number(barSlider.style.width.slice(0, -2)) *
+                TEMPERATURE_BOUNDS[1] * 100);
             barSlider.update();
         }
     }
