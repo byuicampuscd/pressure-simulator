@@ -16,6 +16,7 @@ var controller = (function () {
     /* START Handling of Volume section */
 
     const MAX_VOLUME = 100; // in mL
+    var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME], 2);
 
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
@@ -34,7 +35,8 @@ var controller = (function () {
     handleSlider.setAttribute('min', 0);
     handleSlider.style.width = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
         svgInfo.ballContainer.image.height + "px";
-    handleSlider.setAttribute('step', 1 / (MAX_VOLUME * 100));
+    handleSlider.setAttribute('step', 1 /
+        (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
     handleSlider.oninput = function () {
         this.update();
     }
@@ -52,7 +54,6 @@ var controller = (function () {
 
 
     // Volume Output
-    var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME]);
     var volumeOutput = document.querySelector('#volume p');
     volumeOutput.notify = function () {
         this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
@@ -104,6 +105,7 @@ var controller = (function () {
     /* START Handling of Temperature section */
 
     const TEMPERATURE_BOUNDS = [0, 600]; // in degrees Celsius
+    var temperatureModel = modelFactory.makeMeasureModel(TEMPERATURE_BOUNDS, 2);
 
     // Temperature bar
     var bar = thermometerSVGjs.select('#bar').first();
@@ -118,7 +120,8 @@ var controller = (function () {
     barSlider.setAttribute('min', 0);
     barSlider.style.width = bar.height() / svgInfo.thermometer.viewbox.height *
         svgInfo.thermometer.image.height + "px";
-    barSlider.setAttribute('step', 1 / (TEMPERATURE_BOUNDS[1] * 100));
+    barSlider.setAttribute('step', 1 /
+        (temperatureModel.getBounds()[1] * Math.pow(10, temperatureModel.getPrecision())));
     barSlider.oninput = function () {
         this.update();
     }
@@ -132,7 +135,6 @@ var controller = (function () {
 
 
     // Temperature Output
-    var temperatureModel = modelFactory.makeMeasureModel(TEMPERATURE_BOUNDS);
     var temperatureOutput = document.querySelector('#temperature p');
     temperatureOutput.notify = function () {
         this.textContent = Math.round(temperatureModel.getMeasurement() * 100) / 100;
@@ -151,17 +153,23 @@ var controller = (function () {
     // For when svg parts are being used
     document.querySelector('html').onmousemove = function (e) {
 
-        // If the user is currently 'holding the handle'
+        var slider, model;
+
+        // What the user is currently 'holding'
         if (handleHeld) {
-            handleSlider.stepUp(e.movementY / Number(handleSlider.style.width.slice(0, -2)) * MAX_VOLUME * 100);
-            handleSlider.update();
+            slider = handleSlider;
+            model = volumeModel;
+        } else if (barHeld) {
+            slider = barSlider;
+            model = temperatureModel;
+        } else {
+            return;
         }
-        // If the user is currently 'holding the temperature bar'
-        if (barHeld) {
-            barSlider.stepUp(e.movementY / Number(barSlider.style.width.slice(0, -2)) *
-                TEMPERATURE_BOUNDS[1] * 100);
-            barSlider.update();
-        }
+
+        // If something is being held, update the slider
+        slider.stepUp(e.movementY / Number(slider.style.width.slice(0, -2)) *
+            (model.getBounds()[1] * Math.pow(10, model.getPrecision())));
+        slider.update();
     }
     document.querySelector('html').onmouseup = function () {
         handleHeld = false;

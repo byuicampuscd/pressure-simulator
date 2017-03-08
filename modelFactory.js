@@ -1,6 +1,7 @@
 var modelFactory = (function () {
 
-    function makeMeasureModel(measureBound) {
+    // It should be noted that the precision is only used as desired for final output
+    function makeMeasureModel(measureBound, precision) {
 
         var measurement, measureMin, measureMax, measureRange;
 
@@ -43,8 +44,18 @@ var modelFactory = (function () {
             return measurement;
         }
 
+        function getBounds() {
+            return [measureMin, measureMax];
+        }
+
+        function getPrecision() {
+            return precision;
+        }
+
         var objectToReturn = {
             getMeasurement: getMeasurement,
+            getBounds: getBounds,
+            getPrecision: getPrecision,
             setMeasurementByPercentage: setMeasurementByPercentage
         }
 
