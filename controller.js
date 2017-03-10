@@ -6,6 +6,7 @@ var controller = (function () {
 
     /* START Initial setup */
 
+    const CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
     air.setup(50, 3);
     //air.generateBalls(50, 3);
     air.startAnimation();
@@ -33,22 +34,24 @@ var controller = (function () {
     var handleSlider = document.querySelector('#volume .slider-vertical');
     handleSlider.setAttribute('max', 1);
     handleSlider.setAttribute('min', 0);
-    handleSlider.style.width = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
-        svgInfo.ballContainer.image.height + "px";
     handleSlider.setAttribute('step', 1 /
         (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
+    var handleLength = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
+        svgInfo.ballContainer.image.height;
+    handleSlider.style.width = handleLength + 10 + "px";
+    handleSlider.style.top = handleLength - 5 + "px";
     handleSlider.oninput = function () {
         this.update();
     }
     handleSlider.update = function () {
         handle.transform({
-            y: HANDLE_BOTTOM * handleSlider.value
+            y: HANDLE_BOTTOM * (1 - handleSlider.value)
         });
     };
     interfaceApplier.makeObservable(handleSlider, ["update"]);
 
     ballBoundary.notify = function () {
-        ballBoundary.top = HANDLE_BOTTOM * handleSlider.value;
+        ballBoundary.top = HANDLE_BOTTOM * (1 - handleSlider.value);
     }
 
 
@@ -61,9 +64,14 @@ var controller = (function () {
 
     handleSlider.addObserver(ballBoundary);
     handleSlider.addObserver(volumeModel, "setMeasurementByPercentage", function () {
-        return [1 - handleSlider.value];
+        return [handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);
+
+
+    // Initial values
+    handleSlider.value = 1 - CLOSE_TO_ZERO;
+    handleSlider.update();
 
     /*
     function SVGMovementSlider(root, max) {
@@ -118,16 +126,20 @@ var controller = (function () {
     var barSlider = document.querySelector('#temperature .slider-vertical');
     barSlider.setAttribute('max', 1);
     barSlider.setAttribute('min', 0);
-    barSlider.style.width = bar.height() / svgInfo.thermometer.viewbox.height *
-        svgInfo.thermometer.image.height + "px";
     barSlider.setAttribute('step', 1 /
         (temperatureModel.getBounds()[1] * Math.pow(10, temperatureModel.getPrecision())));
+    var barLength = bar.height() / svgInfo.thermometer.viewbox.height *
+        svgInfo.thermometer.image.height;
+    var barTop = bar.y() / svgInfo.thermometer.viewbox.height *
+        svgInfo.thermometer.image.height;
+    barSlider.style.width = barLength + 10 + "px";
+    barSlider.style.top = barTop + barLength - 5 + "px";
     barSlider.oninput = function () {
         this.update();
     }
     barSlider.update = function () {
         bar.transform({
-            scaleY: 1 - Number(barSlider.value),
+            scaleY: Number(barSlider.value) + CLOSE_TO_ZERO,
             cy: bar.y() + bar.height()
         });
     };
@@ -141,9 +153,14 @@ var controller = (function () {
     }
 
     barSlider.addObserver(temperatureModel, "setMeasurementByPercentage", function () {
-        return [1 - barSlider.value];
+        return [barSlider.value];
     });
     temperatureModel.addObserver(temperatureOutput);
+
+
+    // Initial values
+    barSlider.value = 160 / 600;
+    barSlider.update();
 
     /* END Handling of Temperature section */
 
@@ -167,7 +184,7 @@ var controller = (function () {
         }
 
         // If something is being held, update the slider
-        slider.stepUp(e.movementY / Number(slider.style.width.slice(0, -2)) *
+        slider.stepUp(-e.movementY / Number(slider.style.width.slice(0, -2)) *
             (model.getBounds()[1] * Math.pow(10, model.getPrecision())));
         slider.update();
     }
