@@ -40,6 +40,10 @@ var modelFactory = (function () {
             }
         }
 
+        function setMeasurement(newMeasurement) {
+            measurement = newMeasurement;
+        }
+
         function getMeasurement() {
             return measurement;
         }
@@ -56,7 +60,10 @@ var modelFactory = (function () {
             getMeasurement: getMeasurement,
             getBounds: getBounds,
             getPrecision: getPrecision,
-            setMeasurementByPercentage: setMeasurementByPercentage
+            setMeasurement: setMeasurement
+        }
+        if (measureMax || measureMax === 0) {
+            objectToReturn.setMeasurementByPercentage = setMeasurementByPercentage;
         }
 
         interfaceApplier.makeObservable(objectToReturn, ["setMeasurementByPercentage"]);

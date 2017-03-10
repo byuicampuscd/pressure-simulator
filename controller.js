@@ -14,6 +14,21 @@ var controller = (function () {
     /* END Initial setup */
 
 
+    /* START Handling of Pressure section */
+
+    var pressureModel = modelFactory.makeMeasureModel(null, 2);
+    pressureModel.n = 5;
+    pressureModel.R = 8.314;
+    pressureModel.update = function () {
+        var V = volumeModel.getMeasurement / 1000000,
+            T = temperatureModel.getMeasurement + 273.15;
+
+        this.setMeasurement(this.n * this.R * T / V);
+    }
+
+    /* END Handling of Pressure section */
+
+
     /* START Handling of Volume section */
 
     const MAX_VOLUME = 100; // in mL
