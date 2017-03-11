@@ -66,7 +66,7 @@ var modelFactory = (function () {
             objectToReturn.setMeasurementByPercentage = setMeasurementByPercentage;
         }
 
-        interfaceApplier.makeObservable(objectToReturn, ["setMeasurementByPercentage"]);
+        interfaceApplier.makeObservable(objectToReturn, ["setMeasurement", "setMeasurementByPercentage"]);
 
         return objectToReturn;
     }

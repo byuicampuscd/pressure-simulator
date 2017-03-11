@@ -20,11 +20,36 @@ var controller = (function () {
     pressureModel.n = 5;
     pressureModel.R = 8.314;
     pressureModel.update = function () {
-        var V = volumeModel.getMeasurement / 1000000,
-            T = temperatureModel.getMeasurement + 273.15;
+        var V = volumeModel.getMeasurement() / 1000000;
+        var T = temperatureModel.getMeasurement() + 273.15;
 
         this.setMeasurement(this.n * this.R * T / V);
     }
+
+    // Needle
+    var needle = pressureGaugeSVGjs.select('#needle').first();
+    pressureModel.addObserver({
+        update: function () {
+            var rotation = pressureModel.getMeasurement() / 600 * 270 - 135;
+            /*if (Number.isNaN(rotation)) {
+                return;
+            }*/
+            if (rotation > 150) {
+                rotation = 150;
+            }
+            console.log(rotation)
+            needle.transform({
+                rotation: rotation
+            });
+        }
+    }, "update");
+
+    // Pressure Output
+    var pressureOutput = document.querySelector('#pressure p');
+    pressureOutput.notify = function () {
+        this.textContent = Math.round(pressureModel.getMeasurement() * 100) / 100;
+    }
+    pressureModel.addObserver(pressureOutput);
 
     /* END Handling of Pressure section */
 
@@ -82,11 +107,6 @@ var controller = (function () {
         return [handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);
-
-
-    // Initial values
-    handleSlider.value = 1 - CLOSE_TO_ZERO;
-    handleSlider.update();
 
     /*
     function SVGMovementSlider(root, max) {
@@ -178,6 +198,12 @@ var controller = (function () {
     barSlider.update();
 
     /* END Handling of Temperature section */
+
+    // Initial values
+    volumeModel.addObserver(pressureModel, "update");
+    temperatureModel.addObserver(pressureModel, "update");
+    handleSlider.value = 1 - CLOSE_TO_ZERO;
+    handleSlider.update();
 
 
     /* START Handling of mouse movement and release */
