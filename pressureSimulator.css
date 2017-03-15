@@ -58,3 +58,10 @@
     /* Make the front parts of the ball container (and other svgs) unclickable */
     pointer-events: none;
 }
+
+
+/* Table */
+
+table {
+    display: flex;
+}
