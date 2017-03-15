@@ -156,6 +156,9 @@ var controller = (function () {
     bar.mousedown(function () {
         barHeld = true;
     })
+    thermometerSVGjs.select('#connector_piece').first().mousedown(function () {
+        barHeld = true;
+    })
 
     // Bar Slider
     var barSlider = document.querySelector('#temperature .slider-vertical');
