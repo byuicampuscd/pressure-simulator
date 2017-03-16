@@ -13,7 +13,7 @@
 .layout-section {
     background-color: whitesmoke;
     border: 2px outset;
-    flex: 1 1 auto;
+    flex: auto;
     position: relative;
 }
 
@@ -63,5 +63,10 @@
 /* Table */
 
 table {
-    display: flex;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    border: 1px groove;
 }
