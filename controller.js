@@ -7,8 +7,9 @@ var controller = (function () {
     /* START Initial setup */
 
     const CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
+    var measurements = []; // Array to hold arrays of measurements recorded
+
     air.setup(50, 3);
-    //air.generateBalls(50, 3);
     air.startAnimation();
 
     /* END Initial setup */
@@ -211,6 +212,24 @@ var controller = (function () {
 
     /* START Handling of mouse movement and release */
 
+    function recordMeasurements() {
+        var measurementTable = document.querySelector('table'),
+            newTableRow = document.createElement("tr"),
+            measureModels = [pressureModel, volumeModel, temperatureModel],
+            newMeasurementArray = [];
+
+        measureModels.forEach(function (model) {
+            newMeasurementArray.push(model.getMeasurement());
+
+            newTableCell = document.createElement("td");
+            newTableCell.textContent = (Math.round(model.getMeasurement() * 100) / 100).toFixed(2);
+            newTableRow.appendChild(newTableCell);
+        });
+
+        measurements.push(newMeasurementArray);
+        measurementTable.appendChild(newTableRow);
+    }
+
     // For when svg parts are being used
     document.querySelector('html').onmousemove = function (e) {
 
@@ -233,8 +252,13 @@ var controller = (function () {
         slider.update();
     }
     document.querySelector('html').onmouseup = function () {
-        handleHeld = false;
-        barHeld = false;
+
+        if (handleHeld || barHeld) {
+            handleHeld = false;
+            barHeld = false;
+
+            recordMeasurements();
+        }
     }
 
     /* END Handling of mouse movement and release */

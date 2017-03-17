@@ -63,10 +63,16 @@
 /* Table */
 
 table {
-    width: 100%;
+    width: 95%;
+    margin: auto auto 10px;
     border-collapse: collapse;
 }
 
 th {
+    border: 1px groove;
+}
+
+td {
+    background-color: white;
     border: 1px groove;
 }
