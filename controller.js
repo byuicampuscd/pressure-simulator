@@ -228,6 +228,29 @@ var controller = (function () {
 
         measurements.push(newMeasurementArray);
         measurementTable.appendChild(newTableRow);
+        updatePlot(1, 0);
+    }
+
+    function updatePlot(measurementIndexX, measurementIndexY) {
+        var plotSelector = '#dataplot',
+            pointsToPlot = [];
+
+        measurements.forEach(function (anArray) {
+            // Better with map or reduce?
+            pointsToPlot.push([anArray[measurementIndexX], anArray[measurementIndexY]]);
+        })
+
+        functionPlot({
+            target: '#dataplot',
+            title: "Graph of the Data",
+            width: 300,
+            height: 300,
+            data: [{
+                points: pointsToPlot,
+                fnType: 'points',
+                graphType: 'scatter'
+            }]
+        });
     }
 
     // For when svg parts are being used
