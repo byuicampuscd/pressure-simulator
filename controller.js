@@ -22,7 +22,7 @@ var controller = (function () {
     pressureModel.R = 8.314;
     pressureModel.update = function () {
         var V = volumeModel.getMeasurement() / 1000000;
-        var T = temperatureModel.getMeasurement() + 273.15;
+        var T = 20 + 273.15;
 
         this.setMeasurement(this.n * this.R * T / V);
     }
@@ -145,67 +145,8 @@ var controller = (function () {
 
     /* END Handling of Volume section */
 
-
-    /* START Handling of Temperature section */
-
-    const TEMPERATURE_BOUNDS = [0, 600]; // in degrees Celsius
-    var temperatureModel = modelFactory.makeMeasureModel(TEMPERATURE_BOUNDS, 2);
-
-    // Temperature bar
-    var bar = thermometerSVGjs.select('#bar').first();
-    var barHeld = false; // Flag for mouse events
-    bar.mousedown(function () {
-        barHeld = true;
-    })
-    thermometerSVGjs.select('#connector_piece').first().mousedown(function () {
-        barHeld = true;
-    })
-
-    // Bar Slider
-    var barSlider = document.querySelector('#temperature .slider-vertical');
-    barSlider.setAttribute('max', 1);
-    barSlider.setAttribute('min', 0);
-    barSlider.setAttribute('step', 1 /
-        (temperatureModel.getBounds()[1] * Math.pow(10, temperatureModel.getPrecision())));
-    var barLength = bar.height() / svgInfo.thermometer.viewbox.height *
-        svgInfo.thermometer.image.height;
-    var barTop = bar.y() / svgInfo.thermometer.viewbox.height *
-        svgInfo.thermometer.image.height;
-    barSlider.style.width = barLength + 10 + "px";
-    barSlider.style.top = barTop + barLength - 5 + "px";
-    barSlider.oninput = function () {
-        this.update();
-    }
-    barSlider.update = function () {
-        bar.transform({
-            scaleY: Number(barSlider.value) + CLOSE_TO_ZERO,
-            cy: bar.y() + bar.height()
-        });
-    };
-    interfaceApplier.makeObservable(barSlider, ["update"]);
-
-
-    // Temperature Output
-    var temperatureOutput = document.querySelector('#temperature p');
-    temperatureOutput.notify = function () {
-        this.textContent = Math.round(temperatureModel.getMeasurement() * 100) / 100;
-    }
-
-    barSlider.addObserver(temperatureModel, "setMeasurementByPercentage", function () {
-        return [barSlider.value];
-    });
-    temperatureModel.addObserver(temperatureOutput);
-
-
-    // Initial values
-    barSlider.value = 160 / 600;
-    barSlider.update();
-
-    /* END Handling of Temperature section */
-
     // Initial values
     volumeModel.addObserver(pressureModel, "update");
-    temperatureModel.addObserver(pressureModel, "update");
     handleSlider.value = 1 - CLOSE_TO_ZERO;
     handleSlider.update();
 
@@ -215,7 +156,7 @@ var controller = (function () {
     function recordMeasurements() {
         var measurementTable = document.querySelector('table'),
             newTableRow = document.createElement("tr"),
-            measureModels = [pressureModel, volumeModel, temperatureModel],
+            measureModels = [pressureModel, volumeModel],
             newMeasurementArray = [];
 
         measureModels.forEach(function (model) {
@@ -262,9 +203,6 @@ var controller = (function () {
         if (handleHeld) {
             slider = handleSlider;
             model = volumeModel;
-        } else if (barHeld) {
-            slider = barSlider;
-            model = temperatureModel;
         } else {
             return;
         }
@@ -276,9 +214,8 @@ var controller = (function () {
     }
     document.querySelector('html').onmouseup = function () {
 
-        if (handleHeld || barHeld) {
+        if (handleHeld) {
             handleHeld = false;
-            barHeld = false;
 
             recordMeasurements();
         }

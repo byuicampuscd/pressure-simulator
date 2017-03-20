@@ -29,17 +29,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="layout-section" id="temperature">
-            <h2>Temperature (&deg;C)</h2>
-            <p>160.00</p>
-            <div class="positioningContext">
-                <input class="slider-vertical" type="range" value="0" />
-                <div id="svg-container-thermometer" class="svg-container">
-                    <!-- Container for SVG.js to insert svg for the thermometer, leave empty -->
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="flex_row">
@@ -48,7 +37,6 @@
             <table>
                 <th>Pressure</th>
                 <th>Volume</th>
-                <th>Temperature</th>
             </table>
         </div>
 
@@ -492,130 +480,6 @@
             <circle id="particle" class="ball0" cx="235" cy="235" r="235"/>
         </svg>
         <!-- End ball svg -->
-
-
-        <!-- START thermometer svg -->
-        <svg id="svg_thermometer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194.8 648.7">
-            <style>
-                .therm0{fill:#bdccd4}
-                .therm1{fill:url(#XMLID_8_)}
-                .therm2{fill:url(#XMLID_11_)}
-                .therm3{fill:#0a0a0a}
-                .therm4{font-family:"&apos;MyriadPro-Regular&apos;"}
-                .therm5{font-size:24px}
-                .therm6{fill:url(#bar_1_)}
-                .therm7{fill:none}
-                .therm8{fill:url(#XMLID_12_)}
-                .therm9{fill:url(#XMLID_13_)}
-
-                #bar{
-                    transform-origin:bottom
-                }
-
-            </style>
-            <g id="back">
-                <path id="XMLID_3_" class="therm0" d="M0 559.4v.4c0 49.1 39.8 88.9 88.9 88.9h1.5c48.4-.8 87.4-40.3 87.4-88.9v-.4c.1-4-.2-8.1-.9-12.1-.7-5.2-1.9-10.3-3.5-15.2-5.9-18.2-17.7-33.7-32.9-44.6-8.1-7.3-12.9-17.8-12.9-28.8V41.1c0-6.1-.7-12-3.2-17.7C118.6 9.7 105.1.2 89.3 0h-.5C72.8 0 59 9.6 53 23.3 50.6 29 49.7 34.9 49.7 41v417.6c0 11-4.5 21.5-12.6 28.8-15.2 10.9-26.8 26.5-32.7 44.6-1.6 4.9-2.8 10-3.5 15.2-.7 4.1-1 8.1-.9 12.2z"/>
-                <radialGradient id="XMLID_8_" cx="88.922" cy="559.208" r="87.875" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" stop-color="#fff"/>
-                    <stop offset=".88" stop-color="#fff" stop-opacity=".12"/>
-                    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-                </radialGradient>
-                <circle id="XMLID_1_" class="therm1" cx="88.9" cy="559.2" r="87.9"/>
-                <radialGradient id="XMLID_11_" cx="89.045" cy="266" r="30.443" gradientTransform="matrix(1.0722 0 0 10.1502 -6.802 -2390.944)" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" stop-color="#fff"/>
-                    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-                </radialGradient>
-                <path id="XMLID_2_" class="therm2" d="M49.7 0h78v618h-78z"/>
-                <g id="XMLID_217_">
-                    <text id="XMLID_157_" transform="translate(152.522 465.667)" class="therm3 therm4 therm5">
-                        0˚
-                    </text>
-                    <text id="XMLID_154_" transform="translate(146.845 397.185)" class="therm3 therm4 therm5">
-                        100˚
-                    </text>
-                    <text id="XMLID_155_" transform="translate(146.845 328.705)" class="therm3 therm4 therm5">
-                        200˚
-                    </text>
-                    <text id="XMLID_156_" transform="translate(146.845 260.223)" class="therm3 therm4 therm5">
-                        300˚
-                    </text>
-                    <text id="XMLID_158_" transform="translate(146.845 191.742)" class="therm3 therm4 therm5">
-                        400˚
-                    </text>
-                    <text id="XMLID_159_" transform="translate(146.845 123.261)" class="therm3 therm4 therm5">
-                        500˚
-                    </text>
-                    <text id="XMLID_160_" transform="translate(146.845 54.78)" class="therm3 therm4 therm5">
-                        600˚
-                    </text>
-                    <g id="XMLID_208_">
-                        <path id="XMLID_209_" class="therm3" d="M125.4 49.7c-4.2 3.3-13.4 5.1-13.4 5.1v-3.2s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_400_" class="therm3" d="M125.4 118.2c-4.2 3.3-13.4 5.1-13.4 5.1v-3.2s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_401_" class="therm3" d="M125.4 186.7c-4.2 3.3-13.4 5.1-13.4 5.1v-3.2s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_257_" class="therm3" d="M125.4 255.2c-4.2 3.3-13.4 5.1-13.4 5.1v-3.2s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_258_" class="therm3" d="M125.4 323.6c-4.2 3.3-13.4 5.1-13.4 5.1v-3.2s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_259_" class="therm3" d="M125.4 392.1c-4.2 3.3-13.4 5.1-13.4 5.1V394s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_260_" class="therm3" d="M125.4 460.6c-4.2 3.3-13.4 5.1-13.4 5.1v-3.2s9.3-1.8 13.4-5.1v3.2z"/>
-                        <path id="XMLID_210_" class="therm3" d="M125.4 61.1c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_211_" class="therm3" d="M125.4 74.6c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_212_" class="therm3" d="M125.4 88.1c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_216_" class="therm3" d="M125.4 101.6c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_264_" class="therm3" d="M125.4 129.5c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_263_" class="therm3" d="M125.4 143c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4V143z"/>
-                        <path id="XMLID_262_" class="therm3" d="M125.4 156.5c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_261_" class="therm3" d="M125.4 170c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4V170z"/>
-                        <path id="XMLID_271_" class="therm3" d="M125.4 198c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4V198z"/>
-                        <path id="XMLID_269_" class="therm3" d="M125.4 211.4c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_268_" class="therm3" d="M125.4 224.9c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_267_" class="therm3" d="M125.4 238.4c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_306_" class="therm3" d="M125.4 266.4c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_305_" class="therm3" d="M125.4 279.9c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_304_" class="therm3" d="M125.4 293.4c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_293_" class="therm3" d="M125.4 306.8c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_312_" class="therm3" d="M125.4 334.8c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_311_" class="therm3" d="M125.4 348.3c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_310_" class="therm3" d="M125.4 361.8c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_309_" class="therm3" d="M125.4 375.3c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_338_" class="therm3" d="M125.4 403.5c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_337_" class="therm3" d="M125.4 417c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4V417z"/>
-                        <path id="XMLID_336_" class="therm3" d="M125.4 430.5c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                        <path id="XMLID_325_" class="therm3" d="M125.4 443.9c-2.3 1.8-6 3.1-9 4v2.2c3-.9 6.7-2.2 9-4v-2.2z"/>
-                    </g>
-                </g>
-            </g>
-            <g id="middle">
-                <linearGradient id="bar_1_" gradientUnits="userSpaceOnUse" x1="75.65" y1="266.708" x2="102.195" y2="266.708">
-                    <stop offset="0" stop-color="#ed373c"/>
-                    <stop offset=".994" stop-color="#ec3239"/>
-                </linearGradient>
-                <path id="bar" class="therm6" d="M75.6 51.9h26.5v411.1H75.6z"/>
-                <path id="connector_piece" class="therm6" d="M75.6 463.0h26.5v29.6H75.6z"/>
-                <radialGradient id="XMLID_12_" cx="73.837" cy="19.417" r="11" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" stop-color="#fff"/>
-                    <stop offset=".109" stop-color="#fff" stop-opacity=".891"/>
-                    <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-                </radialGradient>
-                <circle id="XMLID_4_" class="therm8" cx="73.8" cy="19.4" r="11"/>
-            </g>
-            <g id="front">
-                <radialGradient id="XMLID_13_" cx="71.45" cy="527.808" r="119.219" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" stop-color="#fcd8cb"/>
-                    <stop offset=".016" stop-color="#fac5b8"/>
-                    <stop offset=".056" stop-color="#f69d90"/>
-                    <stop offset=".094" stop-color="#f37e71"/>
-                    <stop offset=".132" stop-color="#f1675a"/>
-                    <stop offset=".167" stop-color="#ef5a4d"/>
-                    <stop offset=".199" stop-color="#ef5548"/>
-                    <stop offset=".223" stop-color="#ef5146"/>
-                    <stop offset=".367" stop-color="#ee3c3c"/>
-                    <stop offset=".528" stop-color="#ed2d35"/>
-                    <stop offset=".717" stop-color="#ed2431"/>
-                    <stop offset="1" stop-color="#ed2130"/>
-                </radialGradient>
-                <path id="XMLID_5_" class="therm9" d="M103.8 483.6c-1-2.6-1.6-5.5-1.6-8.6H75.7c0 3.2-.6 6.1-1.6 8.7-1.8 4.5-5.4 8-9.8 9.7C36.4 503.9 17 531.7 19 563.7c2.2 35.3 31 63.7 66.3 65.5 40.3 2 73.7-30.2 73.7-70.1 0-30-18.8-55.6-45.3-65.6-4.5-1.8-8.2-5.4-9.9-9.9z"/>
-            </g>
-        </svg>
-        <!-- End thermometer svg -->
     </div>
     <!-- END svg tags -->
 
@@ -638,13 +502,6 @@
                 image: {
                     width: 200
                 }
-            },
-            thermometer: {
-                svgID: "svg_thermometer",
-                divID: "svg-container-thermometer",
-                image: {
-                    width: 100
-                }
             }
         };
 
@@ -657,8 +514,6 @@
             .svg(svgInfo.pressureGauge.element.outerHTML);
         var ballContainerSVGjs = SVG(svgInfo.ballContainer.divID)
             .svg(svgInfo.ballContainer.element.outerHTML);
-        var thermometerSVGjs = SVG(svgInfo.thermometer.divID)
-            .svg(svgInfo.thermometer.element.outerHTML);
 
         for (var item in svgInfo) {
             var dimensions = svgInfo[item].element.getAttribute('viewBox').split(' ');
