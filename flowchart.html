@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/knsv/mermaid/7.0.0/dist/mermaid.css">
+    <script src="https://cdn.rawgit.com/knsv/mermaid/7.0.0/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+</head>
+<body>
+    <!-- Link to edit: http://knsv.github.io/mermaid/live_editor/#/edit/Z3JhcGggVEIKICAgICAgICAgICAgc2xpZGVyKChTbGlkZXIpKSAtLT4gaW1vZGVsW0luZGVwZW5kZW50IE1vZGVsXQogICAgICAgICAgICBoYW5kbGUoKEhhbmRsZSkpIC0tPiBzbGlkZXIKICAgICAgICAgICAgc2xpZGVyIC0tPiBoYW5kbGUKICAgICAgICAgICAgaW1vZGVsIC0tPiBvdXRwdXQoU2luZ2xlIE1vZGVsIE91dHB1dCkKICAgICAgICAgICAgc2xpZGVyIC0tIEZvciBCYWxsIFNsaWRlciAtLT4gYmJbQmFsbCBCb3VuZGFyeV0KICAgICAgICAgICAgaW1vZGVsIC0tPiBkbW9kZWxbRGVwZW5kZW50IE1vZGVsXQogICAgICAgICAgICBkbW9kZWwgLS0-IHNwaW5kbGUoU3BpbmRsZSkKICAgICAgICAgICAgZG1vZGVsIC0tPiBvdXRwdXQKICAgICAgICAgICAgaGFuZGxlIC0tIFdoZW4gbGlmdCAtLT4gcm1bInJlY29yZE1lYXN1cmVtZW50cygpIDxici8-IHVwZGF0ZVBsb3QoKSJd 
+    -->
+    <pre class="mermaid">
+        graph TB
+            slider((Slider)) --> imodel[Independent Model]
+            handle((Handle)) --> slider
+            slider --> handle
+            imodel --> output(Single Model Output)
+            slider -- For Ball Slider --> bb[Ball Boundary]
+            imodel --> dmodel[Dependent Model]
+            dmodel --> spindle(Spindle)
+            dmodel --> output
+            handle -- When lift --> rm["recordMeasurements() <br/> updatePlot()"]
+    </pre>
+</body>
+</html>
