@@ -18,13 +18,11 @@ var controller = (function () {
     /* START Handling of Pressure section */
 
     var pressureModel = modelFactory.makeMeasureModel(null, 2);
-    pressureModel.n = 5;
-    pressureModel.R = 8.314;
+    pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
-        var V = volumeModel.getMeasurement() / 1000000;
-        var T = 20 + 273.15;
+        var V = volumeModel.getMeasurement(); // in cc's
 
-        this.setMeasurement(this.n * this.R * T / V);
+        this.setMeasurement(this.c / V); // in kPa
     }
 
     // Needle
