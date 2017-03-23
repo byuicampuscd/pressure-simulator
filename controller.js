@@ -17,6 +17,7 @@ var controller = (function () {
 
     /* START Handling of Pressure section */
 
+    const HIGHEST_MARK = 450; // Decided based off issue #6 in GitHub
     var pressureModel = modelFactory.makeMeasureModel(null, 2);
     pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
@@ -29,7 +30,7 @@ var controller = (function () {
     var needle = pressureGaugeSVGjs.select('#needle').first();
     pressureModel.addObserver({
         update: function () {
-            var rotation = pressureModel.getMeasurement() / 600 * 270 - 135;
+            var rotation = pressureModel.getMeasurement() / HIGHEST_MARK * 270 - 135;
             /*if (Number.isNaN(rotation)) {
                 return;
             }*/
@@ -55,7 +56,7 @@ var controller = (function () {
 
     /* START Handling of Volume section */
 
-    const MAX_VOLUME = 100; // in mL
+    const MAX_VOLUME = 20; // in cc
     var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME], 2);
 
     var ballBoundary = air.getBoundary();
@@ -145,7 +146,7 @@ var controller = (function () {
 
     // Initial values
     volumeModel.addObserver(pressureModel, "update");
-    handleSlider.value = 1 - CLOSE_TO_ZERO;
+    handleSlider.value = 0.5;
     handleSlider.update();
 
 
