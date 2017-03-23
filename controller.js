@@ -148,6 +148,8 @@ var controller = (function () {
     volumeModel.addObserver(pressureModel, "update");
     handleSlider.value = 0.5;
     handleSlider.update();
+    
+    updatePlot();
 
 
     /* START Handling of mouse movement and release */
@@ -155,7 +157,7 @@ var controller = (function () {
     function recordMeasurements() {
         var measurementTable = document.querySelector('table'),
             newTableRow = document.createElement("tr"),
-            measureModels = [pressureModel, volumeModel],
+            measureModels = [volumeModel, pressureModel],
             newMeasurementArray = [];
 
         measureModels.forEach(function (model) {
@@ -171,22 +173,25 @@ var controller = (function () {
         updatePlot(1, 0);
     }
 
-    function updatePlot(measurementIndexX, measurementIndexY) {
-        var plotSelector = '#dataplot',
-            pointsToPlot = [];
-
-        measurements.forEach(function (anArray) {
-            // Better with map or reduce?
-            pointsToPlot.push([anArray[measurementIndexX], anArray[measurementIndexY]]);
-        })
+    function updatePlot() {
+        var plotSelector = '#dataplot';
 
         functionPlot({
             target: '#dataplot',
             title: "Graph of the Data",
-            width: 300,
-            height: 300,
+            width: 400,
+            height: 400,
+            xAxis: {
+                label: 'Volume (cc)',
+                domain: [0,22]
+            },
+            yAxis: {
+                label: 'Pressure (kPa)',
+                domain: [0, 550]
+            },
+            grid: true,
             data: [{
-                points: pointsToPlot,
+                points: measurements,
                 fnType: 'points',
                 graphType: 'scatter'
             }]
