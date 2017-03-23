@@ -70,6 +70,7 @@ table {
 
 th {
     border: 1px groove;
+    width: 50%;
 }
 
 td {
