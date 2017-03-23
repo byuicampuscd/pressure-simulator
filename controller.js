@@ -57,7 +57,7 @@ var controller = (function () {
     /* START Handling of Volume section */
 
     const MAX_VOLUME = 20; // in cc
-    var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME], 2);
+    var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME], 1);
 
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
