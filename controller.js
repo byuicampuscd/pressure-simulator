@@ -83,6 +83,7 @@ var controller = (function () {
     handleSlider.oninput = function () {
         this.update();
     }
+    handleSlider.onchange = recordMeasurements;
     handleSlider.update = function () {
         handle.transform({
             y: HANDLE_BOTTOM * (1 - handleSlider.value)
