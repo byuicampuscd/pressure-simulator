@@ -8,7 +8,7 @@
     <script>mermaid.initialize({startOnLoad:true});</script>
 </head>
 <body>
-    <!-- Link to edit: http://knsv.github.io/mermaid/live_editor/#/edit/Z3JhcGggVEIKICAgICAgICAgICAgc2xpZGVyKChTbGlkZXIpKSAtLT4gaW1vZGVsW0luZGVwZW5kZW50IE1vZGVsXQogICAgICAgICAgICBoYW5kbGUoKEhhbmRsZSkpIC0tPiBzbGlkZXIKICAgICAgICAgICAgc2xpZGVyIC0tPiBoYW5kbGUKICAgICAgICAgICAgaW1vZGVsIC0tPiBvdXRwdXQoU2luZ2xlIE1vZGVsIE91dHB1dCkKICAgICAgICAgICAgc2xpZGVyIC0tIEZvciBCYWxsIFNsaWRlciAtLT4gYmJbQmFsbCBCb3VuZGFyeV0KICAgICAgICAgICAgaW1vZGVsIC0tPiBkbW9kZWxbRGVwZW5kZW50IE1vZGVsXQogICAgICAgICAgICBkbW9kZWwgLS0-IHNwaW5kbGUoU3BpbmRsZSkKICAgICAgICAgICAgZG1vZGVsIC0tPiBvdXRwdXQKICAgICAgICAgICAgaGFuZGxlIC0tIFdoZW4gbGlmdCAtLT4gcm1bInJlY29yZE1lYXN1cmVtZW50cygpIDxici8-IHVwZGF0ZVBsb3QoKSJd 
+    <!-- Link to edit: http://knsv.github.io/mermaid/live_editor/#/edit/Z3JhcGggVEIKICAgICAgICAgICAgc2xpZGVyKChTbGlkZXIpKSAtLT4gaW1vZGVsW0luZGVwZW5kZW50IE1vZGVsXQogICAgICAgICAgICBoYW5kbGUoKEhhbmRsZSkpIC0tPiBzbGlkZXIKICAgICAgICAgICAgc2xpZGVyIC0tPiBoYW5kbGUKICAgICAgICAgICAgaW1vZGVsIC0tPiBvdXRwdXQoU2luZ2xlIE1vZGVsIE91dHB1dCkKICAgICAgICAgICAgc2xpZGVyIC0tIEZvciBWb2x1bWUgU2xpZGVyIC0tPiBiYltCYWxsIEJvdW5kYXJ5XQogICAgICAgICAgICBpbW9kZWwgLS0-IGRtb2RlbFtEZXBlbmRlbnQgTW9kZWxdCiAgICAgICAgICAgIGRtb2RlbCAtLT4gc3BpbmRsZShTcGluZGxlKQogICAgICAgICAgICBkbW9kZWwgLS0-IG91dHB1dAogICAgICAgICAgICBoYW5kbGUgLS0gV2hlbiBsaWZ0IC0tPiBybVsicmVjb3JkTWVhc3VyZW1lbnRzKCkgPGJyLz4gdXBkYXRlUGxvdCgpIl0KICAgICAgICAgICAgc2xpZGVyIC0tIFdoZW4gbGlmdCBvciA8YnIvPnByZXNzIGFycm93IGtleSAtLT4gcm1bInJlY29yZE1lYXN1cmVtZW50cygpIDxici8-IHVwZGF0ZVBsb3QoKSJd 
     -->
     <pre class="mermaid">
         graph TB
@@ -16,11 +16,12 @@
             handle((Handle)) --> slider
             slider --> handle
             imodel --> output(Single Model Output)
-            slider -- For Ball Slider --> bb[Ball Boundary]
+            slider -- For Volume Slider --> bb[Ball Boundary]
             imodel --> dmodel[Dependent Model]
             dmodel --> spindle(Spindle)
             dmodel --> output
             handle -- When lift --> rm["recordMeasurements() <br/> updatePlot()"]
+            slider -- When lift or <br/>press arrow key --> rm["recordMeasurements() <br/> updatePlot()"]
     </pre>
 </body>
 </html>
