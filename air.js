@@ -19,8 +19,8 @@ var air = (function () {
     /* START Desired Conditions - These can be modified */
 
     const BALL_COUNT_DEFAULT = 50;
-    const BALL_SPEED_DEFAULT = 3;
-    const BALL_IMAGE_SIZE = 7;
+    const BALL_SPEED_DEFAULT = 10;
+    const BALL_IMAGE_SIZE = 15;
 
     /* END of Desired Conditions */
 
@@ -97,7 +97,7 @@ var air = (function () {
         }
 
         // Create the ball copy in svg using SVG.js
-        this.circle = ballContainerSVGjs.select('#svg_ball_boundary').first()
+        this.circle = syringeSVGjs.select('#svg_ball_boundary').first()
             .nested().svg(document.getElementById("svg_ball").outerHTML)
             .size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
 
@@ -165,8 +165,6 @@ var air = (function () {
 
             return new Ball(initialLocation, initialSpeed, initialDirection);
         })
-
-
     }
 
     // Update the boundary and move the balls one frame

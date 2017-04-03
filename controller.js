@@ -9,7 +9,7 @@ var controller = (function () {
     const CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
     var measurements = []; // Array to hold arrays of measurements recorded
 
-    air.setup(50, 3);
+    air.setup(50, 10);
     air.startAnimation();
 
     /* END Initial setup */
@@ -27,7 +27,7 @@ var controller = (function () {
     }
 
     // Needle
-    var needle = pressureGaugeSVGjs.select('#needle').first();
+    var needle = gaugeSVGjs.select('#needle').first();
     pressureModel.addObserver({
         update: function () {
             var rotation = pressureModel.getMeasurement() / HIGHEST_MARK * 270 - 135;
@@ -64,7 +64,7 @@ var controller = (function () {
     const HANDLE_BOTTOM = ballBoundary.bottom - 20;
 
     // Handle
-    var handle = ballContainerSVGjs.select('#handle').first();
+    var handle = syringeSVGjs.select('#handle').first();
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function () {
         handleHeld = true;
@@ -76,8 +76,8 @@ var controller = (function () {
     handleSlider.setAttribute('min', 0);
     handleSlider.setAttribute('step', 1 /
         (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
-    var handleLength = HANDLE_BOTTOM / svgInfo.ballContainer.viewbox.height *
-        svgInfo.ballContainer.image.height;
+    var handleLength = HANDLE_BOTTOM / svgInfo.syringe.viewbox.height *
+        svgInfo.syringe.image.height;
     handleSlider.style.width = handleLength + 10 + "px";
     handleSlider.style.top = handleLength - 5 + "px";
     handleSlider.oninput = function () {
@@ -149,7 +149,7 @@ var controller = (function () {
     volumeModel.addObserver(pressureModel, "update");
     handleSlider.value = 0.5;
     handleSlider.update();
-    
+
     updatePlot();
 
 
@@ -184,7 +184,7 @@ var controller = (function () {
             height: 400,
             xAxis: {
                 label: 'Volume (cc)',
-                domain: [0,22]
+                domain: [0, 22]
             },
             yAxis: {
                 label: 'Pressure (kPa)',
