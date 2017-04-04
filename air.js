@@ -39,10 +39,10 @@ var air = (function () {
 
     // Boundary limitations of the balls, relative to the container element
     const boundary = {
-        top: 0, // This is the only one that changes, done in handle moving code
+        top: 0,
         right: Number(document.querySelector('#svg_ball_boundary').getAttribute('width')),
         bottom: Number(document.querySelector('#svg_ball_boundary').getAttribute('height')),
-        left: 0
+        left: 0 // This is the only one that changes, done in handle moving code
     };
 
     // Seemed to figure this part out
@@ -52,9 +52,6 @@ var air = (function () {
             'top': {
                 get: function () {
                     return boundary.top
-                },
-                set: function (newTop) {
-                    boundary.top = newTop
                 }
             },
             'right': {
@@ -70,6 +67,9 @@ var air = (function () {
             'left': {
                 get: function () {
                     return boundary.left
+                },
+                set: function (newLeft) {
+                    boundary.left = newLeft
                 }
             }
         });

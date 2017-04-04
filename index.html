@@ -10,22 +10,20 @@
 <body>
 
     <div class="flex_row">
-        <div class="layout-section" id="pressure">
-            <h2>Pressure (kPa)</h2>
-            <p>35.93</p>
-            <input class="slider-vertical" type="range" value="0" />
-            <div id="svg-container-gauge" class="svg-container">
-                <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
-            </div>
-        </div>
-
-        <div class="layout-section" id="volume">
-            <h2>Volume (cc)</h2>
-            <p>100.00</p>
-            <div class="positioningContext">
-                <input class="slider-vertical" type="range" value="0" />
-                <div id="svg-container-air" class="svg-container">
-                    <!-- Container for SVG.js to insert svg for the air container, leave empty -->
+        <div class="layout-section" id="main">
+            <div class="positioner">
+                <div id="pressure">
+                    <h2>Pressure (kPa)</h2>
+                    <p>35.93</p>
+                    <input class="slider-vertical" type="range" value="0" />
+                </div>
+                <div id="volume">
+                    <h2>Volume (cc)</h2>
+                    <p>100.00</p>
+                    <input class="slider-vertical" type="range" value="0" />
+                </div>
+                <div id="svg-container-pressure" class="svg-container">
+                    <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
                 </div>
             </div>
         </div>
@@ -118,8 +116,6 @@
             </linearGradient>
             <path id="XMLID_49_" class="pressure1" d="M1976.4 514.9c25.6-15.1 45.1-93.1 45.1-186.9 0-93.9-19.5-171.8-45.1-186.9-3.4 2-6.7 5.1-9.9 9.3v-11.9H941h-.1c29.9.1 54.1 84.9 54.1 189.6s-24.2 189.5-54.1 189.6h1025.6v-11.9c3.2 3.9 6.5 7.1 9.9 9.1z"/>
         </g>
-        <svg id="svg_ball_boundary" xmlns="http://www.w3.org/2000/svg" x="1011.5" y="138.4" width="974" height="379.2">
-        </svg>
         <g id="handle">
             <radialGradient id="XMLID_281_" cx="2074.935" cy="1348.415" r="310.503" gradientTransform="matrix(0 1 -.4251 0 649.377 -1789.816)" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stop-color="#fff" />
@@ -167,6 +163,8 @@
             </linearGradient>
             <path id="XMLID_121_" class="pressure6" d="M1011.5 517.5h-18.2c-29.9 0-54.2-84.9-54.2-189.6 0-104.7 24.3-189.6 54.2-189.6h18.2c-3.1 0-6.1.9-9.1 2.7-25.6 15.1-45.1 93-45.1 186.9s19.5 171.8 45.1 186.9c2.9 1.8 6 2.7 9.1 2.7z" />
         </g>
+        <svg id="svg_ball_boundary" xmlns="http://www.w3.org/2000/svg" x="1011.5" y="138.4" width="974" height="379.2">
+        </svg>
         <g id="syringe_front">
             <radialGradient id="XMLID_286_" cx="2094.268" cy="-554.751" r="310.503" gradientTransform="matrix(0 1 -.3766 0 1770.423 -1789.816)" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stop-color="#fff" />
@@ -375,7 +373,7 @@
                             300
                         </text>
                     <text id="XMLID_225_" transform="translate(2634.775 537.598)" class="pressure27 pressure13 pressure28">
-                            psi
+                            kPa
                         </text>
                     <text id="XMLID_224_" transform="translate(2813.383 396.156)" class="pressure13 pressure26">
                             400
@@ -885,14 +883,14 @@
         var svgInfo = {
             pressure: {
                 svgID: "svg_pressure",
-                divID: "svg-container-gauge",
+                divID: "svg-container-pressure",
                 image: {
-                    width: 600
+                    width: 750
                 }
             },
             gauge: {
                 svgID: "gauge",
-                divID: "svg-container-gauge",
+                divID: "svg-container-pressure",
                 image: {
                     width: 200
                 }
@@ -910,7 +908,7 @@
             svgInfo[item].element = document.getElementById(svgInfo[item].svgID);
         }
 
-        var pressureSVGjs = SVG("svg-container-gauge")
+        var pressureSVGjs = SVG("svg-container-pressure")
             .svg(document.getElementById("svg_pressure").outerHTML);
         var gaugeSVGjs = pressureSVGjs.select('#' + svgInfo.gauge.svgID).first();
         var syringeSVGjs = pressureSVGjs.select('#' + svgInfo.syringe.svgID).first();
@@ -929,7 +927,7 @@
         /*var svgsyringe = document.getElementById("svg_ball_container");
 
         // Store the outmost svgs in SVG.js form
-        var gaugeSVGjs = SVG('svg-container-gauge')
+        var gaugeSVGjs = SVG('svg-container-pressure')
             .svg(document.getElementById("svg_pressure_gauge").outerHTML);
         var syringeSVGjs = SVG('svg-container-air')
             .svg(svgsyringe.outerHTML);

@@ -17,6 +17,10 @@
     position: relative;
 }
 
+.layout-section div {
+    text-align: center;
+}
+
 .layout-section h2 {
     text-align: center;
     margin: 3px;
@@ -26,7 +30,6 @@
     width: 100px;
     padding: 3px;
     margin: 5px auto;
-    text-align: center;
     color: limegreen;
     background-color: black;
     border: 1px inset;
@@ -40,11 +43,22 @@
 /* Sliders */
 
 .slider-vertical {
-    transform: rotate(270deg);
-    transform-origin: left;
-    position: absolute;
-    left: 10px;
+    transform: rotate(180deg);
+    transform-origin: center;
+    margin: auto;
     width: 150px;
+    position: relative;
+    top: 35px;
+}
+
+#volume {
+    position: relative;
+    right: 5px;
+}
+
+#pressure {
+    position: absolute;
+    right: 0px;
 }
 
 #pressure input[type="range"] {
@@ -54,9 +68,18 @@
 
 /* Svg styles - consider moving inside svg tag */
 
-#front {
+#syringe_front {
     /* Make the front parts of the ball container (and other svgs) unclickable */
     pointer-events: none;
+}
+
+.positioner {
+    display: inline-block;
+    position: relative;
+}
+
+#main {
+    text-align: center;
 }
 
 

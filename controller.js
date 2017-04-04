@@ -34,8 +34,8 @@ var controller = (function () {
             /*if (Number.isNaN(rotation)) {
                 return;
             }*/
-            if (rotation > 150) {
-                rotation = 150;
+            if (rotation > 145) {
+                rotation = 145;
             }
             console.log(rotation)
             needle.transform({
@@ -61,7 +61,7 @@ var controller = (function () {
 
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
-    const HANDLE_BOTTOM = ballBoundary.bottom - 20;
+    const HANDLE_BOUND = ballBoundary.right - 20;
 
     // Handle
     var handle = syringeSVGjs.select('#handle').first();
@@ -76,25 +76,24 @@ var controller = (function () {
     handleSlider.setAttribute('min', 0);
     handleSlider.setAttribute('step', 1 /
         (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
-    var handleLength = HANDLE_BOTTOM / svgInfo.syringe.viewbox.height *
-        svgInfo.syringe.image.height;
+    var handleLength = HANDLE_BOUND / svgInfo.pressure.viewbox.height *
+        svgInfo.pressure.image.height;
+    alert(svgInfo.pressure.element.getBoundingClientRect())
     handleSlider.style.width = handleLength + 10 + "px";
-    handleSlider.style.top = handleLength - 5 + "px";
     handleSlider.oninput = function () {
         this.update();
     }
     handleSlider.onchange = recordMeasurements;
     handleSlider.update = function () {
         handle.transform({
-            y: HANDLE_BOTTOM * (1 - handleSlider.value)
+            x: HANDLE_BOUND * (1 - handleSlider.value)
         });
     };
     interfaceApplier.makeObservable(handleSlider, ["update"]);
 
     ballBoundary.notify = function () {
-        ballBoundary.top = HANDLE_BOTTOM * (1 - handleSlider.value);
+        ballBoundary.left = HANDLE_BOUND * (1 - handleSlider.value);
     }
-
 
 
     // Volume Output
@@ -213,7 +212,7 @@ var controller = (function () {
         }
 
         // If something is being held, update the slider
-        slider.stepUp(-e.movementY / Number(slider.style.width.slice(0, -2)) *
+        slider.stepUp(-e.movementX / Number(slider.style.width.slice(0, -2)) *
             (model.getBounds()[1] * Math.pow(10, model.getPrecision())));
         slider.update();
     }
