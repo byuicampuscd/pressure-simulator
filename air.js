@@ -153,18 +153,20 @@ var air = (function () {
     // Will generate n balls with same initialSpeed according to requirements
     function generateBalls(n, initialSpeed) {
 
-        var tempArray = new Array(n).fill(null);
+        var i, initialLocation, initialDirection, tempArray = [];
 
         // Use a loop to creae n Balls, with random location and direction, but same speed
-        return tempArray.map(function (ele, i) {
-            var initialLocation = {
-                    x: boundary.right * Math.random(),
-                    y: boundary.bottom * Math.random()
-                },
-                initialDirection = 2 * Math.PI * Math.random();
+        for (i = 0; i < n; i++) {
+            initialLocation = {
+                x: boundary.right * Math.random(),
+                y: boundary.bottom * Math.random()
+            };
+            initialDirection = 2 * Math.PI * Math.random();
 
-            return new Ball(initialLocation, initialSpeed, initialDirection);
-        })
+            tempArray[i] = new Ball(initialLocation, initialSpeed, initialDirection);
+        }
+
+        return tempArray;
     }
 
     // Update the boundary and move the balls one frame

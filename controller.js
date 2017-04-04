@@ -78,7 +78,6 @@ var controller = (function () {
         (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
     var handleLength = HANDLE_BOUND / svgInfo.pressure.viewbox.height *
         svgInfo.pressure.image.height;
-    alert(svgInfo.pressure.element.getBoundingClientRect())
     handleSlider.style.width = handleLength + 10 + "px";
     handleSlider.oninput = function () {
         this.update();
