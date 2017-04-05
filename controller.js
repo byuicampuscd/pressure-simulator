@@ -154,7 +154,7 @@ var controller = (function () {
     /* START Handling of mouse movement and release */
 
     function recordMeasurements() {
-        var measurementTable = document.querySelector('table'),
+        var measurementTableBody = document.querySelector('table tbody'),
             newTableRow = document.createElement("tr"),
             measureModels = [volumeModel, pressureModel],
             newMeasurementArray = [];
@@ -168,7 +168,7 @@ var controller = (function () {
         });
 
         measurements.push(newMeasurementArray);
-        measurementTable.appendChild(newTableRow);
+        measurementTableBody.appendChild(newTableRow);
         updatePlot(1, 0);
     }
 
