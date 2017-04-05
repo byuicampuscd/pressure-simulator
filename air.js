@@ -20,7 +20,7 @@ var air = (function () {
 
     const BALL_COUNT_DEFAULT = 50;
     const BALL_SPEED_DEFAULT = 10;
-    const BALL_IMAGE_SIZE = 15;
+    const BALL_IMAGE_SIZE = 7;
 
     /* END of Desired Conditions */
 
