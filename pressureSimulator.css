@@ -91,12 +91,23 @@ table {
     border-collapse: collapse;
 }
 
+thead tr {
+    background-color: #eaeaea;
+}
+
 th {
     border: 1px groove;
     width: 50%;
 }
 
 td {
-    background-color: white;
     border: 1px groove;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f8f8;
 }
