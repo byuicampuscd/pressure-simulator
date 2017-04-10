@@ -37,7 +37,6 @@ var controller = (function () {
             if (rotation > 145) {
                 rotation = 145;
             }
-            console.log(rotation)
             needle.transform({
                 rotation: rotation
             });
@@ -76,8 +75,9 @@ var controller = (function () {
     // Handle
     var handle = syringeSVGjs.select('#handle').first();
     var handleHeld = false; // Flag for mouse events
-    handle.mousedown(function () {
+    handle.mousedown(function (e) {
         handleHeld = true;
+        document.body.style.cursor = "none";
     })
 
     // Handle Slider
@@ -210,7 +210,7 @@ var controller = (function () {
     // For when svg parts are being used
     document.querySelector('html').onmousemove = function (e) {
 
-        var slider, model;
+        var slider, model, stepsToMove;
 
         // What the user is currently 'holding'
         if (handleHeld) {
@@ -221,14 +221,16 @@ var controller = (function () {
         }
 
         // If something is being held, update the slider
-        slider.stepUp(-e.movementX / Number(slider.style.width.slice(0, -2)) *
+        stepsToMove = Math.round(-e.movementX / Number(slider.style.width.slice(0, -2)) *
             (model.getBounds()[1] * Math.pow(10, model.getPrecision())));
+        slider.stepUp(stepsToMove);
         slider.update();
     }
     document.querySelector('html').onmouseup = function () {
 
         if (handleHeld) {
             handleHeld = false;
+            document.body.style.cursor = "auto";
 
             recordMeasurements();
         }
