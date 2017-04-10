@@ -9,7 +9,7 @@ var controller = (function () {
     const CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
     var measurements = []; // Array to hold arrays of measurements recorded
 
-    air.setup(500, 25);
+    air.setup(150, 25);
     air.startAnimation();
 
     /* END Initial setup */
@@ -52,12 +52,12 @@ var controller = (function () {
     pressureModel.addObserver(pressureOutput);
     pressureModel.addObserver(air, "setBallSpeed", function () {
 
-        var newSpeed = 20 + pressureModel.getMeasurement() / 42.5;
+        var newSpeed = 10 + 10 * pressureModel.getMeasurement() / 42.5;
 
-        if (newSpeed < 50) {
+        if (newSpeed < 100) {
             return [newSpeed];
         } else {
-            return [1]; // To keep them from disappearing or going out of bounds
+            return [25]; // To keep them from disappearing or going out of bounds
         }
     });
 

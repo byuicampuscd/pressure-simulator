@@ -18,9 +18,9 @@ var air = (function () {
 
     /* START Desired Conditions - These can be modified */
 
-    const BALL_COUNT_DEFAULT = 50;
+    const BALL_COUNT_DEFAULT = 25;
     const BALL_SPEED_DEFAULT = 10;
-    const BALL_IMAGE_SIZE = 7;
+    const BALL_IMAGE_SIZE = 20;
 
     /* END of Desired Conditions */
 
