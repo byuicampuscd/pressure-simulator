@@ -20,19 +20,25 @@ var air = (function () {
 
     const BALL_COUNT_DEFAULT = 25;
     const BALL_SPEED_DEFAULT = 10;
-    const BALL_IMAGE_SIZE = 20;
+    const BALL_SIZE_DEFAULT = 20;
 
     /* END of Desired Conditions */
 
-    function setup(ballCount, ballInitialSpeed) {
+    function setup(settings) {
 
-        if (ballCount === undefined) {
-            ballCount = BALL_COUNT_DEFAULT;
+        if (settings === undefined) {
+            settings = {};
         }
-        if (ballInitialSpeed === undefined) {
-            ballInitialSpeed = BALL_SPEED_DEFAULT;
+        if (settings.ballCount === undefined) {
+            settings.ballCount = BALL_COUNT_DEFAULT;
         }
-        balls = generateBalls(ballCount, ballInitialSpeed);
+        if (settings.ballInitialSpeed === undefined) {
+            settings.ballInitialSpeed = BALL_SPEED_DEFAULT;
+        }
+        if (settings.ballSize === undefined) {
+            settings.ballSize = BALL_SIZE_DEFAULT;
+        }
+        balls = generateBalls(settings.ballCount, settings.ballInitialSpeed, settings.ballSize);
     }
 
     /* START boundary object */
@@ -81,7 +87,7 @@ var air = (function () {
     /* START Ball Prototype */
 
     /* Constructor - Properties */
-    function Ball(startingLocation, speed, direction) {
+    function Ball(startingLocation, speed, direction, size) {
 
         // Holds the center coordinates
         // No error check since the Ball constructor is contained in a closure
@@ -99,7 +105,7 @@ var air = (function () {
         // Create the ball copy in svg using SVG.js
         this.circle = syringeSVGjs.select('#svg_ball_boundary').first()
             .nested().svg(document.getElementById("svg_ball").outerHTML)
-            .size(BALL_IMAGE_SIZE, BALL_IMAGE_SIZE);
+            .size(size, size);
 
         // Displays it
         this.updateLocation();
@@ -151,7 +157,7 @@ var air = (function () {
     /* START Other ball code */
 
     // Will generate n balls with same initialSpeed according to requirements
-    function generateBalls(n, initialSpeed) {
+    function generateBalls(n, initialSpeed, ballSize) {
 
         var i, initialLocation, initialDirection, tempArray = [];
 
@@ -163,7 +169,7 @@ var air = (function () {
             };
             initialDirection = 2 * Math.PI * Math.random();
 
-            tempArray[i] = new Ball(initialLocation, initialSpeed, initialDirection);
+            tempArray[i] = new Ball(initialLocation, initialSpeed, initialDirection, ballSize);
         }
 
         return tempArray;
@@ -195,7 +201,7 @@ var air = (function () {
     // Start the repeating interval to moveBalls every 30th of a second
     function startAnimation() {
         if (balls === undefined) {
-            generateBalls(BALL_COUNT_DEFAULT, BALL_SPEED_DEFAULT);
+            generateBalls(BALL_COUNT_DEFAULT, BALL_SPEED_DEFAULT, BALL_SIZE_DEFAULT);
         }
         pressureTimer = setInterval(function () {
             moveBalls(balls);

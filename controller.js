@@ -9,7 +9,35 @@ var controller = (function () {
     const CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
     var measurements = []; // Array to hold arrays of measurements recorded
 
-    air.setup(150, 25);
+    var settings = {
+        balls: {
+            ballCount: 150,
+            ballInitialSpeed: 25,
+            ballSize: 20
+        },
+        plot: {
+            target: '#dataplot',
+            title: "Graph of the Data",
+            width: 400,
+            height: 400,
+            xAxis: {
+                label: 'Volume (cc)',
+                domain: [0, 22]
+            },
+            yAxis: {
+                label: 'Pressure (kPa)',
+                domain: [0, 550]
+            },
+            grid: true,
+            data: [{
+                points: measurements,
+                fnType: 'points',
+                graphType: 'scatter'
+            }]
+        }
+    }
+
+    air.setup(settings.balls);
     air.startAnimation();
 
     /* END Initial setup */
@@ -183,28 +211,7 @@ var controller = (function () {
     }
 
     function updatePlot() {
-        var plotSelector = '#dataplot';
-
-        functionPlot({
-            target: '#dataplot',
-            title: "Graph of the Data",
-            width: 400,
-            height: 400,
-            xAxis: {
-                label: 'Volume (cc)',
-                domain: [0, 22]
-            },
-            yAxis: {
-                label: 'Pressure (kPa)',
-                domain: [0, 550]
-            },
-            grid: true,
-            data: [{
-                points: measurements,
-                fnType: 'points',
-                graphType: 'scatter'
-            }]
-        });
+        functionPlot(settings.plot);
     }
 
     // For when svg parts are being used
