@@ -1,0 +1,11 @@
+{
+  "name": "pressure-simulator",
+  "version": "1.0.0",
+  "description": "No description",
+  "main": "",
+  "scripts": {
+    "test": "NA"
+  },
+  "author": "David Rosevear",
+  "license": "UNLICENSED"
+}
