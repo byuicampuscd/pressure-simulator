@@ -44,18 +44,19 @@
         },
         plot: {
             target: '#dataplot',
-            title: "Graph of the Data",
+            //title: "Graph of the Data",
             width: 400,
-            height: 400,
+            height: 550,
+            grid: true,
+            disableZoom: false,
             xAxis: {
                 label: 'Volume (cc)',
                 domain: [0, 22]
             },
             yAxis: {
                 label: 'Pressure (kPa)',
-                domain: [0, 550]
+                domain: [0, 700]
             },
-            grid: true,
             data: [{
                 points: measurements,
                 fnType: 'points',
@@ -148,16 +149,16 @@
 //        handleHeld = false;
 //        document.body.style.cursor = "auto";
 //    })
-    
-    // Handle Slider
+
+    /* Handle Slider*/
     var handleSlider = document.querySelector('#volume .slider-vertical');
     handleSlider.setAttribute('max', 1);
     handleSlider.setAttribute('min', 0);
-    handleSlider.setAttribute('step', 1 /
-        (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
-    var handleLength = HANDLE_BOUND / svgInfo.pressure.viewbox.height *
-        svgInfo.pressure.image.height;
+    handleSlider.setAttribute('step', 1 / (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
+    var handleLength = HANDLE_BOUND / svgInfo.pressure.viewbox.height * svgInfo.pressure.image.height;
     handleSlider.style.width = handleLength + 10 + "px";
+
+    //this is where it gets important!
     handleSlider.oninput = function () {
         this.update();
     }
@@ -240,6 +241,7 @@
         return [handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);
+
 
     /*
     function SVGMovementSlider(root, max) {
