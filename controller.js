@@ -194,7 +194,7 @@
 
 
     volumeInput.onchange = function () {
-        if (this.value <= 20 && this.value > 0) {
+        if (this.value <= 20 && this.value >= 0) {
             var sliderElement = document.querySelector('#volume .slider-vertical');
 
             // Update the model
