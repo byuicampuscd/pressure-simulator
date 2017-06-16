@@ -183,37 +183,56 @@
     volumeInput.setAttribute('min', 0);
 
     volumeInput.update = function () {
-        console.log('I am about to update')
         handle.transform({
             x: HANDLE_BOUND * (1 - handleSlider.value)
         })
     }
+
     //make the ballBoundry listen to the volumeinput 
     interfaceApplier.makeObservable(volumeInput, ["update"]);
     volumeInput.addObserver(ballBoundary);
 
 
+    function updateAnimation(volumeInputValue) {
+        var sliderElement = document.querySelector('#volume .slider-vertical');
+
+        // Update the model
+        volumeModel.setMeasurement(volumeInputValue);
+
+        // Convert the value into a percentage
+        var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
+
+        // Write the sliderElement's value as the new percentage
+        sliderElement.value = percentage;
+
+        // For the plunger to move
+        volumeInput.update();
+
+        // Output measurements to table
+        recordMeasurements();
+
+        return;
+    }
+
+
+
     volumeInput.onchange = function () {
+        // This code will ensure correct values are computed
+        console.log('I am changing')
         if (this.value <= 20 && this.value >= 0) {
-            var sliderElement = document.querySelector('#volume .slider-vertical');
-
-            // Update the model
-            volumeModel.setMeasurement(volumeInput.value);
-
-            // Convert the value into a percentage
-            var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
-
-            // Write the sliderElement's value as the new percentage
-            sliderElement.value = percentage;
-
-            // For the plunger to move
-            volumeInput.update();
-
-            recordMeasurements();
+            updateAnimation(this.value);
+        } else if (this.value > 20) {
+            this.value = 20
+            updateAnimation(this.value)
+        } else if (this.value < 0) {
+            this.value = 0;
+            updateAnimation(this.value);
         }
 
         return;
     }
+
+    
 
 
 
