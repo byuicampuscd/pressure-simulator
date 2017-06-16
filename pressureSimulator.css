@@ -39,6 +39,10 @@
     margin: 15px auto;
 }
 
+#dataplot {
+    margin-bottom: 20px;
+}
+
 p,
 h2,
 text {
@@ -46,6 +50,19 @@ text {
     -ms-user-select: none;
     -moz-user-select: none;
     user-select: none;
+}
+
+
+/*graph styles*/
+
+svg {
+    font-size: 12pt;
+}
+
+svg g.graph>circle {
+    opacity: 1;
+    /* r is not valid css & doesn't work in all browsers*/
+    r: 3;
 }
 
 
