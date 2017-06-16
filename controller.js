@@ -142,13 +142,13 @@
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function (e) {
         handleHeld = true;
-        document.body.style.cursor = "none";
+        document.body.style.cursor = "auto";
     })
 
-//    handle.mouseup(function (e) {
-//        handleHeld = false;
-//        document.body.style.cursor = "auto";
-//    })
+    //    handle.mouseup(function (e) {
+    //        handleHeld = false;
+    //        document.body.style.cursor = "auto";
+    //    })
 
     /* Handle Slider*/
     var handleSlider = document.querySelector('#volume .slider-vertical');
@@ -183,6 +183,7 @@
     volumeInput.setAttribute('min', 0);
 
     volumeInput.update = function () {
+        console.log('I am about to update')
         handle.transform({
             x: HANDLE_BOUND * (1 - handleSlider.value)
         })
@@ -193,27 +194,28 @@
 
 
     volumeInput.onchange = function () {
-        var sliderElement = document.querySelector('#volume .slider-vertical');
+        if (this.value <= 20 && this.value > 0) {
+            var sliderElement = document.querySelector('#volume .slider-vertical');
 
-        // Update the model
-        volumeModel.setMeasurement(volumeInput.value);
+            // Update the model
+            volumeModel.setMeasurement(volumeInput.value);
 
-        // Convert the value into a percentage
-        var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
-        console.log('measurement: ' + volumeModel.getMeasurement())
+            // Convert the value into a percentage
+            var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
 
-        // Write the sliderElement's value as the new percentage
-        sliderElement.value = percentage;
+            // Write the sliderElement's value as the new percentage
+            sliderElement.value = percentage;
 
-        // For the plunger to move
-        volumeInput.update();
+            // For the plunger to move
+            volumeInput.update();
 
-        console.log('Percentage Value: ' + percentage);
-        recordMeasurements();
+            recordMeasurements();
+        }
+
         return;
     }
-    
-    
+
+
 
     //interfaceApplier.makeObservable(volumeInput, ["update"]);
     //volumeInput.addObserver(ballBoundary);
