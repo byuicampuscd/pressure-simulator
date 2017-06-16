@@ -144,6 +144,11 @@
         document.body.style.cursor = "none";
     })
 
+//    handle.mouseup(function (e) {
+//        handleHeld = false;
+//        document.body.style.cursor = "auto";
+//    })
+    
     // Handle Slider
     var handleSlider = document.querySelector('#volume .slider-vertical');
     handleSlider.setAttribute('max', 1);
@@ -169,14 +174,69 @@
     }
 
 
+    // BEGIN EXPERIMENT
+
+    // Volume Input
+    var volumeInput = document.querySelector('#volume input');
+    volumeInput.setAttribute('max', 20);
+    volumeInput.setAttribute('min', 0);
+
+    volumeInput.update = function () {
+        handle.transform({
+            x: HANDLE_BOUND * (1 - handleSlider.value)
+        })
+    }
+    //make the ballBoundry listen to the volumeinput 
+    interfaceApplier.makeObservable(volumeInput, ["update"]);
+    volumeInput.addObserver(ballBoundary);
+
+
+    volumeInput.onchange = function () {
+        var sliderElement = document.querySelector('#volume .slider-vertical');
+
+        // Update the model
+        volumeModel.setMeasurement(volumeInput.value);
+
+        // Convert the value into a percentage
+        var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
+        console.log('measurement: ' + volumeModel.getMeasurement())
+
+        // Write the sliderElement's value as the new percentage
+        sliderElement.value = percentage;
+
+        // For the plunger to move
+        volumeInput.update();
+
+        console.log('Percentage Value: ' + percentage);
+        recordMeasurements();
+        return;
+    }
+    
+    
+
+    //interfaceApplier.makeObservable(volumeInput, ["update"]);
+    //volumeInput.addObserver(ballBoundary);
+    /*volumeInput.addObserver(volumeModel, "setMeasurementByPercentage", function () {
+        return [volumeInput.value];
+    });*/
+    //volumeModel.addObserver(volumeInput);
+
+    // END EXPERIMENT
+
     // Volume Output
-    var volumeOutput = document.querySelector('#volume p');
+    // UNCOMMENT THE FOLLOWING LINE FOR ORIGINAL BOX
+    //var volumeOutput = document.querySelector('#volume p');
+    var volumeOutput = document.getElementById('exVolumeInputBox');
+    volumeOutput.style.backgroundColor = 'black';
+    volumeOutput.style.color = '#23CD20';
     volumeOutput.notify = function () {
-        this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
+        this.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
 
     handleSlider.addObserver(ballBoundary);
     handleSlider.addObserver(volumeModel, "setMeasurementByPercentage", function () {
+        volumeInput.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
+        console.log(handleSlider.value);
         return [handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);

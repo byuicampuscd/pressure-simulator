@@ -19,7 +19,11 @@
                 </div>
                 <div id="volume">
                     <h2>Volume (cc)</h2>
-                    <p>100.00</p>
+                    <!-- Here, we shall change this p tag to an actual input tag and just modify the value of the input -->
+                    <!-- BEGIN EXPERIMENT -->
+                    <input id="exVolumeInputBox" type="number" value="0" />
+                    <!-- END EXPERIMENT -->
+<!--                     <p>100.00</p> -->
                     <input class="slider-vertical" type="range" value="0" />
                 </div>
                 <div id="svg-container-pressure" class="svg-container">
@@ -927,10 +931,11 @@
         container.style.width = svgInfo.pressure.image.width + "px";
         container.style.height = svgInfo.pressure.image.height + "px";
 
-        /*var svgsyringe = document.getElementById("svg_ball_container");
+        var svgsyringe = document.getElementById("svg_ball_container");
 
+        
         // Store the outmost svgs in SVG.js form
-        var gaugeSVGjs = SVG('svg-container-pressure')
+        /*var gaugeSVGjs = SVG('svg-container-pressure')
             .svg(document.getElementById("svg_pressure_gauge").outerHTML);
         var syringeSVGjs = SVG('svg-container-air')
             .svg(svgsyringe.outerHTML);
@@ -952,7 +957,6 @@
         var drawingContainer = document.getElementById('svg-container-air');
         drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
         drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
-
         */
 
         // Startup methods and updates should be added, view and controller properly set up

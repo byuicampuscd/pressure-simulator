@@ -26,13 +26,15 @@
     margin: 3px;
 }
 
-.layout-section p {
+.layout-section p, .layout-section input[type="number"] {
     width: 100px;
     padding: 3px;
     margin: 5px auto;
     color: limegreen;
     background-color: black;
     border: 1px inset;
+    display: block;
+    text-align: center;
 }
 
 .svg-container {
