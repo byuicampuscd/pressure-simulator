@@ -84,9 +84,10 @@
     var pressureModel = modelFactory.makeMeasureModel(null, 2);
     pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
-        var V = volumeModel.getMeasurement(); // in cc's
+        var V = volumeModel.getMeasurement(), // in cc's
+            variance = Math.random(-.1, .1);
 
-        this.setMeasurement(this.c / V); // in kPa
+        this.setMeasurement((this.c / V) + variance); // in kPa
     }
 
     const HIGHEST_MARK = 450; // Highest mark on gauge decided based off issue #6 in GitHub
@@ -153,7 +154,6 @@
     var handleLength = HANDLE_BOUND / svgInfo.pressure.viewbox.height * svgInfo.pressure.image.height;
     handleSlider.style.width = handleLength + 10 + "px";
 
-    //this is where it gets important!
     handleSlider.oninput = function () {
         this.update();
     }
@@ -288,7 +288,9 @@
         }
     }
 
-    /*Increases the radius of the svg points to 3 instead of 1 so that you can actually see them*/
+    /***
+     *Increases the radius of the svg points to 3 instead of 1 so that you can actually see them
+     ****/
     function increasePointSize() {
         var circles = document.querySelectorAll('g.graph>circle');
         circles.forEach(function (circle) {
