@@ -256,6 +256,7 @@
      **/
     function updatePlot() {
         functionPlot(settings.plot);
+        increasePointSize();
     }
 
     // For when svg parts are being used
@@ -285,6 +286,14 @@
 
             recordMeasurements();
         }
+    }
+
+    /*Increases the radius of the svg points to 3 instead of 1 so that you can actually see them*/
+    function increasePointSize() {
+        var circles = document.querySelectorAll('g.graph>circle');
+        circles.forEach(function (circle) {
+            circle.r.baseVal.value = 3;
+        })
     }
 
     /* END Handling of mouse movement and release */

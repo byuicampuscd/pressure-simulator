@@ -61,8 +61,6 @@ svg {
 
 svg g.graph>circle {
     opacity: 1;
-    /* r is not valid css & doesn't work in all browsers*/
-    r: 3;
 }
 
 
