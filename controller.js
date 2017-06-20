@@ -37,6 +37,7 @@
      *                           used to create/update the plot
      */
     var settings = {
+        noise: .1, //must be a positive number
         balls: {
             ballCount: 150,
             ballInitialSpeed: 25,
@@ -84,10 +85,14 @@
     var pressureModel = modelFactory.makeMeasureModel(null, 2);
     pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
-        var V = volumeModel.getMeasurement(), // in cc's
-            variance = Math.random(-.1, .1);
-
-        this.setMeasurement((this.c / V) + variance); // in kPa
+        var V = volumeModel.getMeasurement(); // in cc's
+        if (settings.noise === 0) {
+            this.setMeasurement(this.c / V); // in kPa
+        } else {
+            var variance = Math.random() * (settings.noise - (-settings.noise)) + (-settings.noise);
+            console.log(variance);
+            this.setMeasurement((this.c / V) + variance); // in kPa
+        }
     }
 
     const HIGHEST_MARK = 450; // Highest mark on gauge decided based off issue #6 in GitHub
