@@ -232,7 +232,7 @@
         return;
     }
 
-    
+
 
 
 
@@ -249,8 +249,6 @@
     // UNCOMMENT THE FOLLOWING LINE FOR ORIGINAL BOX
     //var volumeOutput = document.querySelector('#volume p');
     var volumeOutput = document.getElementById('exVolumeInputBox');
-    volumeOutput.style.backgroundColor = 'black';
-    volumeOutput.style.color = '#23CD20';
     volumeOutput.notify = function () {
         this.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }

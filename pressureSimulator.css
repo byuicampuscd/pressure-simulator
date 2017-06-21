@@ -26,7 +26,8 @@
     margin: 3px;
 }
 
-.layout-section p, .layout-section input[type="number"] {
+.layout-section p,
+#exVolumeInputBox {
     width: 100px;
     padding: 3px;
     margin: 5px auto;
