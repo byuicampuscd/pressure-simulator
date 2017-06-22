@@ -109,7 +109,7 @@
     }, "update");
 
     // Pressure Output
-    var pressureOutput = document.querySelector('#pressure p');
+    var pressureOutput = document.getElementById('pressureOutput');
     pressureOutput.notify = function () {
         this.textContent = Math.round(pressureModel.getMeasurement() * 100) / 100;
     }
@@ -151,7 +151,7 @@
     //    })
 
     /* Handle Slider*/
-    var handleSlider = document.querySelector('#volume .slider-vertical');
+    var handleSlider = document.querySelector('.volume-slider');
     handleSlider.setAttribute('max', 1);
     handleSlider.setAttribute('min', 0);
     handleSlider.setAttribute('step', 1 / (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
@@ -178,7 +178,7 @@
     // BEGIN EXPERIMENT
 
     // Volume Input
-    var volumeInput = document.querySelector('#volume input');
+    var volumeInput = document.getElementById('volume-input-box');
     volumeInput.setAttribute('max', 20);
     volumeInput.setAttribute('min', 0);
 
@@ -194,7 +194,7 @@
 
 
     function updateAnimation(volumeInputValue) {
-        var sliderElement = document.querySelector('#volume .slider-vertical');
+        var sliderElement = document.querySelector('.volume-slider');
 
         // Update the model
         volumeModel.setMeasurement(volumeInputValue);
@@ -248,7 +248,7 @@
     // Volume Output
     // UNCOMMENT THE FOLLOWING LINE FOR ORIGINAL BOX
     //var volumeOutput = document.querySelector('#volume p');
-    var volumeOutput = document.getElementById('exVolumeInputBox');
+    var volumeOutput = document.getElementById('volume-input-box');
     volumeOutput.notify = function () {
         this.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
