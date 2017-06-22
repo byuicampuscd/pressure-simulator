@@ -115,7 +115,7 @@
     }, "update");
 
     // Pressure Output
-    var pressureOutput = document.querySelector('#pressure p');
+    var pressureOutput = document.getElementById('pressureOutput');
     pressureOutput.notify = function () {
         this.textContent = Math.round(pressureModel.getMeasurement() * 100) / 100;
     }
@@ -148,11 +148,16 @@
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function (e) {
         handleHeld = true;
-        document.body.style.cursor = "none";
+        document.body.style.cursor = "auto";
     })
 
+    //    handle.mouseup(function (e) {
+    //        handleHeld = false;
+    //        document.body.style.cursor = "auto";
+    //    })
+
     /* Handle Slider*/
-    var handleSlider = document.querySelector('#volume .slider-vertical');
+    var handleSlider = document.querySelector('.volume-slider');
     handleSlider.setAttribute('max', 1);
     handleSlider.setAttribute('min', 0);
     handleSlider.setAttribute('step', 1 / (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
@@ -175,14 +180,88 @@
     }
 
 
+    // BEGIN EXPERIMENT
+
+    // Volume Input
+    var volumeInput = document.getElementById('volume-input-box');
+    volumeInput.setAttribute('max', 20);
+    volumeInput.setAttribute('min', 0);
+
+    volumeInput.update = function () {
+        handle.transform({
+            x: HANDLE_BOUND * (1 - handleSlider.value)
+        })
+    }
+
+    //make the ballBoundry listen to the volumeinput 
+    interfaceApplier.makeObservable(volumeInput, ["update"]);
+    volumeInput.addObserver(ballBoundary);
+
+
+    function updateAnimation(volumeInputValue) {
+        var sliderElement = document.querySelector('.volume-slider');
+
+        // Update the model
+        volumeModel.setMeasurement(volumeInputValue);
+
+        // Convert the value into a percentage
+        var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
+
+        // Write the sliderElement's value as the new percentage
+        sliderElement.value = percentage;
+
+        // For the plunger to move
+        volumeInput.update();
+
+        // Output measurements to table
+        recordMeasurements();
+
+        return;
+    }
+
+
+
+    volumeInput.onchange = function () {
+        // This code will ensure correct values are computed
+        console.log('I am changing')
+        if (this.value <= 20 && this.value >= 0) {
+            updateAnimation(this.value);
+        } else if (this.value > 20) {
+            this.value = 20
+            updateAnimation(this.value)
+        } else if (this.value < 0) {
+            this.value = 0;
+            updateAnimation(this.value);
+        }
+
+        return;
+    }
+
+
+
+
+
+    //interfaceApplier.makeObservable(volumeInput, ["update"]);
+    //volumeInput.addObserver(ballBoundary);
+    /*volumeInput.addObserver(volumeModel, "setMeasurementByPercentage", function () {
+        return [volumeInput.value];
+    });*/
+    //volumeModel.addObserver(volumeInput);
+
+    // END EXPERIMENT
+
     // Volume Output
-    var volumeOutput = document.querySelector('#volume p');
+    // UNCOMMENT THE FOLLOWING LINE FOR ORIGINAL BOX
+    //var volumeOutput = document.querySelector('#volume p');
+    var volumeOutput = document.getElementById('volume-input-box');
     volumeOutput.notify = function () {
-        this.textContent = Math.round(volumeModel.getMeasurement() * 100) / 100;
+        this.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
 
     handleSlider.addObserver(ballBoundary);
     handleSlider.addObserver(volumeModel, "setMeasurementByPercentage", function () {
+        volumeInput.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
+        console.log(handleSlider.value);
         return [handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);

@@ -14,13 +14,13 @@
             <div class="positioner">
                 <div id="pressure">
                     <h2>Pressure (kPa)</h2>
-                    <p>35.93</p>
-                    <input class="slider-vertical" type="range" value="0" />
+                    <p id="pressureOutput"></p>
+                    <input class="hidden" type="range" value="0" />
                 </div>
                 <div id="volume">
                     <h2>Volume (cc)</h2>
-                    <p>100.00</p>
-                    <input class="slider-vertical" type="range" value="0" />
+                    <input id="volume-input-box" type="text" value="0" />
+                    <input class="volume-slider" type="range" value="0" />
                 </div>
                 <div id="svg-container-pressure" class="svg-container">
                     <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
@@ -28,7 +28,6 @@
             </div>
         </div>
     </div>
-
     <div class="flex_row">
         <div class="layout-section" id="table">
             <h2>Data Table</h2>
@@ -53,7 +52,7 @@
     <!-- START svg tags -->
     <!-- This div just contains the svg image information -->
     <!-- JavaScript will be used to manipulate and place them inside the layout created above -->
-    <div style="display:none;">
+    <div class="hidden">
 
         <svg id="svg_pressure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3014.6 655.9">
         <style>
@@ -882,82 +881,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.4.0/svg.js"></script>
-    <script>
-        var svgInfo = {
-            pressure: {
-                svgID: "svg_pressure",
-                divID: "svg-container-pressure",
-                image: {
-                    width: 750
-                }
-            },
-            gauge: {
-                svgID: "gauge",
-                divID: "svg-container-pressure",
-                image: {
-                    width: 200
-                }
-            },
-            syringe: {
-                svgID: "syringe",
-                divID: "svg-container-air",
-                image: {
-                    width: 200
-                }
-            }
-        };
-
-        for (var item in svgInfo) {
-            svgInfo[item].element = document.getElementById(svgInfo[item].svgID);
-        }
-
-        var pressureSVGjs = SVG("svg-container-pressure")
-            .svg(document.getElementById("svg_pressure").outerHTML);
-        var gaugeSVGjs = pressureSVGjs.select('#' + svgInfo.gauge.svgID).first();
-        var syringeSVGjs = pressureSVGjs.select('#' + svgInfo.syringe.svgID).first();
-
-        var dimensions = svgInfo.pressure.element.getAttribute('viewBox').split(' ');
-        svgInfo.pressure.viewbox = {};
-        svgInfo.pressure.viewbox.height = dimensions[3];
-        svgInfo.pressure.viewbox.width = dimensions[2];
-        svgInfo.pressure.viewbox.ratio = dimensions[3] / dimensions[2];
-        svgInfo.pressure.image.height = svgInfo.pressure.image.width * svgInfo.pressure.viewbox.ratio;
-
-        var container = document.getElementById(svgInfo.pressure.divID);
-        container.style.width = svgInfo.pressure.image.width + "px";
-        container.style.height = svgInfo.pressure.image.height + "px";
-
-        /*var svgsyringe = document.getElementById("svg_ball_container");
-
-        // Store the outmost svgs in SVG.js form
-        var gaugeSVGjs = SVG('svg-container-pressure')
-            .svg(document.getElementById("svg_pressure_gauge").outerHTML);
-        var syringeSVGjs = SVG('svg-container-air')
-            .svg(svgsyringe.outerHTML);
-        var thermometerSVGjs = SVG('svg-container-thermometer')
-            .svg(document.getElementById("svg_thermometer").outerHTML);
-
-        // These should be better handled, but here to make initial MVC setup work
-        const BALL_CONTAINER_IMAGE_WIDTH = 250; // The ratio is maintained below
-
-        // Calculated sizes from the indicated width above
-        var temp = svgsyringe.getAttribute('viewBox').split(' ');
-        const BALL_CONTAINER_VIEWBOX_HEIGHT = temp[3];
-        const BALL_CONTAINER_VIEWBOX_WIDTH = temp[2];
-        const BALL_CONTAINER_IMAGE_RATIO = temp[3] / temp[2]; // ViewBox Height/Width
-        const BALL_CONTAINER_IMAGE_HEIGHT = BALL_CONTAINER_IMAGE_WIDTH *
-            BALL_CONTAINER_IMAGE_RATIO;
-
-        // Container element for the svg tag
-        var drawingContainer = document.getElementById('svg-container-air');
-        drawingContainer.style.width = BALL_CONTAINER_IMAGE_WIDTH + "px";
-        drawingContainer.style.height = BALL_CONTAINER_IMAGE_HEIGHT + "px";
-
-        */
-
-        // Startup methods and updates should be added, view and controller properly set up
-
-    </script>
+    <script src="generatePage.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://wzrd.in/standalone/function-plot@latest"></script>
     <script src="interfaces.js"></script>
