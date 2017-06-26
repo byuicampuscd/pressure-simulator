@@ -110,12 +110,6 @@ svg g.graph>circle {
     top: 35px;
 }
 
-
-/*#pressure {
-    position: absolute;
-    right: 0px;
-}*/
-
 .hidden {
     display: none;
 }
@@ -133,22 +127,14 @@ svg g.graph>circle {
     position: relative;
 }
 
+#main {
+    min-width: 800px;
+}
+
 #main>p {
-    /*    float: left;*/
     width: 9%;
     position: absolute;
 }
-
-
-/*#main::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 3px;
-    height: 38px;
-    width: 100%;
-    background-color: #0076B6;
-}*/
 
 
 /* Table */
@@ -176,4 +162,10 @@ tbody tr:nth-child(odd) {
 
 tbody tr:nth-child(even) {
     background-color: #f8f8f8;
+}
+
+@media screen and (max-width:800px) {
+    .layout-section header {
+        width: 745px;
+    }
 }
