@@ -16,6 +16,16 @@ html {
     flex-wrap: wrap;
 }
 
+.row1 {
+    width: 745px;
+    margin: auto;
+    justify-content: center;
+}
+
+.row1>p {
+    height: 100% !important;
+}
+
 .layout-section {
     background-color: whitesmoke;
     border: 2px outset;
@@ -35,7 +45,17 @@ html {
     padding: 5px;
 }
 
-.layout-section p,
+.layout-section header {
+    background-color: #0076B6;
+    text-align: center;
+}
+
+.layout-section header>h2 {
+    display: inline-block;
+    margin: 0 -33px 0 100px;
+}
+
+#pressure-output,
 #volume-input-box {
     font-size: 12pt;
     width: 100px;
@@ -84,16 +104,17 @@ svg g.graph>circle {
 .volume-slider {
     transform: rotate(180deg);
     transform-origin: center;
-    margin: auto;
+    margin: auto auto auto 85px;
     width: 150px;
     position: relative;
     top: 35px;
 }
 
-#pressure {
+
+/*#pressure {
     position: absolute;
     right: 0px;
-}
+}*/
 
 .hidden {
     display: none;
@@ -112,11 +133,14 @@ svg g.graph>circle {
     position: relative;
 }
 
-#main {
-    text-align: center;
+#main>p {
+    /*    float: left;*/
+    width: 9%;
+    position: absolute;
 }
 
-#main::before {
+
+/*#main::before {
     content: "";
     display: block;
     position: absolute;
@@ -124,7 +148,7 @@ svg g.graph>circle {
     height: 38px;
     width: 100%;
     background-color: #0076B6;
-}
+}*/
 
 
 /* Table */

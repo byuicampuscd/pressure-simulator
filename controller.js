@@ -117,7 +117,7 @@
     }, "update");
 
     // Pressure Output
-    var pressureOutput = document.getElementById('pressureOutput');
+    var pressureOutput = document.getElementById('pressure-output');
     pressureOutput.notify = function () {
         this.textContent = Math.round(pressureModel.getMeasurement() * 100) / 100;
     }

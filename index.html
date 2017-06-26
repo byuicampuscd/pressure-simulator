@@ -8,9 +8,32 @@
 </head>
 
 <body>
-
-    <div class="flex_row">
+    <div>
         <div class="layout-section" id="main">
+            <header>
+                <h2>Volume (cc)</h2>
+                <h2>Pressure (kPa)</h2>
+            </header>
+            <p>Instructions: do work fools! lots of work! tons of work!</p>
+            <div class="flex_row row1">
+                <div id="volume">
+                    <input id="volume-input-box" type="text" value="0" />
+                    <input class="volume-slider" type="range" value="0" />
+                </div>
+                <div id="pressure">
+                    <p id="pressure-output"></p>
+                    <input class="hidden" type="range" value="0" />
+                </div>
+                <div id="svg-container-pressure" class="svg-container">
+                    <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="flex_row">
+        <div class="layout-section" id="main">
+            <p>Instructions: do work fools!</p>
             <div class="positioner">
                 <div id="pressure">
                     <h2>Pressure (kPa)</h2>
@@ -23,11 +46,11 @@
                     <input class="volume-slider" type="range" value="0" />
                 </div>
                 <div id="svg-container-pressure" class="svg-container">
-                    <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
+                    <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="flex_row">
         <div class="layout-section" id="table">
             <h2>Data Table</h2>
