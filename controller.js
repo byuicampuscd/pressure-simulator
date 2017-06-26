@@ -37,7 +37,7 @@
      *                           used to create/update the plot
      */
     var settings = {
-        noise: .1, //must be a positive number
+        noise: .03, //must be a positive number
         balls: {
             ballCount: 150,
             ballInitialSpeed: 25,
@@ -49,14 +49,14 @@
             width: 400,
             height: 550,
             grid: true,
-            disableZoom: false,
+            disableZoom: true,
             xAxis: {
                 label: 'Volume (cc)',
                 domain: [0, 22]
             },
             yAxis: {
                 label: 'Pressure (kPa)',
-                domain: [0, 700]
+                domain: [0, 300]
             },
             data: [{
                 points: measurements,
@@ -89,9 +89,11 @@
         if (settings.noise === 0) {
             this.setMeasurement(this.c / V); // in kPa
         } else {
-            var variance = Math.random() * (settings.noise - (-settings.noise)) + (-settings.noise);
-            console.log(variance);
-            this.setMeasurement((this.c / V) + variance); // in kPa
+            var measurement = this.c / V,
+                max = measurement * settings.noise,
+                min = -max,
+                variance = Math.random() * (max - min) + min;
+            this.setMeasurement(measurement + variance); // in kPa
         }
     }
 

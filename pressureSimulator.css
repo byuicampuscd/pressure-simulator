@@ -74,6 +74,8 @@ svg {
 
 svg g.graph>circle {
     opacity: 1;
+    fill: darkblue;
+    stroke: darkblue;
 }
 
 
