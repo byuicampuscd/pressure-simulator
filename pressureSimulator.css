@@ -164,6 +164,24 @@ tbody tr:nth-child(even) {
     background-color: #f8f8f8;
 }
 
+#download {
+    float: right;
+    margin-right: 13px;
+}
+
+.button {
+    background-color: #0076B6;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #003958;
+    text-decoration: none;
+}
+
+.disabled {
+    background-color: gray;
+}
+
 @media screen and (max-width:800px) {
     .layout-section header {
         width: 745px;

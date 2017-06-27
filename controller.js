@@ -87,13 +87,14 @@
     pressureModel.update = function () {
         var V = volumeModel.getMeasurement(); // in cc's
         if (settings.noise === 0) {
-            this.setMeasurement(this.c / V); // in kPa
+            this.setMeasurement(Number((this.c / V).toFixed(this.getPrecision()))); // in kPa
         } else {
             var measurement = this.c / V,
                 max = measurement * settings.noise,
                 min = -max,
-                variance = Math.random() * (max - min) + min;
-            this.setMeasurement(measurement + variance); // in kPa
+                variance = Math.random() * (max - min) + min,
+                finalMeasurement = Number((variance + measurement).toFixed(this.getPrecision()));
+            this.setMeasurement(finalMeasurement); // in kPa
         }
     }
 
@@ -182,7 +183,6 @@
     }
 
 
-    // BEGIN EXPERIMENT
 
     // Volume Input
     var volumeInput = document.getElementById('volume-input-box');
@@ -199,48 +199,41 @@
     interfaceApplier.makeObservable(volumeInput, ["update"]);
     volumeInput.addObserver(ballBoundary);
 
-
+    //Only called when Volume is updated thru the input box
     function updateAnimation(volumeInputValue) {
-        var sliderElement = document.querySelector('.volume-slider');
 
         // Update the model
-        volumeModel.setMeasurement(volumeInputValue);
+        volumeModel.setMeasurement(Number(volumeInputValue.toFixed(2)));
 
         // Convert the value into a percentage
-        var percentage = Math.round(volumeModel.getMeasurement() * 5) / 100
+        var percentage = Number((volumeInputValue / 20).toFixed(2));
 
         // Write the sliderElement's value as the new percentage
-        sliderElement.value = percentage;
+        document.querySelector('.volume-slider').value = percentage;
 
         // For the plunger to move
         volumeInput.update();
 
         // Output measurements to table
         recordMeasurements();
-
         return;
     }
 
-
-
     volumeInput.onchange = function () {
+        var volumeValue = Number(this.value);
         // This code will ensure correct values are computed
-        console.log('I am changing')
-        if (this.value <= 20 && this.value >= 0) {
-            updateAnimation(this.value);
-        } else if (this.value > 20) {
-            this.value = 20
-            updateAnimation(this.value)
-        } else if (this.value < 0) {
-            this.value = 0;
-            updateAnimation(this.value);
+        if (volumeValue <= 20 && volumeValue >= 0) {
+            updateAnimation(volumeValue);
+        } else if (volumeValue > 20) {
+            volumeValue = 20
+            updateAnimation(volumeValue)
+        } else if (volumeValue < 0) {
+            volumeValue = 0;
+            updateAnimation(volumeValue);
         }
 
         return;
     }
-
-
-
 
 
     //interfaceApplier.makeObservable(volumeInput, ["update"]);
@@ -250,11 +243,8 @@
     });*/
     //volumeModel.addObserver(volumeInput);
 
-    // END EXPERIMENT
 
     // Volume Output
-    // UNCOMMENT THE FOLLOWING LINE FOR ORIGINAL BOX
-    //var volumeOutput = document.querySelector('#volume p');
     var volumeOutput = document.getElementById('volume-input-box');
     volumeOutput.notify = function () {
         this.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
@@ -263,7 +253,6 @@
     handleSlider.addObserver(ballBoundary);
     handleSlider.addObserver(volumeModel, "setMeasurementByPercentage", function () {
         volumeInput.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
-        console.log(handleSlider.value);
         return [handleSlider.value];
     });
     volumeModel.addObserver(volumeOutput);
@@ -315,6 +304,15 @@
 
     /* START Handling of mouse movement and release */
 
+
+    function enableDownload(measurements) {
+
+        var csvList = d3.csv.format(measurements, ['Volume', 'Pressure']);
+        console.log(csvList);
+        //document.getElementById('download').href = "data:text/csv;charset=utf-8," + encodeURIComponent(csvList);
+        //document.getElementById('download').classList.remove('disabled');
+    }
+
     function recordMeasurements() {
         var measurementTableBody = document.querySelector('table tbody'),
             newTableRow = document.createElement("tr"),
@@ -332,6 +330,7 @@
         measurements.push(newMeasurementArray);
         measurementTableBody.appendChild(newTableRow);
         updatePlot(1, 0);
+        enableDownload(measurements);
     }
 
     /**
