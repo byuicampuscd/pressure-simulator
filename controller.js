@@ -192,6 +192,10 @@
     interfaceApplier.makeObservable(volumeInput, ["update"]);
     volumeInput.addObserver(ballBoundary);
 
+    
+    // Let's try the event listener way here
+    //volumeInput.addEventListener("change", updateApplication);
+    
 
     function updateAnimation(volumeInputValue) {
         var sliderElement = document.querySelector('#volume .slider-vertical');
@@ -214,9 +218,7 @@
         return;
     }
 
-
-
-    volumeInput.onchange = function () {
+    function updateApplication() {
         // This code will ensure correct values are computed
         console.log('I am changing')
         if (this.value <= 20 && this.value >= 0) {
@@ -229,10 +231,13 @@
             updateAnimation(this.value);
         }
 
+        //this.blur();
         return;
     }
 
-    
+    volumeInput.onchange = updateApplication;
+
+    //volumeInput.oninput = updateApplication;
 
 
 
