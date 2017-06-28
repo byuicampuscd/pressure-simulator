@@ -238,15 +238,6 @@
         return;
     }
 
-
-    //interfaceApplier.makeObservable(volumeInput, ["update"]);
-    //volumeInput.addObserver(ballBoundary);
-    /*volumeInput.addObserver(volumeModel, "setMeasurementByPercentage", function () {
-        return [volumeInput.value];
-    });*/
-    //volumeModel.addObserver(volumeInput);
-
-
     // Volume Output
     var volumeOutput = document.getElementById('volume-input-box');
     volumeOutput.notify = function () {
@@ -260,41 +251,6 @@
     });
     volumeModel.addObserver(volumeOutput);
 
-
-    /*
-    function SVGMovementSlider(root, max) {
-        var rootContainer, viewbox;
-        var slider = document.createElement('input').setAttribute('type', 'range');
-        if (root instanceof SVG.Doc) {
-            rootContainer = root.parent();
-            viewbox = rootContainer.querySelector('svg').getAttribute('viewBox').split(' ');
-        } else {
-            rootContainer = root;
-            viewbox = root.getAttribute('viewBox').split(' ');
-        }
-        slider.setAttribute('max', max);
-        slider.style.transform = "rotate(90deg)";
-        slider.style.transform - origin: "left";
-        slider.style.position: "absolute";
-        slider.style.left: "10px";
-        slider.style.width: max / viewbox[3] *
-            rootContainer.height + "px";
-        rootContainer.parentNode.insertBefore(slider, rootContainer);
-        slider.oninput = function () {
-            this.update();
-        }
-        slider.update = function () {
-            var newValue = slider.value;
-            handle.transform({
-                y: newValue
-            });
-            ballBoundary.top = newValue;
-            volumeOutput.textContent = Math.round((1 - newValue / handleSlider.max) * max *
-                100) / 100;
-        };
-    }
-    */
-
     /* END Handling of Volume section */
 
     // Initial values
@@ -306,15 +262,6 @@
 
 
     /* START Handling of mouse movement and release */
-
-
-    function enableDownload(measurements) {
-
-        var csvList = d3.csv.format(measurements, ['Volume', 'Pressure']);
-        console.log(csvList);
-        //document.getElementById('download').href = "data:text/csv;charset=utf-8," + encodeURIComponent(csvList);
-        //document.getElementById('download').classList.remove('disabled');
-    }
 
     function recordMeasurements() {
         var measurementTableBody = document.querySelector('table tbody'),
@@ -333,7 +280,6 @@
         measurements.push(newMeasurementArray);
         measurementTableBody.appendChild(newTableRow);
         updatePlot(1, 0);
-        enableDownload(measurements);
     }
 
     /**
@@ -387,26 +333,4 @@
     }
 
     /* END Handling of mouse movement and release */
-
-
-    /* Demos */
-
-    var demo = {
-
-        // Air movement demo
-        air: function () {
-            setTimeout(air.endAnimation, 3000);
-            setTimeout(air.startAnimation, 4000);
-            setTimeout(function () {
-                air.setBallSpeed(10)
-            }, 6000);
-            setTimeout(function () {
-                air.setBallSpeed(3)
-            }, 8000);
-        }
-    }
-
-    // Run demos
-    //demo.air();
-
 }());
