@@ -240,10 +240,9 @@
         return;
     }
 
-
     volumeInput.onchange = updateApplication;
 
-    //volumeInput.oninput = updateApplication;
+    
 
     //interfaceApplier.makeObservable(volumeInput, ["update"]);
     //volumeInput.addObserver(ballBoundary);
