@@ -85,12 +85,15 @@
     var pressureModel = modelFactory.makeMeasureModel(null, 2);
     pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
-        var V = volumeModel.getMeasurement(); // in cc's
+        var V = volumeModel.getMeasurement(), // in cc's
+            measurement = this.c / V;
+
         if (settings.noise === 0) {
             this.setMeasurement(Number((this.c / V).toFixed(this.getPrecision()))); // in kPa
+        } else if (measurement === Infinity) {
+            this.setMeasurement(measurement);
         } else {
-            var measurement = this.c / V,
-                max = measurement * settings.noise,
+            var max = measurement * settings.noise,
                 min = -max,
                 variance = Math.random() * (max - min) + min,
                 finalMeasurement = Number((variance + measurement).toFixed(this.getPrecision()));
