@@ -33,8 +33,10 @@
             <h2>Data Table</h2>
             <table>
                 <thead>
-                    <th>Volume (cc)</th>
-                    <th>Pressure (kPa)</th>
+                    <tr>
+                        <th>Volume (cc)</th>
+                        <th>Pressure (kPa)</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -61,8 +63,6 @@
 
 
     <!-- START svg tags -->
-    <!-- This div just contains the svg image information -->
-    <!-- JavaScript will be used to manipulate and place them inside the layout created above -->
     <div class="hidden">
 
         <svg id="svg_pressure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3014.6 655.9">
@@ -474,9 +474,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-dsv/1.0.5/d3-dsv.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.4.0/svg.js"></script>
-    <script src="generatePage.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://wzrd.in/standalone/function-plot@latest"></script>
+    <script src="downloadTable.js"></script>
+    <script src="generatePage.js"></script>
     <script src="interfaces.js"></script>
     <script src="modelFactory.js"></script>
     <script src="air.js"></script>
