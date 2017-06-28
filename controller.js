@@ -51,11 +51,11 @@
             grid: true,
             disableZoom: true,
             xAxis: {
-                label: 'Volume (cc)',
+                //label: 'Volume (cc)',
                 domain: [0, 22]
             },
             yAxis: {
-                label: 'Pressure (kPa)',
+                //label: 'Pressure (kPa)',
                 domain: [0, 300]
             },
             data: [{
