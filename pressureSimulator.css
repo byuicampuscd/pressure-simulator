@@ -1,3 +1,9 @@
+/*basic styles*/
+
+html {
+    font-family: sans-serif;
+}
+
 .positioningContext {
     position: relative;
 }
@@ -24,12 +30,17 @@
 .layout-section h2 {
     text-align: center;
     margin: 3px;
+    background-color: #0076B6;
+    color: white;
+    padding: 5px;
 }
 
-.layout-section p, .layout-section input[type="number"] {
+.layout-section p,
+#volume-input-box {
+    font-size: 12pt;
     width: 100px;
-    padding: 3px;
-    margin: 5px auto;
+    padding: 6px;
+    margin: 10px auto 0px auto;
     color: limegreen;
     background-color: black;
     border: 1px inset;
@@ -63,14 +74,12 @@ svg {
 
 svg g.graph>circle {
     opacity: 1;
-    /* r is not valid css & doesn't work in all browsers*/
-    r: 3;
 }
 
 
 /* Sliders */
 
-.slider-vertical {
+.volume-slider {
     transform: rotate(180deg);
     transform-origin: center;
     margin: auto;
@@ -79,18 +88,13 @@ svg g.graph>circle {
     top: 35px;
 }
 
-#volume {
-    position: relative;
-    right: 5px;
-}
-
 #pressure {
     position: absolute;
     right: 0px;
 }
 
-#pressure input[type="range"] {
-    visibility: hidden;
+.hidden {
+    display: none;
 }
 
 
@@ -110,12 +114,22 @@ svg g.graph>circle {
     text-align: center;
 }
 
+#main::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    height: 38px;
+    width: 100%;
+    background-color: #0076B6;
+}
+
 
 /* Table */
 
 table {
     width: 95%;
-    margin: auto auto 10px;
+    margin: 20px auto 20px;
     border-collapse: collapse;
 }
 
@@ -123,13 +137,11 @@ thead tr {
     background-color: #eaeaea;
 }
 
+td,
 th {
     border: 1px groove;
     width: 50%;
-}
-
-td {
-    border: 1px groove;
+    padding: 4px;
 }
 
 tbody tr:nth-child(odd) {

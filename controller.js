@@ -37,6 +37,7 @@
      *                           used to create/update the plot
      */
     var settings = {
+        noise: .1, //must be a positive number
         balls: {
             ballCount: 150,
             ballInitialSpeed: 25,
@@ -85,8 +86,13 @@
     pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
         var V = volumeModel.getMeasurement(); // in cc's
-
-        this.setMeasurement(this.c / V); // in kPa
+        if (settings.noise === 0) {
+            this.setMeasurement(this.c / V); // in kPa
+        } else {
+            var variance = Math.random() * (settings.noise - (-settings.noise)) + (-settings.noise);
+            console.log(variance);
+            this.setMeasurement((this.c / V) + variance); // in kPa
+        }
     }
 
     const HIGHEST_MARK = 450; // Highest mark on gauge decided based off issue #6 in GitHub
@@ -109,7 +115,7 @@
     }, "update");
 
     // Pressure Output
-    var pressureOutput = document.querySelector('#pressure p');
+    var pressureOutput = document.getElementById('pressureOutput');
     pressureOutput.notify = function () {
         this.textContent = Math.round(pressureModel.getMeasurement() * 100) / 100;
     }
@@ -151,14 +157,13 @@
     //    })
 
     /* Handle Slider*/
-    var handleSlider = document.querySelector('#volume .slider-vertical');
+    var handleSlider = document.querySelector('.volume-slider');
     handleSlider.setAttribute('max', 1);
     handleSlider.setAttribute('min', 0);
     handleSlider.setAttribute('step', 1 / (volumeModel.getBounds()[1] * Math.pow(10, volumeModel.getPrecision())));
     var handleLength = HANDLE_BOUND / svgInfo.pressure.viewbox.height * svgInfo.pressure.image.height;
     handleSlider.style.width = handleLength + 10 + "px";
 
-    //this is where it gets important!
     handleSlider.oninput = function () {
         this.update();
     }
@@ -178,7 +183,7 @@
     // BEGIN EXPERIMENT
 
     // Volume Input
-    var volumeInput = document.querySelector('#volume input');
+    var volumeInput = document.getElementById('volume-input-box');
     volumeInput.setAttribute('max', 20);
     volumeInput.setAttribute('min', 0);
 
@@ -198,7 +203,7 @@
     
 
     function updateAnimation(volumeInputValue) {
-        var sliderElement = document.querySelector('#volume .slider-vertical');
+        var sliderElement = document.querySelector('.volume-slider');
 
         // Update the model
         volumeModel.setMeasurement(volumeInputValue);
@@ -235,11 +240,10 @@
         return;
     }
 
+
     volumeInput.onchange = updateApplication;
 
     //volumeInput.oninput = updateApplication;
-
-
 
     //interfaceApplier.makeObservable(volumeInput, ["update"]);
     //volumeInput.addObserver(ballBoundary);
@@ -253,9 +257,7 @@
     // Volume Output
     // UNCOMMENT THE FOLLOWING LINE FOR ORIGINAL BOX
     //var volumeOutput = document.querySelector('#volume p');
-    var volumeOutput = document.getElementById('exVolumeInputBox');
-    volumeOutput.style.backgroundColor = 'black';
-    volumeOutput.style.color = '#23CD20';
+    var volumeOutput = document.getElementById('volume-input-box');
     volumeOutput.notify = function () {
         this.value = Math.round(volumeModel.getMeasurement() * 100) / 100;
     }
@@ -342,6 +344,7 @@
      **/
     function updatePlot() {
         functionPlot(settings.plot);
+        increasePointSize();
     }
 
     // For when svg parts are being used
@@ -371,6 +374,16 @@
 
             recordMeasurements();
         }
+    }
+
+    /***
+     *Increases the radius of the svg points to 3 instead of 1 so that you can actually see them
+     ****/
+    function increasePointSize() {
+        var circles = document.querySelectorAll('g.graph>circle');
+        circles.forEach(function (circle) {
+            circle.r.baseVal.value = 3;
+        })
     }
 
     /* END Handling of mouse movement and release */
