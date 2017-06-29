@@ -324,9 +324,10 @@
      ****/
     function increasePointSize() {
         var circles = document.querySelectorAll('g.graph>circle');
-        circles.forEach(function (circle) {
-            circle.r.baseVal.value = 3;
-        })
+
+        for (var i = 0; i < circles.length; i++) {
+            circles[i].r.baseVal.value = 3;
+        }
     }
 
     /* END Handling of mouse movement and release */

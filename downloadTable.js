@@ -1,5 +1,6 @@
 /*eslint-env browser*/
 /*eslint no-console:0*/
+/*eslint no-unused-vars:1*/
 /*global d3*/
 
 'use-strict'
@@ -9,7 +10,6 @@ function enableDownload(measurements) {
 
     //var csvList = d3.csv.format(measurements, ['Volume', 'Pressure']);
     var csvList = d3.csv.format(measurements);
-    console.log(csvList);
     document.getElementById('download').href = "data:text/csv;charset=utf-8," + encodeURIComponent(csvList);
     document.getElementById('download').classList.remove('disabled');
 }
@@ -22,14 +22,13 @@ function scrapeTable() {
         list = [];
 
     //fills list with objects that match each table row
-    tRows.forEach(function (row) {
+    for (var i = 0; i < tRows.length; i++) {
         tempObj = {};
-        row.childNodes.forEach(function (td, i) {
-            tempObj[tKeys[i].innerText] = td.innerHTML;
-        });
+        for (var j = 0; j < tRows[i].childNodes.length; j++) {
+            tempObj[tKeys[j].innerText] = tRows[i].childNodes[j].innerHTML;
+        }
         list.push(tempObj);
-    });
-
+    }
     enableDownload(list);
 }
 
@@ -38,9 +37,8 @@ function startListening() {
             childList: true
         },
         target = document.querySelector('table tbody'),
-        observer = new MutationObserver(function (mutations) {
+        observer = new MutationObserver(function () {
             scrapeTable();
-            //console.log(mutations);
         })
 
     observer.observe(target, config);
