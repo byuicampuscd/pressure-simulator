@@ -49,7 +49,3 @@ container.style.height = svgInfo.pressure.image.height + "px";
 
 var svgsyringe = document.getElementById("svg_ball_container");
 /* End Generate syringe SVG*/
-
-
-//Listen to changes in the table
-startListening();
