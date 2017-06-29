@@ -121,7 +121,7 @@ var air = (function () {
 
         // Create the ball copy in svg using SVG.js
         this.circle = syringeSVGjs.select('#svg_ball_boundary').first()
-            .nested().svg(document.getElementById("svg_ball").outerHTML)
+            .nested().svg(document.getElementById("svg_ball_wrapper_div").innerHTML)
             .size(size, size);
 
         // Displays it

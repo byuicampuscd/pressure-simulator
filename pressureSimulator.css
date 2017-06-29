@@ -214,3 +214,11 @@ tbody tr:nth-child(even) {
         width: 745px;
     }
 }
+
+input[type=range]::-ms-tooltip {
+    display: none;
+}
+
+input[type=range]::-ms-track {
+    color: transparent;
+}

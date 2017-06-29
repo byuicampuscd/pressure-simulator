@@ -31,7 +31,8 @@ for (var item in svgInfo) {
     svgInfo[item].element = document.getElementById(svgInfo[item].svgID);
 }
 
-var pressureSVGjs = SVG("svg-container-pressure").svg(document.getElementById("svg_pressure").outerHTML);
+
+var pressureSVGjs = SVG("svg-container-pressure").svg(document.getElementById("svg_pressure_wrapper_div").innerHTML);
 var gaugeSVGjs = pressureSVGjs.select('#' + svgInfo.gauge.svgID).first();
 var syringeSVGjs = pressureSVGjs.select('#' + svgInfo.syringe.svgID).first();
 

@@ -25,7 +25,7 @@
             <div id="svg-container-pressure" class="svg-container">
                 <!-- Container for SVG.js to insert svg for the pressure gauge, leave empty -->
             </div>
-            <p>Pull the syringe handle or the slider above it to calculate pressure</p>
+            <p>To change the volume in the syringe, move the syringe handle with the mouse, change the slider, or type a value in the volume box.</p>
         </div>
     </div>
     <div class="flex_row">
@@ -55,8 +55,7 @@
 
 
     <!-- START svg tags -->
-    <div class="hidden">
-
+    <div id="svg_pressure_wrapper_div" class="hidden">
         <svg id="svg_pressure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3014.6 655.9">
         <style>
             .pressure0{fill:url(#XMLID_219_)}
@@ -447,7 +446,8 @@
             </g>
         </g>
         </svg>
-
+    </div>
+    <div id="svg_ball_wrapper_div" class="hidden">
         <!-- START ball svg -->
         <svg id="svg_ball" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 470">
         <style>
@@ -465,7 +465,7 @@
     <!-- END svg tags -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-dsv/1.0.5/d3-dsv.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.4.0/svg.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.2/svg.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://wzrd.in/standalone/function-plot@latest"></script>
     <script src="downloadTable.js"></script>

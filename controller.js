@@ -11,6 +11,9 @@
  * @external functionPlot
  * @see http://maurizzzio.github.io/function-plot/
  */
+function usingIE() {
+    return navigator.appVersion.match(/\.NET/i) !== null;
+}
 
 /**
  * The Controller for the app.
@@ -25,7 +28,7 @@
 
     /* START Initial setup */
 
-    const CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
+    var CLOSE_TO_ZERO = 0.00000000000000000000000000000001;
     var measurements = []; // Array to hold arrays of measurements recorded
 
     /** 
@@ -80,7 +83,7 @@
      * @private
      */
     var pressureModel = modelFactory.makeMeasureModel(null, 2);
-    pressureModel.c = 850; // c for constant, see issue #3 in GitHub for an explanation
+    pressureModel.c = 850; // c for varant, see issue #3 in GitHub for an explanation
     pressureModel.update = function () {
         var V = volumeModel.getMeasurement(), // in cc's
             measurement = this.c / V;
@@ -98,7 +101,7 @@
         }
     }
 
-    const HIGHEST_MARK = 450; // Highest mark on gauge decided based off issue #6 in GitHub
+    var HIGHEST_MARK = 450; // Highest mark on gauge decided based off issue #6 in GitHub
 
     // Needle
     var needle = gaugeSVGjs.select('#needle').first();
@@ -139,17 +142,18 @@
 
     /* START Handling of Volume section */
 
-    const MAX_VOLUME = 20; // in cc
+    var MAX_VOLUME = 20; // in cc
     var volumeModel = modelFactory.makeMeasureModel([0, MAX_VOLUME], 1);
 
     var ballBoundary = air.getBoundary();
     // Also set the bottom boundary for the handle
-    const HANDLE_BOUND = ballBoundary.right - 20;
+    var HANDLE_BOUND = ballBoundary.right - 20;
 
     // Handle
     var handle = syringeSVGjs.select('#handle').first();
     var handleHeld = false; // Flag for mouse events
     handle.mousedown(function (e) {
+
         handleHeld = true;
         document.body.style.cursor = "auto";
     })
@@ -170,7 +174,24 @@
     handleSlider.oninput = function () {
         this.update();
     }
-    handleSlider.onchange = recordMeasurements;
+
+    var usingMouseOnSlider = false;
+    handleSlider.onmousedown = function () {
+        usingMouseOnSlider = true;
+    }
+
+    handleSlider.onmouseup = function () {
+        if (usingMouseOnSlider === true && usingIE()) {
+            usingMouseOnSlider = false;
+            recordMeasurements();
+        }
+    }
+    handleSlider.onchange = function (e) {
+        this.update();
+        if (!usingMouseOnSlider) {
+            recordMeasurements();
+        }
+    }
     handleSlider.update = function () {
         handle.transform({
             x: HANDLE_BOUND * (1 - handleSlider.value)
@@ -290,32 +311,36 @@
         increasePointSize();
     }
 
+
     // For when svg parts are being used
     document.querySelector('html').onmousemove = function (e) {
-
+        if (usingIE()) {
+            return;
+        }
         var slider, model, stepsToMove;
 
         // What the user is currently 'holding'
         if (handleHeld) {
             slider = handleSlider;
             model = volumeModel;
+            // If something is being held, update the slider
+            stepsToMove = Math.round(-e.movementX / Number(slider.style.width.slice(0, -2)) *
+                (model.getBounds()[1] * Math.pow(10, model.getPrecision())));
+            slider.stepUp(stepsToMove);
+            slider.update();
         } else {
             return;
         }
 
-        // If something is being held, update the slider
-        stepsToMove = Math.round(-e.movementX / Number(slider.style.width.slice(0, -2)) *
-            (model.getBounds()[1] * Math.pow(10, model.getPrecision())));
-        slider.stepUp(stepsToMove);
-        slider.update();
     }
-    document.querySelector('html').onmouseup = function () {
-
+    document.querySelector('html').onmouseup = function (event) {
+        usingMouseOnSlider = false;
         if (handleHeld) {
             handleHeld = false;
             document.body.style.cursor = "auto";
-
-            recordMeasurements();
+            if (!usingIE()) {
+                recordMeasurements();
+            }
         }
     }
 
