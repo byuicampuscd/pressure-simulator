@@ -88,6 +88,18 @@ text {
 
 /*graph styles*/
 
+#graph {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 15vw;
+    min-width: 500px;
+}
+
+#graph>h2 {
+    width: 100%
+}
+
 svg {
     font-size: 12pt;
 }
@@ -96,6 +108,19 @@ svg g.graph>circle {
     opacity: 1;
     fill: darkblue;
     stroke: darkblue;
+}
+
+#x-axis-label {
+    width: 100%;
+    text-align: center;
+    margin: -20px auto 30px 360px;
+}
+
+#y-axis-label {
+    margin-top: 60px;
+    margin-right: -20px;
+    height: 20px;
+    transform: rotate(-90deg);
 }
 
 

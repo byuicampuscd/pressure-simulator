@@ -45,17 +45,14 @@
         },
         plot: {
             target: '#dataplot',
-            //title: "Graph of the Data",
             width: 400,
             height: 550,
             grid: true,
             disableZoom: true,
             xAxis: {
-                //label: 'Volume (cc)',
                 domain: [0, 22]
             },
             yAxis: {
-                //label: 'Pressure (kPa)',
                 domain: [0, 300]
             },
             data: [{
