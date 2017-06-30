@@ -1,0 +1,138 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "svg.js",
+        "scope": null,
+        "escapedName": "svg.js",
+        "name": "svg.js",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\Danverde\\Documents\\pressure-simulator\\thirdParty"
+    ]
+  ],
+  "_from": "svg.js@latest",
+  "_id": "svg.js@2.6.2",
+  "_inCache": true,
+  "_location": "/svg.js",
+  "_nodeVersion": "6.10.3",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/svg.js-2.6.2.tgz_1496655466865_0.8391724752727896"
+  },
+  "_npmUser": {
+    "name": "fuzzyma",
+    "email": "ulima.ums@googlemail.com"
+  },
+  "_npmVersion": "2.10.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "svg.js",
+    "scope": null,
+    "escapedName": "svg.js",
+    "name": "svg.js",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/svg.js/-/svg.js-2.6.2.tgz",
+  "_shasum": "f1c31a9d07acbf7c47c97147685e3a0a42a2929c",
+  "_shrinkwrap": null,
+  "_spec": "svg.js",
+  "_where": "C:\\Users\\Danverde\\Documents\\pressure-simulator\\thirdParty",
+  "author": {
+    "name": "Wout Fierens",
+    "email": "wout@mick-wout.com"
+  },
+  "bugs": {
+    "url": "https://github.com/svgdotjs/svg.js/issues"
+  },
+  "dependencies": {},
+  "description": "A lightweight library for manipulating and animating SVG.",
+  "devDependencies": {
+    "coveralls": "^2.13.1",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-chmod": "^2.0.0",
+    "gulp-cli": "^1.3.0",
+    "gulp-concat": "^2.3.3",
+    "gulp-header": "^1.0.5",
+    "gulp-rename": "^1.2.2",
+    "gulp-size": "^2.1.0",
+    "gulp-trimlines": "^1.0.0",
+    "gulp-uglify": "^2.1.2",
+    "gulp-wrap": "^0.13.0",
+    "jasmine-core": "^2.6.2",
+    "karma": "^1.7.0",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "request": "^2.81.0",
+    "svgdom": "latest"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "f1c31a9d07acbf7c47c97147685e3a0a42a2929c",
+    "tarball": "https://registry.npmjs.org/svg.js/-/svg.js-2.6.2.tgz"
+  },
+  "gitHead": "ecc3882209cb5fe8d8c8e2ad18f44f63916130cc",
+  "github": "https://github.com/svgdotjs/svg.js",
+  "homepage": "https://svgdotjs.github.io/",
+  "jam": {
+    "include": [
+      "dist/svg.js",
+      "README.md",
+      "LICENSE.txt"
+    ]
+  },
+  "keywords": [
+    "svg",
+    "vector",
+    "graphics",
+    "animation"
+  ],
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "main": "dist/svg.js",
+  "maintainers": [
+    {
+      "name": "dotnetcarpenter",
+      "email": "jon.ronnenberg@gmail.com"
+    },
+    {
+      "name": "fuzzyma",
+      "email": "ulima.ums@googlemail.com"
+    },
+    {
+      "name": "wout",
+      "email": "wout@impinc.co.uk"
+    }
+  ],
+  "name": "svg.js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svgdotjs/svg.js.git"
+  },
+  "scripts": {
+    "build": "gulp",
+    "build:test": "gulp unify",
+    "test": "karma start .config/karma.conf.js --single-run",
+    "test:quick": "karma start .config/karma.quick.js"
+  },
+  "typings": "./svg.js.d.ts",
+  "url": "https://svgdotjs.github.io/",
+  "version": "2.6.2"
+}
