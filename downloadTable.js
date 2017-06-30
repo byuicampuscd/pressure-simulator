@@ -54,11 +54,15 @@ function scrapeTable() {
     return d3.csv.format(list);
 }
 
-
-
-document.querySelector('#download').addEventListener('click', function () {
-    if (document.querySelectorAll('tbody tr').length > 0) {
-        document.getElementById('download').classList.remove('disabled');
+//enable download button when the table is updated 
+var observer = new MutationObserver(function () {
+    document.getElementById('download').classList.remove('disabled');
+    document.getElementById('download').addEventListener('click', function () {
         download(scrapeTable(), "Pressure Simulator Results.csv", "text/csv");
-    }
+    });
+    observer.disconnect();
+});
+
+observer.observe(document.querySelector('table tbody'), {
+    childList: true
 });
