@@ -195,7 +195,8 @@ tbody tr:nth-child(even) {
     margin-right: 13px;
 }
 
-.button {
+button {
+    font-size: 12pt;
     background-color: #0076B6;
     color: white;
     padding: 8px;
@@ -203,6 +204,10 @@ tbody tr:nth-child(even) {
     border: 1px solid #003958;
     text-decoration: none;
     margin-bottom: 30px;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 .disabled {

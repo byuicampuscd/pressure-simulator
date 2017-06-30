@@ -17,7 +17,8 @@ function scrapeTable() {
 
     var tKeys = nodeListToArray(document.querySelectorAll('thead tr th')),
         tRows = nodeListToArray(document.querySelectorAll('tbody tr')),
-        list, emptyRowObj;
+        list,
+        emptyRowObj;
 
     //convert headers to just text
     tKeys = tKeys.map(function (ele) {
@@ -46,13 +47,18 @@ function scrapeTable() {
             //send it back to the list array
             return rowObj;
 
-        })
+        });
     }
 
     console.log("list", list);
     return d3.csv.format(list);
 }
 
+
+
 document.querySelector('#download').addEventListener('click', function () {
-    download(scrapeTable(), "PressureSimulatorResults.csv", "text/csv");
+    if (document.querySelectorAll('tbody tr').length > 0) {
+        document.getElementById('download').classList.remove('disabled');
+        download(scrapeTable(), "Pressure Simulator Results.csv", "text/csv");
+    }
 });
