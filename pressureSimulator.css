@@ -22,10 +22,6 @@ html {
     justify-content: center;
 }
 
-.row1>p {
-    height: 100% !important;
-}
-
 .layout-section {
     background-color: whitesmoke;
     border: 2px outset;
